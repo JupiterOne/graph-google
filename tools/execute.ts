@@ -11,7 +11,9 @@ async function run(): Promise<void> {
   // TODO Populate for authentication as a Google Service Account
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount
   const integrationConfig = {
-    // providerApiToken: process.env.PROVIDER_LOCAL_EXECUTION_API_TOKEN
+    accountId: process.env.GSUITE_ACCOUNT_ID,
+    creds: process.env.GSUITE_CREDS,
+    subject: process.env.GSUITE_SUBJECT
   };
 
   logger.info(

@@ -1,24 +1,24 @@
 module.exports = {
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    "^.+\\.tsx?$": "ts-jest"
   },
-  testMatch: [
-    '<rootDir>/**/*.test.{js,ts}'
+  testMatch: ["<rootDir>/**/*.test.{js,ts}"],
+  collectCoverageFrom: [
+    "src/**/*.ts",
+    "!<rootDir>/src/executionHandler.ts",
+    "!<rootDir>/src/initializeContext.ts"
   ],
-  collectCoverageFrom: ['src/**/*.ts'],
-  coveragePathIgnorePatterns: [
-    '<rootDir>/src/index.ts'
-  ],
-  moduleFileExtensions: ['ts', 'js'],
-  testEnvironment: 'node',
+  coveragePathIgnorePatterns: ["<rootDir>/src/index.ts"],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
+  testEnvironment: "node",
   clearMocks: true,
   collectCoverage: true,
   coverageThreshold: {
     global: {
-      statements: 100,
-      branches: 100,
-      functions: 100,
-      lines: 100
+      statements: 90,
+      branches: 90,
+      functions: 90,
+      lines: 90
     }
   }
 };

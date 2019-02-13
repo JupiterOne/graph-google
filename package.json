@@ -15,10 +15,12 @@
     "build:files": "ts-node tools/copy-dist-files.ts",
     "build:types": "tsc --project tsconfig.dist.json --declaration --emitDeclarationOnly",
     "build:publish": "yarn build && cd dist && yarn publish --access public",
+    "lint": "tslint --project . --fix",
     "test": "jest"
   },
   "dependencies": {
-    "bunyan": "^1.8.12"
+    "bunyan": "^1.8.12",
+    "googleapis": "37.1.0"
   },
   "peerDependencies": {
     "@jupiterone/jupiter-managed-integration-sdk": "^19.0.0"
@@ -34,6 +36,7 @@
     "@types/node": "^10.12.20",
     "husky": "^1.3.1",
     "jest": "^23.5.0",
+    "jest-mock-axios": "^2.1.11",
     "lint-staged": "^8.1.3",
     "prettier": "1.16.4",
     "ts-jest": "^23.10.5",

@@ -1,0 +1,76 @@
+{
+  "config": {
+    "url": "https://www.googleapis.com/admin/directory/v1/groups/2/members",
+    "method": "GET",
+    "headers": {
+      "Accept-Encoding": "gzip",
+      "User-Agent": "google-api-nodejs-client/0.7.2 (gzip)",
+      "Accept": "application/json"
+    },
+    "params": {},
+    "responseType": "json"
+  },
+  "data": {
+    "kind": "admin#directory#members",
+    "etag": "\"GPUJN6YVAOElesyqxtgGs7jrFWY/Vj99AtCFjFLU6-q2QqKsiUavh8o\"",
+    "members": [
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN6YVAOElesyqxtgGs7jrFWY/Mmb9RMoyivXzv-kMYwtCr9lh-mk\"",
+        "id": "3",
+        "email": "first.user@example.com",
+        "role": "MANAGER",
+        "type": "USER",
+        "status": "ACTIVE"
+      },
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN6YVAOElesyqxtgGs7jrFWY/8xFiMxVxK5aicGy-2g-H4YxNsjA\"",
+        "id": "5",
+        "email": "test@example.com",
+        "role": "MEMBER",
+        "type": "USER",
+        "status": "ACTIVE"
+      },
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN23YVAOElesyqxtgGs7jrFWY/8xFiMxVxK5aicGy-2g-XXXXXXX\"",
+        "id": "104221518650717901111",
+        "email": "restricted.test@example.com",
+        "role": "MEMBER",
+        "type": "GROUP",
+        "status": "ACTIVE"
+      },
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN6YVAOElesyqxtgGs7jrFWY/8xFiMxVxK5aicGy-2g-YYYYYYY\"",
+        "id": "104221518650717901222",
+        "email": "team.test.group@example.com",
+        "role": "MEMBER",
+        "type": "GROUP",
+        "status": "ACTIVE"
+      },
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN6YVAOElesyq23tgGs7jrFWY/8xFiMxVxK5aicGy-2g-YYYYYYY\"",
+        "id": "104221518350717913333",
+        "email": "example@example.com",
+        "role": "MEMBER",
+        "type": "EXTERNAL",
+        "status": "ACTIVE"
+      },
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN6asdOElesyq23tgGs7jrFWY/8xFiMxVxK5aicGy-2g-YYYYYYY\"",
+        "id": "1042215183717913313",
+        "email": null,
+        "role": "MEMBER",
+        "type": "EXTERNAL",
+        "status": "ACTIVE"
+      }
+    ]
+  },
+  "headers": {},
+  "status": 200,
+  "statusText": "OK"
+}

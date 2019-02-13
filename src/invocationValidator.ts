@@ -1,7 +1,11 @@
 import {
   IntegrationExecutionContext,
+  IntegrationInstanceAuthenticationError,
+  IntegrationInstanceConfigError,
   IntegrationInvocationEvent
 } from "@jupiterone/jupiter-managed-integration-sdk";
+
+import { GSuiteClient } from "./GSuite";
 
 /**
  * Performs validation of the execution before the execution handler function is
@@ -12,18 +16,25 @@ import {
  * ensure that credentials are valid. The function will be awaited to support
  * connecting to the provider for this purpose.
  *
- * @param executionContext
+ * @param context
  */
 export default async function invocationValidator(
-  executionContext: IntegrationExecutionContext<IntegrationInvocationEvent>
+  context: IntegrationExecutionContext<IntegrationInvocationEvent>
 ) {
-  // const { config } = executionContext.instance;
-  // if (!config.providerAPIKey) {
-  //   throw new IntegrationInstanceConfigError('providerAPIKey missing in config');
-  // }
-  // try {
-  //   new ProviderClient(config.providerAPIKey).someEndpoint();
-  // } catch (err) {
-  //   throw new IntegrationInstanceAuthenticationError(err);
-  // }
+  const { config } = context.instance;
+  if (!config.providerAPIKey) {
+    throw new IntegrationInstanceConfigError(
+      "providerAPIKey missing in config"
+    );
+  }
+  try {
+    const provider = new GSuiteClient(config.accountId, {
+      email: config.email,
+      key: config.key,
+      subject: config.subject
+    });
+    await provider.authenticate();
+  } catch (err) {
+    throw new IntegrationInstanceAuthenticationError(err);
+  }
 }

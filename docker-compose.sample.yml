@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  integration:
+    build: .
+    volumes:
+      - .:/app:cached
+      - ~/.ssh:/root/.ssh
+      - ~/.bash_history:/root/.bash_history
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      GRAPH_DB_ENDPOINT: graph
+      GSUITE_ACCOUNT_ID: 'YOUR GOOGLE ACCOUNT ID HERE'
+      GSUITE_SERVICE_ACCOUNT_EMAIL: 'YOUR SERVICE ACCOUNT EMAIL HERE'
+      GSUITE_KEYFILE: 'PATH TO JWT KEYFILE (OPTIONAL)'
+      GSUITE_KEY: 'CONTENT OF JWT KEYFILE (OPTIONAL)'
+      GSUITE_SUBJECT: 'SUBJECT USER (OPTIONAL)'
+    links:
+      - graph
+  graph:
+    image: tinkerpop/gremlin-server:3.3
+    ports:
+      - "8182:8182"

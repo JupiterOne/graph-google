@@ -4,3 +4,5 @@ coverage/
 dist/
 jupiterone-jupiter-managed-integration-sdk-*
 yarn-error.log
+docker-compose.yml
+lifeomnic-test-*.json

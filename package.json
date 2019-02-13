@@ -14,10 +14,14 @@
     "build:src": "babel src --extensions '.ts' --out-dir dist",
     "build:files": "ts-node tools/copy-dist-files.ts",
     "build:types": "tsc --project tsconfig.dist.json --declaration --emitDeclarationOnly",
-    "test": "jest"
+    "test": "jest",
+    "lint": "tslint --project . --fix"
   },
   "dependencies": {
-    "bunyan": "^1.8.12"
+    "@types/ramda": "types/npm-ramda#dist",
+    "bunyan": "^1.8.12",
+    "googleapis": "37.1.0",
+    "ramda": "^0.26.1"
   },
   "peerDependencies": {
     "@jupiterone/jupiter-managed-integration-sdk": "^18.0.4"

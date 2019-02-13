@@ -2,16 +2,19 @@ import {
   IntegrationExecutionContext,
   IntegrationExecutionResult,
   IntegrationInvocationEvent
-} from '@jupiterone/jupiter-managed-integration-sdk';
+} from "@jupiterone/jupiter-managed-integration-sdk";
+
+import initializeContext from "./initializeContext";
 
 export default async function executionHandler(
   context: IntegrationExecutionContext<IntegrationInvocationEvent>
 ): Promise<IntegrationExecutionResult> {
+  const { graph, persister, provider } = await initializeContext(context);
+
+  const oldData = await graph.fetchEntities();
+  const gsuiteData = await provider.fetchEntities();
+
   return {
-    operations: {
-      created: 0,
-      deleted: 0,
-      updated: 0
-    }
+    operations: await persister.publish(oldData, gsuiteData)
   };
 }

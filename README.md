@@ -15,8 +15,7 @@ connect to provider APIs. An integration is triggered by an event containing the
 instance configuration. `IntegrationInstance.config` is encrypted at rest and
 decrypted before it is delivered to the integration execution handler.
 
-Local execution of the integration is started through `execute.ts` (`yarn
-start`), which may be changed to load development credentials into the
+Local execution of the integration is started through `execute.ts` (`yarn start`), which may be changed to load development credentials into the
 `IntegrationInstance.config`. Use environment variables to avoid publishing
 sensitive information to GitHub!
 
@@ -33,10 +32,12 @@ provider. Developing an integration involves:
 
 Run the integration to see what happens:
 
-1.  Install Docker
-2.  `yarn install`
-3.  `yarn start:graph`
-4.  `yarn start`
+1.  Install Docker and Docker Compose
+2.  Copy `docker-compose.sample.yml` to `docker-compose.yml`.
+3.  Fill in correct credentials in ENV.
+4.  `docker-compose build`
+5.  `docker-compose run --rm integration yarn install`
+6.  `docker-compose run --rm integration yarn start`
 
 Activity is logged to the console indicating the operations produced and
 processed. View raw data in the graph database using
@@ -48,12 +49,13 @@ produced.
 Restart the graph server to clear the data when you want to run the integration
 with no existing data:
 
-1.  `yarn stop:graph`
-2.  `yarn start:graph`
+```shell
+docker-compose restart graph`
+```
 
 ### Environment Variables
 
-* `GRAPH_DB_ENDPOINT` - `"localhost"`
+- `GRAPH_DB_ENDPOINT` - `"localhost"`
 
 ### Running tests
 
@@ -63,5 +65,13 @@ and conversion from provider data to entities and relationships.
 To run tests locally:
 
 ```shell
-yarn test
+docker-compose run --rm integration yarn test
+```
+
+### Interactive session
+
+You can start interactive session inside a container:
+
+```shell
+docker-compose run --rm integration bash
 ```

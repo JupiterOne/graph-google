@@ -5,4 +5,4 @@ dist/
 jupiterone-jupiter-managed-integration-sdk-*
 yarn-error.log
 docker-compose.yml
-lifeomnic-test-*.json
+lifeomic-test-*.json

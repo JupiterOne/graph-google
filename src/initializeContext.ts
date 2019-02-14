@@ -3,9 +3,7 @@ import {
   IntegrationInvocationEvent
 } from "@jupiterone/jupiter-managed-integration-sdk";
 
-import { GSuiteClient } from "./GSuite";
-import { JupiterOneGraphClient } from "./JupiterOne";
-import { Persister } from "./Persister";
+import { GSuiteClient } from "./gsuite";
 
 export default async function initializeContext(
   context: IntegrationExecutionContext<IntegrationInvocationEvent>
@@ -22,13 +20,10 @@ export default async function initializeContext(
   await provider.authenticate();
 
   const { persister, graph } = context.clients.getClients();
-  const graphClient = new JupiterOneGraphClient(graph);
-
-  const persisterClient = new Persister(persister);
 
   return {
-    graph: graphClient,
-    persister: persisterClient,
+    graph,
+    persister,
     provider
   };
 }

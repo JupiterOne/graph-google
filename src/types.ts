@@ -5,7 +5,7 @@ import {
   PersisterClient
 } from "@jupiterone/jupiter-managed-integration-sdk";
 
-import GSuiteClient from "./GSuite/GSuiteClient";
+import GSuiteClient from "./gsuite/GSuiteClient";
 
 export interface GSuiteExecutionContext
   extends IntegrationExecutionContext<IntegrationInvocationEvent> {

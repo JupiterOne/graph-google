@@ -20,8 +20,7 @@
   "dependencies": {
     "@types/ramda": "types/npm-ramda#dist",
     "bunyan": "^1.8.12",
-    "googleapis": "37.1.0",
-    "ramda": "^0.26.1"
+    "googleapis": "37.1.0"
   },
   "peerDependencies": {
     "@jupiterone/jupiter-managed-integration-sdk": "^18.0.4"

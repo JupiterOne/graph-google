@@ -1,10 +1,10 @@
-import { User } from "../../GSuite/GSuiteClient";
+import { User } from "../gsuite/GSuiteClient";
 
 import {
   USER_PASSWORD_POLICY_RELATIONSHIP_CLASS,
   USER_PASSWORD_POLICY_RELATIONSHIP_TYPE,
   UserPasswordPolicyRelationship
-} from "../../JupiterOne";
+} from "../jupiterone";
 
 import { generatePasswordPolicyId } from "./PasswordPolicyEntityConverter";
 import { generateUserId } from "./UserEntityConverter";
@@ -16,12 +16,13 @@ export function createUserPasswordPolicyRelationships(
     const parentId = generateUserId(user.id);
     const childId = generatePasswordPolicyId(user.id);
 
-    return {
+    const relationship: UserPasswordPolicyRelationship = {
       _key: `${parentId}_has_${childId}`,
       _type: USER_PASSWORD_POLICY_RELATIONSHIP_TYPE,
       _class: USER_PASSWORD_POLICY_RELATIONSHIP_CLASS,
       _fromEntityKey: parentId,
       _toEntityKey: childId
-    } as UserPasswordPolicyRelationship;
+    };
+    return relationship;
   });
 }

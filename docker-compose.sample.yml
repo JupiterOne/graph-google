@@ -17,7 +17,7 @@ services:
       GSUITE_KEYFILE: 'PATH TO JWT KEYFILE (OPTIONAL)'
       GSUITE_KEY: 'CONTENT OF JWT KEYFILE (OPTIONAL)'
       GSUITE_SUBJECT: 'SUBJECT USER (OPTIONAL)'
-    links:
+    depend_on:
       - graph
   graph:
     image: tinkerpop/gremlin-server:3.3

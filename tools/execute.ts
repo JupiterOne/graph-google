@@ -1,7 +1,7 @@
 import {
   createLocalInvocationEvent,
   executeSingleHandlerLocal
-} from "@jupiterone/jupiter-managed-integration-sdk";
+} from "@jupiterone/jupiter-managed-integration-sdk/local";
 import { createLogger, TRACE } from "bunyan";
 import { executionHandler } from "../src/index";
 

@@ -1,7 +1,7 @@
 import {
   createLocalInvocationEvent,
   executeSingleHandlerLocal
-} from "@jupiterone/jupiter-managed-integration-sdk";
+} from "@jupiterone/jupiter-managed-integration-sdk/local";
 import { createLogger, TRACE } from "bunyan";
 import { executionHandler } from "../src/index";
 
@@ -12,10 +12,7 @@ async function run(): Promise<void> {
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount
   const integrationConfig = {
     accountId: process.env.GSUITE_ACCOUNT_ID,
-    email: process.env.GSUITE_SERVICE_ACCOUNT_EMAIL,
-    // FIXME: Use keyfile for temporary reasons should be just key
-    keyFile: process.env.GSUITE_KEYFILE,
-    // key: process.env.GSUITE_KEY,
+    creds: process.env.GSUITE_CREDS,
     subject: process.env.GSUITE_SUBJECT
   };
 

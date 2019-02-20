@@ -19,8 +19,6 @@ export function createUserEntities(data: User[]): UserEntity[] {
       suspended: user.suspended,
       archived: user.archived,
       active: !user.suspended || !user.archived,
-      tags:
-        user.keywords && user.keywords.map((k: { value: string }) => k.value),
       agreedToTerms: user.agreedToTerms,
       changePasswordAtNextLogin: user.changePasswordAtNextLogin,
       creationTime: user.creationTime,

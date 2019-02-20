@@ -21,6 +21,7 @@ export default async function publishChanges(
   gsuiteData: GSuiteDataModel
 ) {
   const newData = convert(gsuiteData);
+
   const entities = [
     ...persister.processEntities<UserEntity>(oldData.users, newData.users),
     ...persister.processEntities<GroupEntity>(oldData.groups, newData.groups),
@@ -44,7 +45,7 @@ export default async function publishChanges(
   return await persister.publishPersisterOperations([entities, relationships]);
 }
 
-function convert(gsuiteData: GSuiteDataModel): JupiterOneDataModel {
+export function convert(gsuiteData: GSuiteDataModel): JupiterOneDataModel {
   return {
     groups: createGroupEntities(gsuiteData.groups),
     passwordPolicies: createPasswordPolicyEntities(gsuiteData.users),

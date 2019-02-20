@@ -4,6 +4,7 @@ import {
   IntegrationInstanceConfigError,
   IntegrationInvocationEvent
 } from "@jupiterone/jupiter-managed-integration-sdk";
+import { JWTOptions } from "google-auth-library";
 
 import { GSuiteClient } from "./gsuite";
 
@@ -22,17 +23,20 @@ export default async function invocationValidator(
   executionContext: IntegrationExecutionContext<IntegrationInvocationEvent>
 ) {
   const { config } = executionContext.instance;
-  if (!config.accountId || !config.email || !config.key || !config.subject) {
+
+  if (!config.accountId || !config.creds || !config.subject) {
     throw new IntegrationInstanceConfigError(
-      "config requires all of { accountId, email, key, subject }"
+      "config requires all of { accountId, creds, subject }"
     );
   }
 
-  const provider = new GSuiteClient(config.accountId, {
-    email: config.email,
-    key: config.key,
+  const creds = JSON.parse(config.creds);
+  const jwtOptions: JWTOptions = {
+    email: creds.client_email,
+    key: creds.private_key,
     subject: config.subject
-  });
+  };
+  const provider = new GSuiteClient(config.accountId, jwtOptions);
 
   try {
     await provider.authenticate();

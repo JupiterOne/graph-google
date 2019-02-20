@@ -11,7 +11,6 @@ export interface UserEntity extends EntityFromIntegration {
   suspended?: boolean;
   archived?: boolean;
   active: boolean;
-  tags: string[];
   agreedToTerms?: boolean;
   changePasswordAtNextLogin?: boolean;
   creationTime?: string;

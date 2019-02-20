@@ -1,6 +1,5 @@
 import { JWT, JWTOptions } from "google-auth-library";
 import { admin_directory_v1, google } from "googleapis";
-
 export interface User extends admin_directory_v1.Schema$User {}
 
 export enum MemberType {

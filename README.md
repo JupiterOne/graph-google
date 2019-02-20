@@ -1,5 +1,7 @@
 # JupiterOne Managed Integration for Google
 
+[![Build Status](https://travis-ci.org/JupiterOne/jupiter-integration-google.svg?branch=master)](https://travis-ci.org/JupterOne/jupiter-integration-vericode)
+
 A JupiterOne integration ingests information such as configurations and other
 metadata about digital and physical assets belonging to an organization. The
 integration is responsible for connecting to data provider APIs and determining

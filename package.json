@@ -18,7 +18,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@jupiterone/jupiter-managed-integration-sdk": "^19.0.1",
+    "@jupiterone/jupiter-managed-integration-sdk": "^19.0.3",
     "bunyan": "^1.8.12"
   },
   "devDependencies": {

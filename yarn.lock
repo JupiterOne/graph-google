@@ -653,10 +653,10 @@
     log-update "^2.3.0"
     strip-ansi "^3.0.1"
 
-"@jupiterone/jupiter-managed-integration-sdk@^19.0.4":
-  version "19.0.4"
-  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-19.0.4.tgz#d7d67cf48f993630c60eb1e3f08d0fd8748c957d"
-  integrity sha512-XganV2PBI2tC9RdS1aLETK0RQXbi79Ym7RmTL20JSF88jeyn67wYebohsmKjN82YlO6tUlgQ99tq6z2dq2QRIA==
+"@jupiterone/jupiter-managed-integration-sdk@^19.0.6":
+  version "19.0.6"
+  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-19.0.6.tgz#c2d44ff3e79163508c26b19d0b3d9268945ce5e8"
+  integrity sha512-sqjAlhZZKQKnRJpruv8aM+FXuAjC/DTmQoRP5maVqFDs11y8bJBuTmHHpJeIoDr8IXgA2iW7gBwToHXYk9dXEA==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"

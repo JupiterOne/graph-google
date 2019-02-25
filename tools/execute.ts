@@ -8,12 +8,20 @@ import { executionHandler } from "../src/index";
 async function run(): Promise<void> {
   const logger = createLogger({ name: "local", level: TRACE });
 
-  // TODO Populate for authentication as a Google Service Account
-  // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+  if (
+    !process.env.GOOGLE_ACCOUNT_ID ||
+    !process.env.GOOGLE_DOMAIN_ADMIN_EMAIL ||
+    !process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
+  ) {
+    throw new Error("Local execution requires G Suite environment variables");
+  }
+
   const integrationConfig = {
-    accountId: process.env.GSUITE_ACCOUNT_ID,
-    creds: process.env.GSUITE_CREDS,
-    subject: process.env.GSUITE_SUBJECT
+    googleAccountId: process.env.GOOGLE_ACCOUNT_ID,
+    domainAdminEmail: process.env.GOOGLE_DOMAIN_ADMIN_EMAIL,
+    serviceAccountCredentials: JSON.parse(
+      process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
+    )
   };
 
   logger.info(

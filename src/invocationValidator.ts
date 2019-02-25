@@ -4,9 +4,7 @@ import {
   IntegrationInstanceConfigError,
   IntegrationInvocationEvent
 } from "@jupiterone/jupiter-managed-integration-sdk";
-import { JWTOptions } from "google-auth-library";
-
-import { GSuiteClient } from "./gsuite";
+import createGSuiteClient from "./createGSuiteClient";
 
 /**
  * Performs validation of the execution before the execution handler function is
@@ -24,19 +22,19 @@ export default async function invocationValidator(
 ) {
   const { config } = executionContext.instance;
 
-  if (!config.accountId || !config.creds || !config.subject) {
-    throw new IntegrationInstanceConfigError(
-      "config requires all of { accountId, creds, subject }"
+  if (!config.serviceAccountCredentials) {
+    throw new Error(
+      "config.serviceAccountCredentials must be provided by the execution environment"
     );
   }
 
-  const creds = JSON.parse(config.creds);
-  const jwtOptions: JWTOptions = {
-    email: creds.client_email,
-    key: creds.private_key,
-    subject: config.subject
-  };
-  const provider = new GSuiteClient(config.accountId, jwtOptions);
+  if (!config.domainAdminEmail || !config.googleAccountId) {
+    throw new IntegrationInstanceConfigError(
+      "config.googleAccountId and config.domainAdminEmail must be provided"
+    );
+  }
+
+  const provider = createGSuiteClient(config);
 
   try {
     await provider.authenticate();

@@ -17,13 +17,12 @@ export interface GSuiteExecutionContext
 export interface GoogleIntegrationInstanceConfig {
   googleAccountId: string;
   domainAdminEmail: string;
-  serviceAccountCredentials: ServiceAccountCredentials;
 }
 
 /**
  * Google Service Account credentials, allowing code to run as the service
  * account, securely maintained by the execution environment and provided at
- * runtime in the integration instance config.
+ * runtime in the `context.invocationArgs.serviceAccountCredentials`.
  */
 export interface ServiceAccountCredentials {
   client_email: string;

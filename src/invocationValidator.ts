@@ -4,7 +4,7 @@ import {
   IntegrationInstanceConfigError,
   IntegrationInvocationEvent
 } from "@jupiterone/jupiter-managed-integration-sdk";
-import createGSuiteClient from "./createGSuiteClient";
+import { createGSuiteClient } from "./gsuite";
 
 /**
  * Performs validation of the execution before the execution handler function is
@@ -20,22 +20,24 @@ import createGSuiteClient from "./createGSuiteClient";
 export default async function invocationValidator(
   executionContext: IntegrationExecutionContext<IntegrationInvocationEvent>
 ) {
-  const { config } = executionContext.instance;
+  const {
+    instance: { config },
+    invocationArgs
+  } = executionContext;
 
-  if (!config.serviceAccountCredentials) {
+  if (!invocationArgs || !invocationArgs.serviceAccountCredentials) {
     throw new Error(
-      "config.serviceAccountCredentials must be provided by the execution environment"
+      "invocationArgs.serviceAccountCredentials must be provided by the execution environment"
     );
   }
 
   if (!config.domainAdminEmail || !config.googleAccountId) {
     throw new IntegrationInstanceConfigError(
-      "config.googleAccountId and config.domainAdminEmail must be provided"
+      "config.googleAccountId and config.domainAdminEmail must be provided by the user"
     );
   }
 
-  const provider = createGSuiteClient(config);
-
+  const provider = createGSuiteClient(executionContext);
   try {
     await provider.authenticate();
   } catch (err) {

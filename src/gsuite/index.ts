@@ -1,3 +1,4 @@
+import createGSuiteClient from "./createGSuiteClient";
 import GSuiteClient from "./GSuiteClient";
 
-export { GSuiteClient };
+export { createGSuiteClient, GSuiteClient };

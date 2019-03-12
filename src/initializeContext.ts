@@ -13,9 +13,15 @@ export default async function initializeContext(
 
   const { persister, graph } = context.clients.getClients();
 
+  const account = {
+    id: config.accountId,
+    name: config.accountName || context.instance.name
+  };
+
   return {
     graph,
     persister,
-    provider
+    provider,
+    account
   };
 }

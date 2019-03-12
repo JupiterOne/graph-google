@@ -5,15 +5,15 @@ import {
   GroupEntity
 } from "../jupiterone";
 
-export function generateGroupId(id?: string) {
+export function generateGroupKey(id?: string) {
   return `gsuite-group-id-${id}`;
 }
 
 export function createGroupEntities(data: Group[]): GroupEntity[] {
   return data.map(group => {
-    const groupEntity: GroupEntity = {
+    return {
       _class: GROUP_ENTITY_CLASS,
-      _key: generateGroupId(group.id),
+      _key: generateGroupKey(group.id),
       _type: GROUP_ENTITY_TYPE,
       id: group.id,
       adminCreated: group.adminCreated,
@@ -24,7 +24,5 @@ export function createGroupEntities(data: Group[]): GroupEntity[] {
       name: group.name,
       description: group.description
     };
-
-    return groupEntity;
   });
 }

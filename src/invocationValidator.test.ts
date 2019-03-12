@@ -1,4 +1,7 @@
-import { IntegrationInstanceConfigError } from "@jupiterone/jupiter-managed-integration-sdk";
+import {
+  IntegrationInstanceAuthenticationError,
+  IntegrationInstanceConfigError
+} from "@jupiterone/jupiter-managed-integration-sdk";
 import { readFileSync } from "fs";
 import invocationValidator from "./invocationValidator";
 
@@ -98,4 +101,26 @@ it("should not throw a error for valid config", async () => {
 
   await invocationValidator(executionContext as any);
   expect(invocationValidator(executionContext as any)).resolves.not.toThrow();
+});
+
+jest.unmock("google-auth-library");
+
+it("auth error", async () => {
+  const executionContext = {
+    instance: {
+      config: {
+        accountId: "example",
+        creds: readFileSync(
+          `${__dirname}/../test/fixtures/jwt.json`
+        ).toString(),
+        subject: "exaple@example.com"
+      }
+    }
+  };
+
+  try {
+    await invocationValidator(executionContext as any);
+  } catch (e) {
+    expect(e instanceof IntegrationInstanceAuthenticationError).toBe(true);
+  }
 });

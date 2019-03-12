@@ -1,5 +1,9 @@
 import { PersisterClient } from "@jupiterone/jupiter-managed-integration-sdk";
 import {
+  createAccountEntity,
+  createAccountGroupRelationships,
+  createAccountPasswordPolicyRelationships,
+  createAccountUserRelationships,
   createGroupEntities,
   createPasswordPolicyEntities,
   createUserEntities,
@@ -7,8 +11,9 @@ import {
   createUserPasswordPolicyRelationships
 } from "../converters";
 
-import { GSuiteDataModel } from "../gsuite/GSuiteClient";
+import { Account, GSuiteDataModel } from "../gsuite/GSuiteClient";
 import {
+  AccountEntity,
   GroupEntity,
   JupiterOneDataModel,
   PasswordPolicyEntity,
@@ -18,11 +23,16 @@ import {
 export default async function publishChanges(
   persister: PersisterClient,
   oldData: JupiterOneDataModel,
-  gsuiteData: GSuiteDataModel
+  gsuiteData: GSuiteDataModel,
+  account: Account
 ) {
-  const newData = convert(gsuiteData);
+  const newData = convert(gsuiteData, account);
 
   const entities = [
+    ...persister.processEntities<AccountEntity>(
+      oldData.accounts,
+      newData.accounts
+    ),
     ...persister.processEntities<UserEntity>(oldData.users, newData.users),
     ...persister.processEntities<GroupEntity>(oldData.groups, newData.groups),
     ...persister.processEntities<PasswordPolicyEntity>(
@@ -39,14 +49,30 @@ export default async function publishChanges(
     ...persister.processRelationships(
       oldData.userPasswordPolicyRelationships,
       newData.userPasswordPolicyRelationships
+    ),
+    ...persister.processRelationships(
+      oldData.accountUserRelationships,
+      newData.accountUserRelationships
+    ),
+    ...persister.processRelationships(
+      oldData.accountGroupRelationships,
+      newData.accountGroupRelationships
+    ),
+    ...persister.processRelationships(
+      oldData.accountPasswordPolicyRelationships,
+      newData.accountPasswordPolicyRelationships
     )
   ];
 
   return await persister.publishPersisterOperations([entities, relationships]);
 }
 
-export function convert(gsuiteData: GSuiteDataModel): JupiterOneDataModel {
+export function convert(
+  gsuiteData: GSuiteDataModel,
+  account: Account
+): JupiterOneDataModel {
   return {
+    accounts: [createAccountEntity(account)],
     groups: createGroupEntities(gsuiteData.groups),
     passwordPolicies: createPasswordPolicyEntities(gsuiteData.users),
     users: createUserEntities(gsuiteData.users),
@@ -57,6 +83,18 @@ export function convert(gsuiteData: GSuiteDataModel): JupiterOneDataModel {
     ),
     userPasswordPolicyRelationships: createUserPasswordPolicyRelationships(
       gsuiteData.users
+    ),
+    accountUserRelationships: createAccountUserRelationships(
+      gsuiteData.users,
+      account
+    ),
+    accountGroupRelationships: createAccountGroupRelationships(
+      gsuiteData.groups,
+      account
+    ),
+    accountPasswordPolicyRelationships: createAccountPasswordPolicyRelationships(
+      gsuiteData.users,
+      account
     )
   };
 }

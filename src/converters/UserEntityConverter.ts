@@ -1,14 +1,14 @@
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
 
-export function generateUserId(id?: string) {
+export function generateUserKey(id?: string) {
   return `gsuite-user-id-${id}`;
 }
 
 export function createUserEntities(data: User[]): UserEntity[] {
   return data.map(user => {
-    const userEntity: UserEntity = {
-      _key: generateUserId(user.id),
+    return {
+      _key: generateUserKey(user.id),
       _type: USER_ENTITY_TYPE,
       _class: USER_ENTITY_CLASS,
       id: user.id,
@@ -43,7 +43,5 @@ export function createUserEntities(data: User[]): UserEntity[] {
       thumbnailPhotoEtag: user.thumbnailPhotoEtag,
       thumbnailPhotoUrl: user.thumbnailPhotoUrl
     };
-
-    return userEntity;
   });
 }

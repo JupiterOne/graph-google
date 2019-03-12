@@ -5,5 +5,5 @@ export interface PasswordPolicyEntity extends EntityFromIntegration {
   isEnforcedIn2Sv?: boolean;
   isEnrolledIn2Sv?: boolean;
 }
-export const PASSWORD_POLICY_ENTITY_TYPE = "gsuite_password_policy";
+export const PASSWORD_POLICY_ENTITY_TYPE = "gsuite_user_password_policy";
 export const PASSWORD_POLICY_ENTITY_CLASS = "PasswordPolicy";

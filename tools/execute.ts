@@ -25,12 +25,17 @@ async function run(): Promise<void> {
     domainAdminEmail: process.env.GOOGLE_DOMAIN_ADMIN_EMAIL
   };
 
+  const invocationArgs = {
+    // providerPrivateKey: process.env.PROVIDER_LOCAL_EXECUTION_PRIVATE_KEY
+  };
+
   logger.info(
     await executeSingleHandlerLocal(
       integrationConfig,
       logger,
       executionHandler,
       { serviceAccountCredentials },
+      invocationArgs,
       createLocalInvocationEvent()
     ),
     "Execution completed successfully!"

@@ -44,7 +44,7 @@ test("executionHandler", async () => {
   expect(executionContext.provider.fetchUsers).toHaveBeenCalledTimes(1);
   expect(executionContext.provider.fetchGroups).toHaveBeenCalledTimes(1);
   expect(executionContext.provider.fetchGroups).toHaveBeenCalledTimes(1);
-  expect(executionContext.persister.processEntities).toHaveBeenCalledTimes(4);
+  expect(executionContext.persister.processEntities).toHaveBeenCalledTimes(3);
   expect(
     executionContext.persister.publishPersisterOperations
   ).toHaveBeenCalledTimes(1);

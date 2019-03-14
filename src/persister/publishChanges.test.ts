@@ -2,6 +2,7 @@ import { createTestIntegrationExecutionContext } from "@jupiterone/jupiter-manag
 import fetchGsuiteData from "../gsuite/fetchGsuiteData";
 import initializeContext from "../initializeContext";
 
+import { readFileSync } from "fs";
 import { convert } from "./publishChanges";
 
 jest.mock("googleapis", () => {
@@ -28,9 +29,7 @@ async function initialize() {
   const options = {
     instance: {
       config: {
-        accountId: "fakeId",
-        creds:
-          '{"email": "fake_email", "key": "fake_key", "subject": "fake_subject"}'
+        googleAccountId: "fakeId"
       },
       id: "",
       name: "google_account_name"
@@ -42,9 +41,12 @@ async function initialize() {
     }
   };
 
-  const context = createTestIntegrationExecutionContext(options);
+  const context = {
+    ...createTestIntegrationExecutionContext(options),
+    invocationArgs: options.invocationArgs
+  };
 
-  return await initializeContext(context);
+  return initializeContext(context);
 }
 
 test("Convert Groups", async () => {

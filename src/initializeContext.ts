@@ -7,15 +7,16 @@ import { createGSuiteClient } from "./gsuite";
 export default async function initializeContext(
   context: IntegrationExecutionContext<IntegrationInvocationEvent>
 ) {
-  const provider = createGSuiteClient(context);
+  const { config } = context.instance;
 
+  const provider = createGSuiteClient(context);
   await provider.authenticate();
 
   const { persister, graph } = context.clients.getClients();
 
   const account = {
-    id: config.accountId,
-    name: config.accountName || context.instance.name
+    id: config.googleAccountId,
+    name: config.googleAccountName || context.instance.name
   };
 
   return {

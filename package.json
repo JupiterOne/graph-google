@@ -23,9 +23,10 @@
     "googleapis": "37.1.0"
   },
   "peerDependencies": {
-    "@jupiterone/jupiter-managed-integration-sdk": "^19.1.2"
+    "@jupiterone/jupiter-managed-integration-sdk": "^19.2.0"
   },
   "devDependencies": {
+    "@jupiterone/jupiter-managed-integration-sdk": "^19.2.0",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",

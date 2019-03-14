@@ -12,6 +12,7 @@ export function createUserEntities(data: User[]): UserEntity[] {
       _type: USER_ENTITY_TYPE,
       _class: USER_ENTITY_CLASS,
       id: user.id,
+      email: user.primaryEmail,
       displayName: (user.name && user.name.fullName) || "",
       firstName: user.name && user.name.givenName,
       lastName: user.name && user.name.familyName,

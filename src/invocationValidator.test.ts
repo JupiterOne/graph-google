@@ -5,122 +5,154 @@ import {
 import { readFileSync } from "fs";
 import invocationValidator from "./invocationValidator";
 
-jest.mock("google-auth-library");
+import { JWT } from "google-auth-library";
 
-test("should throw an error for missing serviceAccountCredentials", async () => {
-  const executionContext = {
-    instance: {
-      config: {
-        googleAccountId: "example",
-        domainAdminEmail: "example@example.com"
+interface Mocked extends jest.Mock, Object {}
+
+function mocked(item: Object): Mocked {
+  return item as Mocked;
+}
+
+jest.mock("google-auth-library", () => {
+  return {
+    JWT: jest.fn().mockImplementation(() => ({
+      authorize() {
+        return true;
       }
-    },
-    invocationArgs: {}
+    })),
+    GoogleAuth: jest.fn(),
+    DefaultTransporter: jest.fn()
   };
-  try {
-    await invocationValidator(executionContext as any);
-  } catch (e) {
-    expect(e instanceof Error).toBe(true);
-  }
-  expect.assertions(1);
 });
 
-test("should throw an error for missing invocationArgs", async () => {
-  const executionContext = {
-    instance: {
-      config: {
-        googleAccountId: "example",
-        domainAdminEmail: "example@example.com"
-      }
+describe("Mocked Google Auth library", () => {
+  test("should throw an error for missing serviceAccountCredentials", async () => {
+    const executionContext = {
+      instance: {
+        config: {
+          googleAccountId: "example",
+          domainAdminEmail: "example@example.com"
+        }
+      },
+      invocationArgs: {}
+    };
+    try {
+      await invocationValidator(executionContext as any);
+    } catch (e) {
+      expect(e instanceof Error).toBe(true);
     }
-  };
-  try {
-    await invocationValidator(executionContext as any);
-  } catch (e) {
-    expect(e instanceof Error).toBe(true);
-  }
-  expect.assertions(1);
-});
+    expect.assertions(1);
+  });
 
-test("should throw an error for missing googleAccountId", async () => {
-  const executionContext = {
-    instance: {
-      config: {
-        domainAdminEmail: "example@example.com"
+  test("should throw an error for missing invocationArgs", async () => {
+    const executionContext = {
+      instance: {
+        config: {
+          googleAccountId: "example",
+          domainAdminEmail: "example@example.com"
+        }
       }
-    },
-    invocationArgs: {
-      serviceAccountCredentials: readFileSync(
-        `${__dirname}/../test/fixtures/jwt.json`
-      ).toJSON()
+    };
+    try {
+      await invocationValidator(executionContext as any);
+    } catch (e) {
+      expect(e instanceof Error).toBe(true);
     }
-  };
-  try {
-    await invocationValidator(executionContext as any);
-  } catch (e) {
-    expect(e instanceof IntegrationInstanceConfigError).toBe(true);
-  }
-  expect.assertions(1);
-});
+    expect.assertions(1);
+  });
 
-test("should throw an error for missing domainAdminEmail", async () => {
-  const executionContext = {
-    instance: {
-      config: {
-        googleAccountId: "example"
-      }
-    },
-    invocationArgs: {
-      serviceAccountCredentials: readFileSync(
-        `${__dirname}/../test/fixtures/jwt.json`
-      ).toJSON()
-    }
-  };
-  try {
-    await invocationValidator(executionContext as any);
-  } catch (e) {
-    expect(e instanceof IntegrationInstanceConfigError).toBe(true);
-  }
-  expect.assertions(1);
-});
+  test("should throw an error for missing googleAccountId", async () => {
+    jest.doMock("google-auth-library");
 
-it("should not throw a error for valid config", async () => {
-  const executionContext = {
-    instance: {
-      config: {
-        googleAccountId: "example",
-        domainAdminEmail: "example@example.com"
-      }
-    },
-    invocationArgs: {
-      serviceAccountCredentials: readFileSync(
-        `${__dirname}/../test/fixtures/jwt.json`
-      ).toJSON()
-    }
-  };
-
-  await invocationValidator(executionContext as any);
-  expect(invocationValidator(executionContext as any)).resolves.not.toThrow();
-});
-
-jest.unmock("google-auth-library");
-
-it("auth error", async () => {
-  const executionContext = {
-    instance: {
-      config: {
-        accountId: "example",
-        creds: readFileSync(
+    const executionContext = {
+      instance: {
+        config: {
+          domainAdminEmail: "example@example.com"
+        }
+      },
+      invocationArgs: {
+        serviceAccountCredentials: readFileSync(
           `${__dirname}/../test/fixtures/jwt.json`
-        ).toString(),
-        subject: "exaple@example.com"
+        ).toJSON()
       }
+    };
+    try {
+      await invocationValidator(executionContext as any);
+    } catch (e) {
+      expect(e instanceof IntegrationInstanceConfigError).toBe(true);
     }
-  };
+    expect.assertions(1);
+  });
 
-  try {
+  test("should throw an error for missing domainAdminEmail", async () => {
+    const executionContext = {
+      instance: {
+        config: {
+          googleAccountId: "example"
+        }
+      },
+      invocationArgs: {
+        serviceAccountCredentials: readFileSync(
+          `${__dirname}/../test/fixtures/jwt.json`
+        ).toJSON()
+      }
+    };
+    try {
+      await invocationValidator(executionContext as any);
+    } catch (e) {
+      expect(e instanceof IntegrationInstanceConfigError).toBe(true);
+    }
+    expect.assertions(1);
+  });
+
+  it("should not throw an error for valid config", async () => {
+    const executionContext = {
+      instance: {
+        config: {
+          googleAccountId: "example",
+          domainAdminEmail: "example@example.com"
+        }
+      },
+      invocationArgs: {
+        serviceAccountCredentials: readFileSync(
+          `${__dirname}/../test/fixtures/jwt.json`
+        ).toJSON()
+      }
+    };
+
     await invocationValidator(executionContext as any);
-  } catch (e) {
-    expect(e instanceof IntegrationInstanceAuthenticationError).toBe(true);
-  }
+    expect(invocationValidator(executionContext as any)).resolves.not.toThrow();
+  });
+});
+
+describe("Unmocked Google Auth library", () => {
+  beforeAll(() => {
+    mocked(JWT).mockImplementation(() => {
+      const googleLib = require.requireActual("google-auth-library");
+
+      return googleLib.JWT;
+    });
+  });
+
+  it("auth error", async () => {
+    const executionContext = {
+      instance: {
+        config: {
+          googleAccountId: "example",
+          domainAdminEmail: "example@example.com"
+        }
+      },
+      invocationArgs: {
+        serviceAccountCredentials: readFileSync(
+          `${__dirname}/../test/fixtures/jwt.json`
+        ).toJSON()
+      }
+    };
+
+    try {
+      await invocationValidator(executionContext as any);
+    } catch (e) {
+      expect(e instanceof IntegrationInstanceAuthenticationError).toBe(true);
+    }
+  });
 });

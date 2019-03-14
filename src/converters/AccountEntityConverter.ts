@@ -6,7 +6,7 @@ import {
 } from "../jupiterone";
 
 export function generateAccountKey(id?: string) {
-  return `gsuite-account-key-${id}`;
+  return `google-account-key-${id}`;
 }
 
 export function createAccountEntity(account: Account): AccountEntity {

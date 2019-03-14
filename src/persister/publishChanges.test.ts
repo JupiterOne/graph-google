@@ -33,7 +33,12 @@ async function initialize() {
           '{"email": "fake_email", "key": "fake_key", "subject": "fake_subject"}'
       },
       id: "",
-      name: "gsuite_name"
+      name: "google_account_name"
+    },
+    invocationArgs: {
+      serviceAccountCredentials: readFileSync(
+        `${__dirname}/../../test/fixtures/jwt.json`
+      ).toJSON()
     }
   };
 
@@ -49,8 +54,8 @@ test("Convert Groups", async () => {
   expect(newData.groups).toEqual([
     {
       _class: "UserGroup",
-      _key: "gsuite-group-id-1",
-      _type: "gsuite_group",
+      _key: "google-group-id-1",
+      _type: "google_group",
       adminCreated: true,
       description: "",
       directMembersCount: "1",
@@ -62,8 +67,8 @@ test("Convert Groups", async () => {
     },
     {
       _class: "UserGroup",
-      _key: "gsuite-group-id-2",
-      _type: "gsuite_group",
+      _key: "google-group-id-2",
+      _type: "google_group",
       adminCreated: true,
       description: "",
       directMembersCount: "2",
@@ -75,8 +80,8 @@ test("Convert Groups", async () => {
     },
     {
       _class: "UserGroup",
-      _key: "gsuite-group-id-",
-      _type: "gsuite_group",
+      _key: "google-group-id-",
+      _type: "google_group",
       adminCreated: true,
       description: "",
       directMembersCount: "0",
@@ -95,8 +100,8 @@ test("Convert Users", async () => {
 
   expect(newData.users).toEqual([
     {
-      _key: "gsuite-user-id-3",
-      _type: "gsuite_user",
+      _key: "google-user-id-3",
+      _type: "google_user",
       _class: "User",
       id: "3",
       displayName: "fakeName fakeFamilyName",
@@ -131,8 +136,8 @@ test("Convert Users", async () => {
       thumbnailPhotoUrl: undefined
     },
     {
-      _key: "gsuite-user-id-4",
-      _type: "gsuite_user",
+      _key: "google-user-id-4",
+      _type: "google_user",
       _class: "User",
       id: "4",
       displayName: "FakeName2 FakeFamilyName2",
@@ -167,8 +172,8 @@ test("Convert Users", async () => {
       thumbnailPhotoUrl: undefined
     },
     {
-      _key: "gsuite-user-id-5",
-      _type: "gsuite_user",
+      _key: "google-user-id-5",
+      _type: "google_user",
       _class: "User",
       id: "5",
       displayName: "Test user",
@@ -204,8 +209,8 @@ test("Convert Users", async () => {
     },
     {
       _class: "User",
-      _key: "gsuite-user-id-6",
-      _type: "gsuite_user",
+      _key: "google-user-id-6",
+      _type: "google_user",
       active: true,
       agreedToTerms: true,
       archived: false,
@@ -248,10 +253,10 @@ test("Convert Users -> Group Relationships", async () => {
   expect(newData.userGroupRelationships).toEqual([
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-1",
-      _key: "gsuite-group-id-1_has_gsuite-user-id-3",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-user-id-3",
+      _fromEntityKey: "google-group-id-1",
+      _key: "google-group-id-1_has_google-user-id-3",
+      _type: "google_user_group",
+      _toEntityKey: "google-user-id-3",
       deliverySettings: undefined,
       email: "first.user@example.com",
       id: "3",
@@ -262,10 +267,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-1",
-      _key: "gsuite-group-id-1_has_gsuite-user-id-6",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-user-id-6",
+      _fromEntityKey: "google-group-id-1",
+      _key: "google-group-id-1_has_google-user-id-6",
+      _type: "google_user_group",
+      _toEntityKey: "google-user-id-6",
       deliverySettings: undefined,
       email: "test@example.com",
       id: "5",
@@ -276,10 +281,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-1",
-      _key: "gsuite-group-id-1_has_gsuite-group-id-1",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-group-id-1",
+      _fromEntityKey: "google-group-id-1",
+      _key: "google-group-id-1_has_google-group-id-1",
+      _type: "google_user_group",
+      _toEntityKey: "google-group-id-1",
       deliverySettings: undefined,
       email: "restricted.test@example.com",
       id: "104221518650717901111",
@@ -290,10 +295,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-1",
-      _key: "gsuite-group-id-1_has_gsuite-group-id-2",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-group-id-2",
+      _fromEntityKey: "google-group-id-1",
+      _key: "google-group-id-1_has_google-group-id-2",
+      _type: "google_user_group",
+      _toEntityKey: "google-group-id-2",
       deliverySettings: undefined,
       email: "team.test.group@example.com",
       id: "104221518650717901222",
@@ -304,10 +309,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-2",
-      _key: "gsuite-group-id-2_has_gsuite-user-id-3",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-user-id-3",
+      _fromEntityKey: "google-group-id-2",
+      _key: "google-group-id-2_has_google-user-id-3",
+      _type: "google_user_group",
+      _toEntityKey: "google-user-id-3",
       deliverySettings: undefined,
       email: "first.user@example.com",
       id: "3",
@@ -318,10 +323,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-2",
-      _key: "gsuite-group-id-2_has_gsuite-user-id-6",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-user-id-6",
+      _fromEntityKey: "google-group-id-2",
+      _key: "google-group-id-2_has_google-user-id-6",
+      _type: "google_user_group",
+      _toEntityKey: "google-user-id-6",
       deliverySettings: undefined,
       email: "test@example.com",
       id: "5",
@@ -332,10 +337,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-2",
-      _key: "gsuite-group-id-2_has_gsuite-group-id-1",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-group-id-1",
+      _fromEntityKey: "google-group-id-2",
+      _key: "google-group-id-2_has_google-group-id-1",
+      _type: "google_user_group",
+      _toEntityKey: "google-group-id-1",
       deliverySettings: undefined,
       email: "restricted.test@example.com",
       id: "104221518650717901111",
@@ -346,10 +351,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-group-id-2",
-      _key: "gsuite-group-id-2_has_gsuite-group-id-2",
-      _type: "gsuite_user_group",
-      _toEntityKey: "gsuite-group-id-2",
+      _fromEntityKey: "google-group-id-2",
+      _key: "google-group-id-2_has_google-group-id-2",
+      _type: "google_user_group",
+      _toEntityKey: "google-group-id-2",
       deliverySettings: undefined,
       email: "team.test.group@example.com",
       id: "104221518650717901222",
@@ -367,11 +372,11 @@ test("Convert Account", async () => {
 
   expect(newData.accounts).toEqual([
     {
-      _key: "gsuite-account-key-fakeId",
-      _type: "gsuite_account",
+      _key: "google-account-key-fakeId",
+      _type: "google_account",
       _class: "Account",
-      displayName: "gsuite_name",
-      name: "gsuite_name"
+      displayName: "google_account_name",
+      name: "google_account_name"
     }
   ]);
 });
@@ -383,31 +388,31 @@ test("Convert Account -> User Relationships", async () => {
   expect(newData.accountUserRelationships).toEqual([
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-user-id-3",
-      _toEntityKey: "gsuite-user-id-3",
-      _type: "gsuite_account_user"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-user-id-3",
+      _toEntityKey: "google-user-id-3",
+      _type: "google_account_user"
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-user-id-4",
-      _toEntityKey: "gsuite-user-id-4",
-      _type: "gsuite_account_user"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-user-id-4",
+      _toEntityKey: "google-user-id-4",
+      _type: "google_account_user"
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-user-id-5",
-      _toEntityKey: "gsuite-user-id-5",
-      _type: "gsuite_account_user"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-user-id-5",
+      _toEntityKey: "google-user-id-5",
+      _type: "google_account_user"
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-user-id-6",
-      _toEntityKey: "gsuite-user-id-6",
-      _type: "gsuite_account_user"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-user-id-6",
+      _toEntityKey: "google-user-id-6",
+      _type: "google_account_user"
     }
   ]);
 });
@@ -419,24 +424,24 @@ test("Convert Account -> Group Relationships", async () => {
   expect(newData.accountGroupRelationships).toEqual([
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-group-id-1",
-      _toEntityKey: "gsuite-group-id-1",
-      _type: "gsuite_account_group"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-group-id-1",
+      _toEntityKey: "google-group-id-1",
+      _type: "google_account_group"
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-group-id-2",
-      _toEntityKey: "gsuite-group-id-2",
-      _type: "gsuite_account_group"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-group-id-2",
+      _toEntityKey: "google-group-id-2",
+      _type: "google_account_group"
     },
     {
       _class: "HAS",
-      _fromEntityKey: "gsuite-account-key-fakeId",
-      _key: "gsuite-account-key-fakeId_has_gsuite-group-id-",
-      _toEntityKey: "gsuite-group-id-",
-      _type: "gsuite_account_group"
+      _fromEntityKey: "google-account-key-fakeId",
+      _key: "google-account-key-fakeId_has_google-group-id-",
+      _toEntityKey: "google-group-id-",
+      _type: "google_account_group"
     }
   ]);
 });

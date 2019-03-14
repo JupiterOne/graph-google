@@ -6,7 +6,7 @@ import {
 } from "../jupiterone";
 
 export function generateGroupKey(id?: string) {
-  return `gsuite-group-id-${id}`;
+  return `google-group-id-${id}`;
 }
 
 export function createGroupEntities(data: Group[]): GroupEntity[] {

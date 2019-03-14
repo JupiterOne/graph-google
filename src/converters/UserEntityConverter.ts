@@ -2,7 +2,7 @@ import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
 
 export function generateUserKey(id?: string) {
-  return `gsuite-user-id-${id}`;
+  return `google-user-id-${id}`;
 }
 
 export function createUserEntities(data: User[]): UserEntity[] {

@@ -1,5 +1,6 @@
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
+import toGenderProperty from "./toGenderProperty";
 
 export function generateUserId(id?: string) {
   return `gsuite-user-id-${id}`;
@@ -24,7 +25,7 @@ export function createUserEntities(data: User[]): UserEntity[] {
       creationTime: user.creationTime,
       customerId: user.customerId,
       deletionTime: user.deletionTime,
-      gender: user.gender,
+      gender: toGenderProperty(user.gender),
       hashFunction: user.hashFunction,
       includeInGlobalAddressList: user.includeInGlobalAddressList,
       ipWhitelisted: user.ipWhitelisted,
@@ -41,7 +42,7 @@ export function createUserEntities(data: User[]): UserEntity[] {
       recoveryPhone: user.recoveryPhone,
       suspensionReason: user.suspensionReason,
       thumbnailPhotoEtag: user.thumbnailPhotoEtag,
-      thumbnailPhotoUrl: user.thumbnailPhotoUrl
+      thumbnailPhotoUrl: user.thumbnailPhotoUrl,
     };
 
     return userEntity;

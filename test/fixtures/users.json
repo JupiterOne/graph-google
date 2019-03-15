@@ -24,6 +24,7 @@
           "familyName": "fakeFamilyName",
           "fullName": "fakeName fakeFamilyName"
         },
+        "gender": "male",
         "isAdmin": true,
         "isDelegatedAdmin": false,
         "lastLoginTime": "2019-02-12T11:42:33.000Z",
@@ -65,6 +66,9 @@
           "familyName": "FakeFamilyName2",
           "fullName": "FakeName2 FakeFamilyName2"
         },
+        "gender": {
+          "type": "female"
+        },
         "isAdmin": true,
         "isDelegatedAdmin": false,
         "lastLoginTime": "2019-01-30T11:44:02.000Z",
@@ -95,6 +99,10 @@
           "givenName": "Test",
           "familyName": "user",
           "fullName": "Test user"
+        },
+        "gender": {
+          "type": "other",
+          "customGender": "custom business"
         },
         "isAdmin": false,
         "isDelegatedAdmin": false,

@@ -16,7 +16,7 @@ export interface UserEntity extends EntityFromIntegration {
   creationTime?: string;
   customerId?: string;
   deletionTime?: string;
-  gender?: any;
+  gender?: string;
   hashFunction?: string;
   includeInGlobalAddressList?: boolean;
   ipWhitelisted?: boolean;

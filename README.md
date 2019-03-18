@@ -17,7 +17,8 @@ connect to provider APIs. An integration is triggered by an event containing the
 instance configuration. `IntegrationInstance.config` is encrypted at rest and
 decrypted before it is delivered to the integration execution handler.
 
-Local execution of the integration is started through `execute.ts` (`yarn start`), which may be changed to load development credentials into the
+Local execution of the integration is started through `execute.ts`
+(`yarn start`), which may be changed to load development credentials into the
 `IntegrationInstance.config`. Use environment variables to avoid publishing
 sensitive information to GitHub!
 
@@ -27,19 +28,22 @@ Integrations mutate the graph to reflect configurations and metadata from the
 provider. Developing an integration involves:
 
 1.  Establishing a secure connection to a provider API
-2.  Fetching provider data and converting it to entities and relationships
-3.  Collecting the existing set of entities and relationships already in the graph
-4.  Performing a diff to determine which entites/relationships to create/update/delete
-5.  Delivering create/update/delete operations to the persister to update the graph
+1.  Fetching provider data and converting it to entities and relationships
+1.  Collecting the existing set of entities and relationships already in the
+    graph
+1.  Performing a diff to determine which entites/relationships to
+    create/update/delete
+1.  Delivering create/update/delete operations to the persister to update the
+    graph
 
 Run the integration to see what happens:
 
 1.  Install Docker and Docker Compose
-2.  Copy `docker-compose.sample.yml` to `docker-compose.yml`.
-3.  Fill in correct credentials in ENV.
-4.  `docker-compose build`
-5.  `docker-compose run --rm integration yarn install`
-6.  `docker-compose run --rm integration yarn start`
+1.  Copy `docker-compose.sample.yml` to `docker-compose.yml`.
+1.  Fill in correct credentials in ENV.
+1.  `docker-compose build`
+1.  `docker-compose run --rm integration yarn install`
+1.  `docker-compose run --rm integration yarn start`
 
 Activity is logged to the console indicating the operations produced and
 processed. View raw data in the graph database using

@@ -21,18 +21,18 @@ export function mockGsuiteApis(endpoints: ApiEndpoints) {
                   return {
                     ...endpointMock,
                     [methodName]: readFixture(
-                      endpoints[endpointName][methodName]
-                    )
+                      endpoints[endpointName][methodName],
+                    ),
                   };
                 },
-                {}
-              )
+                {},
+              ),
             };
           },
-          {}
+          {},
         );
-      }
-    }
+      },
+    },
   };
 }
 

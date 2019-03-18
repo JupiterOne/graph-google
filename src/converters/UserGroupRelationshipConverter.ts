@@ -3,7 +3,7 @@ import { Group, Member, MemberType, User } from "../gsuite/GSuiteClient";
 import {
   USER_GROUP_RELATIONSHIP_CLASS,
   USER_GROUP_RELATIONSHIP_TYPE,
-  UserGroupRelationship
+  UserGroupRelationship,
 } from "../jupiterone";
 
 import { generateGroupKey } from "./GroupEntityConverter";
@@ -16,10 +16,10 @@ interface UsersDict {
 export function createUserGroupRelationships(
   users: User[],
   groups: Group[],
-  members: Member[]
+  members: Member[],
 ) {
   const defaultValue: UserGroupRelationship[] = [];
-  let usersDict: UsersDict = {};
+  const usersDict: UsersDict = {};
   users.forEach((user: User) => {
     user.emails.forEach((e: { address: string }) => {
       usersDict[e.address] = user;
@@ -46,7 +46,7 @@ export function createUserGroupRelationships(
       kind: member.kind,
       role: member.role,
       status: member.status,
-      type: member.type
+      type: member.type,
     };
 
     return [...acc, relationship];
@@ -74,7 +74,7 @@ function findUserByEmail(users: UsersDict, email: string) {
 function findChildKey(
   member: Member,
   users: UsersDict,
-  groups: Group[]
+  groups: Group[],
 ): string | null {
   if (!member.email) {
     return null;

@@ -2,7 +2,7 @@ import { Group } from "../gsuite/GSuiteClient";
 import {
   GROUP_ENTITY_CLASS,
   GROUP_ENTITY_TYPE,
-  GroupEntity
+  GroupEntity,
 } from "../jupiterone";
 
 export function generateGroupKey(id?: string) {
@@ -22,7 +22,7 @@ export function createGroupEntities(data: Group[]): GroupEntity[] {
       email: group.email,
       kind: group.kind,
       name: group.name,
-      description: group.description
+      description: group.description,
     };
   });
 }

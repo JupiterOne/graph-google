@@ -13,11 +13,11 @@ fs.writeFileSync(
       name: pkg.name,
       peerDependencies: pkg.peerDependencies,
       repository: pkg.repository,
-      version: pkg.version
+      version: pkg.version,
     },
     null,
-    2
-  )
+    2,
+  ),
 );
 
 fs.copyFileSync("LICENSE", "dist/LICENSE");

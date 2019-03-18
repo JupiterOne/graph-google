@@ -6,7 +6,7 @@ export * from "./entities/AccountUserRelationship";
 export * from "./entities/AccountGroupRelationship";
 
 import fetchEntitiesAndRelationships, {
-  JupiterOneDataModel
+  JupiterOneDataModel,
 } from "./fetchEntitiesAndRelationships";
 
 export { fetchEntitiesAndRelationships, JupiterOneDataModel };

@@ -5,14 +5,14 @@ jest.mock("googleapis", () => {
 
   const scheme = {
     groups: {
-      list: `${__dirname}/../../test/fixtures/badResponse.json`
+      list: `${__dirname}/../../test/fixtures/badResponse.json`,
     },
     users: {
-      list: `${__dirname}/../../test/fixtures/badResponse.json`
+      list: `${__dirname}/../../test/fixtures/badResponse.json`,
     },
     members: {
-      list: `${__dirname}/../../test/fixtures/badResponse.json`
-    }
+      list: `${__dirname}/../../test/fixtures/badResponse.json`,
+    },
   };
 
   return Gsuite.mockGsuiteApis(scheme);
@@ -24,7 +24,7 @@ async function getGsuiteData() {
   const client = new GSuiteClient("fakeId", {
     email: "fake_email",
     key: "fake_key",
-    subject: "fake_subject"
+    subject: "fake_subject",
   });
 
   await client.authenticate();

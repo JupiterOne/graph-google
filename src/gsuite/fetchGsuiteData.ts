@@ -1,17 +1,17 @@
 import GSuiteClient, { GSuiteDataModel } from "./GSuiteClient";
 
 export default async function fetchGsuiteData(
-  client: GSuiteClient
+  client: GSuiteClient,
 ): Promise<GSuiteDataModel> {
   const [users, groups] = await Promise.all([
     client.fetchUsers(),
-    client.fetchGroups()
+    client.fetchGroups(),
   ]);
 
   const groupsMembers = await Promise.all(
     groups.map(group => {
       return group.id ? client.fetchMembers(group.id) : [];
-    })
+    }),
   );
 
   const allMembers = groupsMembers.reduce((acc, value) => {

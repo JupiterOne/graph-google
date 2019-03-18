@@ -261,7 +261,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-1",
       _key: "google-group-id-1_has_google-user-id-3",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-user-id-3",
       deliverySettings: undefined,
       email: "first.user@example.com",
@@ -275,7 +275,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-1",
       _key: "google-group-id-1_has_google-user-id-6",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-user-id-6",
       deliverySettings: undefined,
       email: "test@example.com",
@@ -289,7 +289,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-1",
       _key: "google-group-id-1_has_google-group-id-1",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-group-id-1",
       deliverySettings: undefined,
       email: "restricted.test@example.com",
@@ -303,7 +303,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-1",
       _key: "google-group-id-1_has_google-group-id-2",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-group-id-2",
       deliverySettings: undefined,
       email: "team.test.group@example.com",
@@ -317,7 +317,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-2",
       _key: "google-group-id-2_has_google-user-id-3",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-user-id-3",
       deliverySettings: undefined,
       email: "first.user@example.com",
@@ -331,7 +331,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-2",
       _key: "google-group-id-2_has_google-user-id-6",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-user-id-6",
       deliverySettings: undefined,
       email: "test@example.com",
@@ -345,7 +345,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-2",
       _key: "google-group-id-2_has_google-group-id-1",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-group-id-1",
       deliverySettings: undefined,
       email: "restricted.test@example.com",
@@ -359,7 +359,7 @@ test("Convert Users -> Group Relationships", async () => {
       _class: "HAS",
       _fromEntityKey: "google-group-id-2",
       _key: "google-group-id-2_has_google-group-id-2",
-      _type: "google_user_group",
+      _type: "google_group_has_user",
       _toEntityKey: "google-group-id-2",
       deliverySettings: undefined,
       email: "team.test.group@example.com",
@@ -397,28 +397,28 @@ test("Convert Account -> User Relationships", async () => {
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-3",
       _toEntityKey: "google-user-id-3",
-      _type: "google_account_user"
+      _type: "google_account_has_user"
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-4",
       _toEntityKey: "google-user-id-4",
-      _type: "google_account_user"
+      _type: "google_account_has_user"
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-5",
       _toEntityKey: "google-user-id-5",
-      _type: "google_account_user"
+      _type: "google_account_has_user"
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-6",
       _toEntityKey: "google-user-id-6",
-      _type: "google_account_user"
+      _type: "google_account_has_user"
     }
   ]);
 });
@@ -433,21 +433,21 @@ test("Convert Account -> Group Relationships", async () => {
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-group-id-1",
       _toEntityKey: "google-group-id-1",
-      _type: "google_account_group"
+      _type: "google_account_has_group"
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-group-id-2",
       _toEntityKey: "google-group-id-2",
-      _type: "google_account_group"
+      _type: "google_account_has_group"
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-group-id-",
       _toEntityKey: "google-group-id-",
-      _type: "google_account_group"
+      _type: "google_account_has_group"
     }
   ]);
 });

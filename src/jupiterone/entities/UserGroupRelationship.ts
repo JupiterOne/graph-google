@@ -10,5 +10,5 @@ export interface UserGroupRelationship extends RelationshipFromIntegration {
   type?: string;
 }
 
-export const USER_GROUP_RELATIONSHIP_TYPE = "gsuite_user_group";
+export const USER_GROUP_RELATIONSHIP_TYPE = "google_group_has_user";
 export const USER_GROUP_RELATIONSHIP_CLASS = "HAS";

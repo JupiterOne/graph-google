@@ -12,12 +12,14 @@ import publishChanges from "./persister/publishChanges";
 export default async function executionHandler(
   context: IntegrationExecutionContext<IntegrationInvocationEvent>
 ): Promise<IntegrationExecutionResult> {
-  const { graph, persister, provider } = await initializeContext(context);
+  const { graph, persister, provider, account } = await initializeContext(
+    context
+  );
 
   const oldData = await fetchEntitiesAndRelationships(graph);
   const gsuiteData = await fetchGsuiteData(provider);
 
   return {
-    operations: await publishChanges(persister, oldData, gsuiteData)
+    operations: await publishChanges(persister, oldData, gsuiteData, account)
   };
 }

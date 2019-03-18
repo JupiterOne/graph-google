@@ -8,7 +8,6 @@ WORKDIR /app
 
 COPY package.json package.json
 COPY yarn.lock yarn.lock
-COPY jupiterone-jupiter-managed-integration-sdk-v18.0.4.tgz jupiterone-jupiter-managed-integration-sdk-v18.0.4.tgz
 
 RUN yarn
 

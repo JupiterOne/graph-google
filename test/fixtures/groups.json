@@ -36,6 +36,18 @@
         "description": "",
         "adminCreated": true,
         "nonEditableAliases": ["team.test.group@example.com.test-google-a.com"]
+      },
+      {
+        "kind": "admin#directory#group",
+        "id": "",
+        "etag": "\"GPUJN6YVAOElesyqxtgGs7jrFWY/dpE_wXXXXXXXXXXX\"",
+        "email": "restricted.test1@example.com",
+        "name": "Empty Test Group",
+        "directMembersCount": "0",
+        "description": "",
+        "adminCreated": true,
+        "aliases": ["empty.test@example.com"],
+        "nonEditableAliases": ["empty.test@example.com.test-google-a.com"]
       }
     ]
   },

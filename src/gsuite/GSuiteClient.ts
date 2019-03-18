@@ -9,6 +9,11 @@ export enum MemberType {
   USER = "USER"
 }
 
+export interface Account {
+  id: string;
+  name: string;
+}
+
 export interface Member extends admin_directory_v1.Schema$Member {
   groupId: string;
   memberType: MemberType;

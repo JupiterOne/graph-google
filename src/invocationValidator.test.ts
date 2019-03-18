@@ -1,6 +1,6 @@
 import {
   IntegrationInstanceAuthenticationError,
-  IntegrationInstanceConfigError
+  IntegrationInstanceConfigError,
 } from "@jupiterone/jupiter-managed-integration-sdk";
 import { readFileSync } from "fs";
 import invocationValidator from "./invocationValidator";
@@ -9,7 +9,7 @@ import { JWT } from "google-auth-library";
 
 interface Mocked extends jest.Mock, Object {}
 
-function mocked(item: Object): Mocked {
+function mocked(item: object): Mocked {
   return item as Mocked;
 }
 
@@ -18,10 +18,10 @@ jest.mock("google-auth-library", () => {
     JWT: jest.fn().mockImplementation(() => ({
       authorize() {
         return true;
-      }
+      },
     })),
     GoogleAuth: jest.fn(),
-    DefaultTransporter: jest.fn()
+    DefaultTransporter: jest.fn(),
   };
 });
 
@@ -31,10 +31,10 @@ describe("Mocked Google Auth library", () => {
       instance: {
         config: {
           googleAccountId: "example",
-          domainAdminEmail: "example@example.com"
-        }
+          domainAdminEmail: "example@example.com",
+        },
       },
-      invocationArgs: {}
+      invocationArgs: {},
     };
     try {
       await invocationValidator(executionContext as any);
@@ -49,9 +49,9 @@ describe("Mocked Google Auth library", () => {
       instance: {
         config: {
           googleAccountId: "example",
-          domainAdminEmail: "example@example.com"
-        }
-      }
+          domainAdminEmail: "example@example.com",
+        },
+      },
     };
     try {
       await invocationValidator(executionContext as any);
@@ -67,14 +67,14 @@ describe("Mocked Google Auth library", () => {
     const executionContext = {
       instance: {
         config: {
-          domainAdminEmail: "example@example.com"
-        }
+          domainAdminEmail: "example@example.com",
+        },
       },
       invocationArgs: {
         serviceAccountCredentials: readFileSync(
-          `${__dirname}/../test/fixtures/jwt.json`
-        ).toJSON()
-      }
+          `${__dirname}/../test/fixtures/jwt.json`,
+        ).toJSON(),
+      },
     };
     try {
       await invocationValidator(executionContext as any);
@@ -88,14 +88,14 @@ describe("Mocked Google Auth library", () => {
     const executionContext = {
       instance: {
         config: {
-          googleAccountId: "example"
-        }
+          googleAccountId: "example",
+        },
       },
       invocationArgs: {
         serviceAccountCredentials: readFileSync(
-          `${__dirname}/../test/fixtures/jwt.json`
-        ).toJSON()
-      }
+          `${__dirname}/../test/fixtures/jwt.json`,
+        ).toJSON(),
+      },
     };
     try {
       await invocationValidator(executionContext as any);
@@ -110,14 +110,14 @@ describe("Mocked Google Auth library", () => {
       instance: {
         config: {
           googleAccountId: "example",
-          domainAdminEmail: "example@example.com"
-        }
+          domainAdminEmail: "example@example.com",
+        },
       },
       invocationArgs: {
         serviceAccountCredentials: readFileSync(
-          `${__dirname}/../test/fixtures/jwt.json`
-        ).toJSON()
-      }
+          `${__dirname}/../test/fixtures/jwt.json`,
+        ).toJSON(),
+      },
     };
 
     await invocationValidator(executionContext as any);
@@ -139,14 +139,14 @@ describe("Unmocked Google Auth library", () => {
       instance: {
         config: {
           googleAccountId: "example",
-          domainAdminEmail: "example@example.com"
-        }
+          domainAdminEmail: "example@example.com",
+        },
       },
       invocationArgs: {
         serviceAccountCredentials: readFileSync(
-          `${__dirname}/../test/fixtures/jwt.json`
-        ).toJSON()
-      }
+          `${__dirname}/../test/fixtures/jwt.json`,
+        ).toJSON(),
+      },
     };
 
     try {

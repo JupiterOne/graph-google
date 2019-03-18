@@ -5,7 +5,7 @@ import {
   createAccountUserRelationships,
   createGroupEntities,
   createUserEntities,
-  createUserGroupRelationships
+  createUserGroupRelationships,
 } from "../converters";
 
 import { Account, GSuiteDataModel } from "../gsuite/GSuiteClient";
@@ -13,39 +13,39 @@ import {
   AccountEntity,
   GroupEntity,
   JupiterOneDataModel,
-  UserEntity
+  UserEntity,
 } from "../jupiterone";
 
 export default async function publishChanges(
   persister: PersisterClient,
   oldData: JupiterOneDataModel,
   gsuiteData: GSuiteDataModel,
-  account: Account
+  account: Account,
 ) {
   const newData = convert(gsuiteData, account);
 
   const entities = [
     ...persister.processEntities<AccountEntity>(
       oldData.accounts,
-      newData.accounts
+      newData.accounts,
     ),
     ...persister.processEntities<UserEntity>(oldData.users, newData.users),
-    ...persister.processEntities<GroupEntity>(oldData.groups, newData.groups)
+    ...persister.processEntities<GroupEntity>(oldData.groups, newData.groups),
   ];
 
   const relationships = [
     ...persister.processRelationships(
       oldData.userGroupRelationships,
-      newData.userGroupRelationships
+      newData.userGroupRelationships,
     ),
     ...persister.processRelationships(
       oldData.accountUserRelationships,
-      newData.accountUserRelationships
+      newData.accountUserRelationships,
     ),
     ...persister.processRelationships(
       oldData.accountGroupRelationships,
-      newData.accountGroupRelationships
-    )
+      newData.accountGroupRelationships,
+    ),
   ];
 
   return await persister.publishPersisterOperations([entities, relationships]);
@@ -53,7 +53,7 @@ export default async function publishChanges(
 
 export function convert(
   gsuiteData: GSuiteDataModel,
-  account: Account
+  account: Account,
 ): JupiterOneDataModel {
   return {
     accounts: [createAccountEntity(account)],
@@ -62,15 +62,15 @@ export function convert(
     userGroupRelationships: createUserGroupRelationships(
       gsuiteData.users,
       gsuiteData.groups,
-      gsuiteData.members
+      gsuiteData.members,
     ),
     accountUserRelationships: createAccountUserRelationships(
       gsuiteData.users,
-      account
+      account,
     ),
     accountGroupRelationships: createAccountGroupRelationships(
       gsuiteData.groups,
-      account
-    )
+      account,
+    ),
   };
 }

@@ -1,12 +1,12 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.tsx?$": "ts-jest",
   },
   testMatch: ["<rootDir>/src/**/*.test.{js,ts}"],
   collectCoverageFrom: [
     "src/**/*.ts",
     "!<rootDir>/src/executionHandler.ts",
-    "!<rootDir>/src/initializeContext.ts"
+    "!<rootDir>/src/initializeContext.ts",
   ],
   coveragePathIgnorePatterns: ["<rootDir>/src/index.ts"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
@@ -18,7 +18,7 @@ module.exports = {
       statements: 90,
       branches: 90,
       functions: 90,
-      lines: 90
-    }
-  }
+      lines: 90,
+    },
+  },
 };

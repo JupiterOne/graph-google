@@ -3,8 +3,8 @@ export { createUserEntities } from "./UserEntityConverter";
 export { createGroupEntities } from "./GroupEntityConverter";
 export { createUserGroupRelationships } from "./UserGroupRelationshipConverter";
 export {
-  createAccountUserRelationships
+  createAccountUserRelationships,
 } from "./AccountUserRelationshipConverter";
 export {
-  createAccountGroupRelationships
+  createAccountGroupRelationships,
 } from "./AccountGroupRelationshipConverter";

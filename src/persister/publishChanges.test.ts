@@ -10,14 +10,14 @@ jest.mock("googleapis", () => {
 
   const scheme = {
     groups: {
-      list: `${__dirname}/../../test/fixtures/groups.json`
+      list: `${__dirname}/../../test/fixtures/groups.json`,
     },
     users: {
-      list: `${__dirname}/../../test/fixtures/users.json`
+      list: `${__dirname}/../../test/fixtures/users.json`,
     },
     members: {
-      list: `${__dirname}/../../test/fixtures/members.json`
-    }
+      list: `${__dirname}/../../test/fixtures/members.json`,
+    },
   };
 
   return Gsuite.mockGsuiteApis(scheme);
@@ -29,21 +29,21 @@ async function initialize() {
   const options = {
     instance: {
       config: {
-        googleAccountId: "fakeId"
+        googleAccountId: "fakeId",
       },
       id: "",
-      name: "google_account_name"
+      name: "google_account_name",
     },
     invocationArgs: {
       serviceAccountCredentials: readFileSync(
-        `${__dirname}/../../test/fixtures/jwt.json`
-      ).toJSON()
-    }
+        `${__dirname}/../../test/fixtures/jwt.json`,
+      ).toJSON(),
+    },
   };
 
   const context = {
     ...createTestIntegrationExecutionContext(options),
-    invocationArgs: options.invocationArgs
+    invocationArgs: options.invocationArgs,
   };
 
   return initializeContext(context);
@@ -65,7 +65,7 @@ test("Convert Groups", async () => {
       email: "restricted.test1@example.com",
       id: "1",
       kind: "admin#directory#group",
-      name: "Restircted Test Group"
+      name: "Restircted Test Group",
     },
     {
       _class: "UserGroup",
@@ -78,7 +78,7 @@ test("Convert Groups", async () => {
       email: "team.test.group@example.com",
       id: "2",
       kind: "admin#directory#group",
-      name: "Team Test Group"
+      name: "Team Test Group",
     },
     {
       _class: "UserGroup",
@@ -91,8 +91,8 @@ test("Convert Groups", async () => {
       email: "restricted.test1@example.com",
       id: "",
       kind: "admin#directory#group",
-      name: "Empty Test Group"
-    }
+      name: "Empty Test Group",
+    },
   ]);
 });
 
@@ -136,7 +136,7 @@ test("Convert Users", async () => {
       recoveryPhone: undefined,
       suspensionReason: undefined,
       thumbnailPhotoEtag: undefined,
-      thumbnailPhotoUrl: undefined
+      thumbnailPhotoUrl: undefined,
     },
     {
       _key: "google-user-id-4",
@@ -173,7 +173,7 @@ test("Convert Users", async () => {
       recoveryPhone: undefined,
       suspensionReason: undefined,
       thumbnailPhotoEtag: undefined,
-      thumbnailPhotoUrl: undefined
+      thumbnailPhotoUrl: undefined,
     },
     {
       _key: "google-user-id-5",
@@ -210,7 +210,7 @@ test("Convert Users", async () => {
       recoveryPhone: undefined,
       suspensionReason: undefined,
       thumbnailPhotoEtag: undefined,
-      thumbnailPhotoUrl: undefined
+      thumbnailPhotoUrl: undefined,
     },
     {
       _class: "User",
@@ -247,8 +247,8 @@ test("Convert Users", async () => {
       suspended: false,
       suspensionReason: undefined,
       humbnailPhotoEtag: undefined,
-      humbnailPhotoUrl: undefined
-    }
+      humbnailPhotoUrl: undefined,
+    },
   ]);
 });
 
@@ -269,7 +269,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MANAGER",
       status: "ACTIVE",
-      type: "USER"
+      type: "USER",
     },
     {
       _class: "HAS",
@@ -283,7 +283,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MEMBER",
       status: "ACTIVE",
-      type: "USER"
+      type: "USER",
     },
     {
       _class: "HAS",
@@ -297,7 +297,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MEMBER",
       status: "ACTIVE",
-      type: "GROUP"
+      type: "GROUP",
     },
     {
       _class: "HAS",
@@ -311,7 +311,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MEMBER",
       status: "ACTIVE",
-      type: "GROUP"
+      type: "GROUP",
     },
     {
       _class: "HAS",
@@ -325,7 +325,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MANAGER",
       status: "ACTIVE",
-      type: "USER"
+      type: "USER",
     },
     {
       _class: "HAS",
@@ -339,7 +339,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MEMBER",
       status: "ACTIVE",
-      type: "USER"
+      type: "USER",
     },
     {
       _class: "HAS",
@@ -353,7 +353,7 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MEMBER",
       status: "ACTIVE",
-      type: "GROUP"
+      type: "GROUP",
     },
     {
       _class: "HAS",
@@ -367,8 +367,8 @@ test("Convert Users -> Group Relationships", async () => {
       kind: "admin#directory#member",
       role: "MEMBER",
       status: "ACTIVE",
-      type: "GROUP"
-    }
+      type: "GROUP",
+    },
   ]);
 });
 
@@ -382,8 +382,8 @@ test("Convert Account", async () => {
       _type: "google_account",
       _class: "Account",
       displayName: "google_account_name",
-      name: "google_account_name"
-    }
+      name: "google_account_name",
+    },
   ]);
 });
 
@@ -397,29 +397,29 @@ test("Convert Account -> User Relationships", async () => {
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-3",
       _toEntityKey: "google-user-id-3",
-      _type: "google_account_has_user"
+      _type: "google_account_has_user",
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-4",
       _toEntityKey: "google-user-id-4",
-      _type: "google_account_has_user"
+      _type: "google_account_has_user",
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-5",
       _toEntityKey: "google-user-id-5",
-      _type: "google_account_has_user"
+      _type: "google_account_has_user",
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-user-id-6",
       _toEntityKey: "google-user-id-6",
-      _type: "google_account_has_user"
-    }
+      _type: "google_account_has_user",
+    },
   ]);
 });
 
@@ -433,21 +433,21 @@ test("Convert Account -> Group Relationships", async () => {
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-group-id-1",
       _toEntityKey: "google-group-id-1",
-      _type: "google_account_has_group"
+      _type: "google_account_has_group",
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-group-id-2",
       _toEntityKey: "google-group-id-2",
-      _type: "google_account_has_group"
+      _type: "google_account_has_group",
     },
     {
       _class: "HAS",
       _fromEntityKey: "google-account-key-fakeId",
       _key: "google-account-key-fakeId_has_google-group-id-",
       _toEntityKey: "google-group-id-",
-      _type: "google_account_has_group"
-    }
+      _type: "google_account_has_group",
+    },
   ]);
 });

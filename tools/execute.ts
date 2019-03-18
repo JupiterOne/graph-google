@@ -1,6 +1,6 @@
 import {
   createLocalInvocationEvent,
-  executeSingleHandlerLocal
+  executeSingleHandlerLocal,
 } from "@jupiterone/jupiter-managed-integration-sdk/local";
 import { createLogger, TRACE } from "bunyan";
 import { executionHandler } from "../src/index";
@@ -17,12 +17,12 @@ async function run(): Promise<void> {
   }
 
   const serviceAccountCredentials = JSON.parse(
-    process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
+    process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS,
   );
 
   const integrationConfig = {
     googleAccountId: process.env.GOOGLE_ACCOUNT_ID,
-    domainAdminEmail: process.env.GOOGLE_DOMAIN_ADMIN_EMAIL
+    domainAdminEmail: process.env.GOOGLE_DOMAIN_ADMIN_EMAIL,
   };
 
   logger.info(
@@ -31,13 +31,14 @@ async function run(): Promise<void> {
       logger,
       executionHandler,
       { serviceAccountCredentials },
-      createLocalInvocationEvent()
+      createLocalInvocationEvent(),
     ),
-    "Execution completed successfully!"
+    "Execution completed successfully!",
   );
 }
 
 run().catch(err => {
+  // tslint:disable-next-line:no-console
   console.error(err);
   process.exit(1);
 });

@@ -11,7 +11,7 @@ import {
   USER_ENTITY_TYPE,
   USER_GROUP_RELATIONSHIP_TYPE,
   UserEntity,
-  UserGroupRelationship
+  UserGroupRelationship,
 } from "./entities";
 
 export interface JupiterOneDataModel {
@@ -24,7 +24,7 @@ export interface JupiterOneDataModel {
 }
 
 export default async function fetchEntitiesAndRelationships(
-  graph: GraphClient
+  graph: GraphClient,
 ): Promise<JupiterOneDataModel> {
   const [
     accounts,
@@ -32,14 +32,14 @@ export default async function fetchEntitiesAndRelationships(
     groups,
     userGroupRelationships,
     accountUserRelationships,
-    accountGroupRelationships
+    accountGroupRelationships,
   ] = await Promise.all([
     graph.findEntitiesByType<AccountEntity>(ACCOUNT_ENTITY_TYPE),
     graph.findEntitiesByType<UserEntity>(USER_ENTITY_TYPE),
     graph.findEntitiesByType<GroupEntity>(GROUP_ENTITY_TYPE),
     graph.findRelationshipsByType(USER_GROUP_RELATIONSHIP_TYPE),
     graph.findRelationshipsByType(ACCOUNT_USER_RELATIONSHIP_TYPE),
-    graph.findRelationshipsByType(ACCOUNT_GROUP_RELATIONSHIP_TYPE)
+    graph.findRelationshipsByType(ACCOUNT_GROUP_RELATIONSHIP_TYPE),
   ]);
 
   return {
@@ -48,6 +48,6 @@ export default async function fetchEntitiesAndRelationships(
     groups,
     userGroupRelationships,
     accountUserRelationships,
-    accountGroupRelationships
+    accountGroupRelationships,
   };
 }

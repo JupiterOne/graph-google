@@ -1,12 +1,12 @@
 import { JWT, JWTOptions } from "google-auth-library";
 import { admin_directory_v1, google } from "googleapis";
-export interface User extends admin_directory_v1.Schema$User {}
+export type User = admin_directory_v1.Schema$User;
 
 export enum MemberType {
   CUSTOMER = "CUSTOMER",
   EXTERNAL = "EXTERNAL",
   GROUP = "GROUP",
-  USER = "USER"
+  USER = "USER",
 }
 
 export interface Account {
@@ -23,7 +23,7 @@ export interface MembersDict {
   [groupId: string]: Member[];
 }
 
-export interface Group extends admin_directory_v1.Schema$Group {}
+export type Group = admin_directory_v1.Schema$Group;
 
 export interface GSuiteDataModel {
   groups: Group[];
@@ -47,21 +47,21 @@ export default class GSuiteClient {
       scopes: [
         "https://www.googleapis.com/auth/admin.directory.user.readonly",
         "https://www.googleapis.com/auth/admin.directory.group.readonly",
-        "https://www.googleapis.com/auth/admin.directory.domain.readonly"
-      ]
+        "https://www.googleapis.com/auth/admin.directory.domain.readonly",
+      ],
     });
 
     await auth.authorize();
 
     this.client = google.admin({
       version: "directory_v1",
-      auth
+      auth,
     });
   }
 
   public async fetchGroups(): Promise<Group[]> {
     const result = await this.client.groups.list({
-      customer: this.accountId
+      customer: this.accountId,
     });
 
     if (!result.data || !result.data.groups) {
@@ -73,7 +73,7 @@ export default class GSuiteClient {
 
   public async fetchMembers(groupId: string): Promise<Member[]> {
     const result = await this.client.members.list({
-      groupKey: groupId
+      groupKey: groupId,
     });
 
     if (!result.data || !result.data.members) {
@@ -83,13 +83,13 @@ export default class GSuiteClient {
     return result.data.members.map(member => ({
       ...member,
       groupId,
-      memberType: member.type as MemberType
+      memberType: member.type as MemberType,
     }));
   }
 
   public async fetchUsers(): Promise<User[]> {
     const result = await this.client.users.list({
-      customer: this.accountId
+      customer: this.accountId,
     });
 
     if (!result.data || !result.data.users) {

@@ -2,7 +2,7 @@ import {
   GraphClient,
   IntegrationExecutionContext,
   IntegrationInvocationEvent,
-  PersisterClient
+  PersisterClient,
 } from "@jupiterone/jupiter-managed-integration-sdk";
 
 import GSuiteClient from "./gsuite/GSuiteClient";

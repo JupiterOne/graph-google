@@ -3,7 +3,7 @@ import { Account, Group } from "../gsuite/GSuiteClient";
 import {
   ACCOUNT_GROUP_RELATIONSHIP_CLASS,
   ACCOUNT_GROUP_RELATIONSHIP_TYPE,
-  AccountGroupRelationship
+  AccountGroupRelationship,
 } from "../jupiterone";
 
 import { generateAccountKey } from "./AccountEntityConverter";
@@ -11,7 +11,7 @@ import { generateGroupKey } from "./GroupEntityConverter";
 
 export function createAccountGroupRelationships(
   groups: Group[],
-  account: Account
+  account: Account,
 ) {
   const defaultValue: AccountGroupRelationship[] = [];
 
@@ -24,7 +24,7 @@ export function createAccountGroupRelationships(
       _fromEntityKey: parentKey,
       _key: `${parentKey}_has_${childKey}`,
       _type: ACCOUNT_GROUP_RELATIONSHIP_TYPE,
-      _toEntityKey: childKey
+      _toEntityKey: childKey,
     };
 
     return [...acc, relationship];

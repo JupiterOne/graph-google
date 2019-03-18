@@ -1,15 +1,15 @@
 import {
   IntegrationExecutionContext,
-  IntegrationInvocationEvent
+  IntegrationInvocationEvent,
 } from "@jupiterone/jupiter-managed-integration-sdk";
 import GSuiteClient from "./GSuiteClient";
 
 export default function createGSuiteClient(
-  context: IntegrationExecutionContext<IntegrationInvocationEvent>
+  context: IntegrationExecutionContext<IntegrationInvocationEvent>,
 ) {
   const {
     instance: { config },
-    invocationArgs
+    invocationArgs,
   } = context;
 
   const creds = (invocationArgs as any).serviceAccountCredentials;
@@ -17,6 +17,6 @@ export default function createGSuiteClient(
   return new GSuiteClient(config.googleAccountId, {
     email: creds.client_email,
     key: creds.private_key,
-    subject: config.domainAdminEmail
+    subject: config.domainAdminEmail,
   });
 }

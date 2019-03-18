@@ -2,8 +2,10 @@ import {
   IntegrationExecutionContext,
   IntegrationExecutionResult,
   IntegrationInvocationEvent,
+  summarizePersisterOperationsResults,
 } from "@jupiterone/jupiter-managed-integration-sdk";
 
+import deleteDeprecatedTypes from "./deleteDeprecatedTypes";
 import fetchGsuiteData from "./gsuite/fetchGsuiteData";
 import initializeContext from "./initializeContext";
 import fetchEntitiesAndRelationships from "./jupiterone/fetchEntitiesAndRelationships";
@@ -20,6 +22,9 @@ export default async function executionHandler(
   const gsuiteData = await fetchGsuiteData(provider);
 
   return {
-    operations: await publishChanges(persister, oldData, gsuiteData, account),
+    operations: summarizePersisterOperationsResults(
+      await publishChanges(persister, oldData, gsuiteData, account),
+      await deleteDeprecatedTypes(graph, persister),
+    ),
   };
 }

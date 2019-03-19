@@ -17,10 +17,38 @@ connect to provider APIs. An integration is triggered by an event containing the
 instance configuration. `IntegrationInstance.config` is encrypted at rest and
 decrypted before it is delivered to the integration execution handler.
 
+Currently, the integration instance configuration user interface will need code
+changes to collect necessary information.
+
 Local execution of the integration is started through `execute.ts`
 (`yarn start`), which may be changed to load development credentials into the
 `IntegrationInstance.config`. Use environment variables to avoid publishing
 sensitive information to GitHub!
+
+## Documentation
+
+Integration projects must provide documentation for docs.jupiterone.io. This
+documentation should outline the credentials required by the data provider API
+(including specific permissions if the data provider allows scoping of
+credentials), which entities are ingested, and what relationships are created.
+At build time, this documentation will be placed in a docs folder inside dist so
+that it's included in the NPM module.
+
+The documentation should be placed in `docs/jupiterone-io` and named after the
+package. For example, an AWS integration with the name "jupiter-integration-aws"
+in `package.json` should have its documentation in
+`docs/jupiterone-io/jupiter-integration-aws.md`. Any other files in
+`docs/jupiterone-io` will not be published. Also note that namespace is ignored,
+so "jupiter-integration-aws" and "@jupiterone/jupiter-integration-aws" should
+both name their docs file the same.
+
+The first header in the documentation is used as the title of the document in
+the table of contents on docs.jupiterone.io, so it should be the name of the
+provider (E.G. "AWS").
+
+The documentation is pushed to docs.jupiterone.io every time a new version of
+the integration is specified in `package.json`, so make sure it's up to date
+every time you release a new version.
 
 ## Development Environment
 

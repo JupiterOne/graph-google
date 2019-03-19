@@ -25,7 +25,7 @@
     "googleapis": "37.1.0"
   },
   "peerDependencies": {
-    "@jupiterone/jupiter-managed-integration-sdk": "^19.2.0"
+    "@jupiterone/jupiter-managed-integration-sdk": "^20.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -34,7 +34,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-typescript": "^7.1.0",
-    "@jupiterone/jupiter-managed-integration-sdk": "^19.2.0",
+    "@jupiterone/jupiter-managed-integration-sdk": "^20.0.0",
     "@types/bunyan": "^1.8.5",
     "@types/fs-extra": "^5.0.5",
     "@types/jest": "^24.0.0",

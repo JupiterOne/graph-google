@@ -1,3 +1,4 @@
+/* tslint:disable:no-console */
 import {
   createLocalInvocationEvent,
   executeSingleHandlerLocal,
@@ -9,20 +10,22 @@ async function run(): Promise<void> {
   const logger = createLogger({ name: "local", level: TRACE });
 
   if (
-    !process.env.GOOGLE_ACCOUNT_ID ||
-    !process.env.GOOGLE_DOMAIN_ADMIN_EMAIL ||
-    !process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
+    !process.env.GOOGLE_LOCAL_EXECUTION_ACCOUNT_ID ||
+    !process.env.GOOGLE_LOCAL_EXECUTION_DOMAIN_ADMIN_EMAIL ||
+    !process.env.GOOGLE_LOCAL_EXECUTION_SERVICE_ACCOUNT_CREDENTIALS
   ) {
-    throw new Error("Local execution requires G Suite environment variables");
+    throw new Error(
+      "Local execution requires environment variables, see README.md",
+    );
   }
 
   const serviceAccountCredentials = JSON.parse(
-    process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS,
+    process.env.GOOGLE_LOCAL_EXECUTION_SERVICE_ACCOUNT_CREDENTIALS,
   );
 
   const integrationConfig = {
-    googleAccountId: process.env.GOOGLE_ACCOUNT_ID,
-    domainAdminEmail: process.env.GOOGLE_DOMAIN_ADMIN_EMAIL,
+    googleAccountId: process.env.GOOGLE_LOCAL_EXECUTION_ACCOUNT_ID,
+    domainAdminEmail: process.env.GOOGLE_LOCAL_EXECUTION_DOMAIN_ADMIN_EMAIL,
   };
 
   logger.info(
@@ -38,7 +41,6 @@ async function run(): Promise<void> {
 }
 
 run().catch(err => {
-  // tslint:disable-next-line:no-console
   console.error(err);
   process.exit(1);
 });

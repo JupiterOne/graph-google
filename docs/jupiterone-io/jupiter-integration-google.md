@@ -69,4 +69,4 @@ The following relationships are created/mapped:
 | `google_account` | **HAS** | `google_group` |
 | `google_account` | **HAS** | `google_user`  |
 | `google_group`   | **HAS** | `google_user`  |
-| `google_user`    | **HAS** | `google_user`  |
+| `google_site`    | **HAS** | `google_user`  |

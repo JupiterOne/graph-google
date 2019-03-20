@@ -64,11 +64,23 @@ provider. Developing an integration involves:
 1.  Delivering create/update/delete operations to the persister to update the
     graph
 
-Run the integration to see what happens:
+Run the integration to see what happens. You may use use Node to execute
+directly on your machine (NVM is recommended), or you may use Docker Compose to
+run the project in a contained environment
+
+Node:
+
+1.  Install Docker and Node
+1.  `yarn install`
+1.  Provide credentials in `.env`
+1.  `yarn start:graph`
+1.  `yarn start`
+
+Docker Compose:
 
 1.  Install Docker and Docker Compose
-1.  Copy `docker-compose.sample.yml` to `docker-compose.yml`.
-1.  Fill in correct credentials in ENV.
+1.  Copy `docker-compose.sample.yml` to `docker-compose.yml`
+1.  Provide credentials in `docker-compose.yml` `ENV`
 1.  `docker-compose build`
 1.  `docker-compose run --rm integration yarn install`
 1.  `docker-compose run --rm integration yarn start`
@@ -81,13 +93,60 @@ Execute the integration again to see that there are no change operations
 produced.
 
 Restart the graph server to clear the data when you want to run the integration
-with no existing data:
+with no existing data.
 
-```shell
-docker-compose restart graph`
+```sh
+yarn stop:graph && yarn start:graph
+```
+
+Or:
+
+```sh
+docker-compose restart graph
 ```
 
 ### Environment Variables
+
+Provider API configuration is specified by users when they install the
+integration into their JupiterOne environment. Some integrations may also
+require pre-shared secrets, used across all integration installations, which is
+to be secured by JupiterOne and provided in the execution context.
+
+Local execution requires the same configuration parameters for a development
+provider account. `tools/execute.ts` is the place to provide the parameters. The
+execution script must not include any credentials, and it is important to make
+it easy for other developers to execute the integration against their own
+development provider account.
+
+1. Update `tools/execute.ts` to provide the properties required by the
+   `executionHandler` function
+1. Create a `.env` file to provide the environment variables transferred into
+   the properties
+
+For example, given this execution script:
+
+```typescript
+const integrationConfig = {
+  apiToken: process.env.MYPROVIDER_LOCAL_EXECUTION_API_TOKEN,
+};
+
+const invocationArgs = {
+  preSharedPrivateKey: process.env.MYPROVIDER_LOCAL_EXECUTION_PRIVATE_KEY,
+};
+```
+
+Create a `.env` file (this is `.gitignore`'d):
+
+```sh
+MYPROVIDER_LOCAL_EXECUTION_API_TOKEN=abc123
+MYPROVIDER_LOCAL_EXECUTION_PRIVATE_KEY='something\nreally\nlong'
+```
+
+#### SDK Variables
+
+Environment variables can modify some aspects of the integration SDK behavior.
+These may be added to your `.env` with values to overrided the defaults listed
+here.
 
 - `GRAPH_DB_ENDPOINT` - `"localhost"`
 

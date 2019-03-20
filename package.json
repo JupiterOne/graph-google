@@ -1,12 +1,12 @@
 {
   "name": "@jupiterone/jupiter-integration-google",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A JupiterOne managed integration for Google",
   "main": "index.js",
   "repository": "https://github.com/jupiterone/jupiter-integration-google",
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
-    "start": "ts-node tools/execute.ts | bunyan",
+    "start": "ts-node --require dotenv/config tools/execute.ts | bunyan",
     "start:graph": "docker run -d --rm --name jupiterone-local-graph -p 8182:8182 tinkerpop/gremlin-server:3.3",
     "stop:graph": "docker stop jupiterone-local-graph",
     "prebuild": "rm -rf dist/*",
@@ -40,6 +40,7 @@
     "@types/jest": "^24.0.0",
     "@types/node": "^10.12.20",
     "bunyan": "^1.8.12",
+    "dotenv": "^7.0.0",
     "fs-extra": "^7.0.1",
     "husky": "^1.3.1",
     "jest": "^24.0.0",

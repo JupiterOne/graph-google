@@ -2,14 +2,13 @@ import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
 import toGenderProperty from "./toGenderProperty";
 
-export function generateUserKey(id?: string) {
-  return `google-user-id-${id}`;
-}
+import generateKey from "../utils/generateKey";
+import setCollectionAsFlattenFields from "../utils/setCollectionAsFlattenFields";
 
 export function createUserEntities(data: User[]): UserEntity[] {
   return data.map(user => {
-    return {
-      _key: generateUserKey(user.id),
+    let userEntity: UserEntity = {
+      _key: generateKey(USER_ENTITY_TYPE, user.id),
       _type: USER_ENTITY_TYPE,
       _class: USER_ENTITY_CLASS,
       id: user.id,
@@ -44,6 +43,57 @@ export function createUserEntities(data: User[]): UserEntity[] {
       suspensionReason: user.suspensionReason,
       thumbnailPhotoEtag: user.thumbnailPhotoEtag,
       thumbnailPhotoUrl: user.thumbnailPhotoUrl,
+      aliases: user.aliases,
     };
+
+    if (user.addresses) {
+      userEntity = setCollectionAsFlattenFields(
+        userEntity,
+        "Address",
+        user.addresses,
+        "formatted",
+      );
+    }
+
+    if (user.phones) {
+      userEntity = setCollectionAsFlattenFields(
+        userEntity,
+        "Phone",
+        user.phones,
+        "value",
+      );
+    }
+
+    if (user.relations) {
+      userEntity = setCollectionAsFlattenFields(
+        userEntity,
+        "Relation",
+        user.relations,
+        "value",
+      );
+    }
+
+    if (user.externalIds) {
+      userEntity = setCollectionAsFlattenFields<UserEntity>(
+        userEntity,
+        "ExternalId",
+        user.externalIds,
+        "value",
+      );
+    }
+
+    if (user.emails) {
+      const emailsColletion = user.emails.filter(
+        (e: { type: string }) => !!e.type,
+      );
+      userEntity = setCollectionAsFlattenFields<UserEntity>(
+        userEntity,
+        "Email",
+        emailsColletion,
+        "address",
+      );
+    }
+
+    return userEntity;
   });
 }

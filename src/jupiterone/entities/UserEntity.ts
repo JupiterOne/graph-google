@@ -35,4 +35,5 @@ export interface UserEntity extends EntityFromIntegration {
   suspensionReason?: string;
   thumbnailPhotoEtag?: string;
   thumbnailPhotoUrl?: string;
+  aliases?: string[];
 }

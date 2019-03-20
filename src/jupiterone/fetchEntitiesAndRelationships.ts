@@ -1,52 +1,75 @@
 import { GraphClient } from "@jupiterone/jupiter-managed-integration-sdk";
-import {
-  ACCOUNT_ENTITY_TYPE,
-  ACCOUNT_GROUP_RELATIONSHIP_TYPE,
-  ACCOUNT_USER_RELATIONSHIP_TYPE,
-  AccountEntity,
-  AccountGroupRelationship,
-  AccountUserRelationship,
-  GROUP_ENTITY_TYPE,
-  GroupEntity,
-  USER_ENTITY_TYPE,
-  USER_GROUP_RELATIONSHIP_TYPE,
-  UserEntity,
-  UserGroupRelationship,
-} from "./entities";
+
+import * as Entities from "./entities";
+
+export interface JupiterOneEntitiesData {
+  accounts: Entities.AccountEntity[];
+  groups: Entities.GroupEntity[];
+  users: Entities.UserEntity[];
+  sites: Entities.SiteEntity[];
+}
+
+export interface JupiterOneRelationshipsData {
+  userGroupRelationships: Entities.UserGroupRelationship[];
+  siteUserRelationships: Entities.SiteUserRelationship[];
+  accountUserRelationships: Entities.AccountUserRelationship[];
+  accountGroupRelationships: Entities.AccountGroupRelationship[];
+}
 
 export interface JupiterOneDataModel {
-  accounts: AccountEntity[];
-  groups: GroupEntity[];
-  users: UserEntity[];
-  userGroupRelationships: UserGroupRelationship[];
-  accountUserRelationships: AccountUserRelationship[];
-  accountGroupRelationships: AccountGroupRelationship[];
+  entities: JupiterOneEntitiesData;
+  relationships: JupiterOneRelationshipsData;
 }
 
 export default async function fetchEntitiesAndRelationships(
   graph: GraphClient,
 ): Promise<JupiterOneDataModel> {
-  const [
-    accounts,
-    users,
-    groups,
-    userGroupRelationships,
-    accountUserRelationships,
-    accountGroupRelationships,
-  ] = await Promise.all([
-    graph.findEntitiesByType<AccountEntity>(ACCOUNT_ENTITY_TYPE),
-    graph.findEntitiesByType<UserEntity>(USER_ENTITY_TYPE),
-    graph.findEntitiesByType<GroupEntity>(GROUP_ENTITY_TYPE),
-    graph.findRelationshipsByType(USER_GROUP_RELATIONSHIP_TYPE),
-    graph.findRelationshipsByType(ACCOUNT_USER_RELATIONSHIP_TYPE),
-    graph.findRelationshipsByType(ACCOUNT_GROUP_RELATIONSHIP_TYPE),
+  const data: JupiterOneDataModel = {
+    entities: await fetchEntities(graph),
+    relationships: await fetchRelationships(graph),
+  };
+
+  return data;
+}
+
+async function fetchEntities(
+  graph: GraphClient,
+): Promise<JupiterOneEntitiesData> {
+  const [accounts, users, groups, sites] = await Promise.all([
+    graph.findEntitiesByType<Entities.AccountEntity>(
+      Entities.ACCOUNT_ENTITY_TYPE,
+    ),
+    graph.findEntitiesByType<Entities.UserEntity>(Entities.USER_ENTITY_TYPE),
+    graph.findEntitiesByType<Entities.GroupEntity>(Entities.GROUP_ENTITY_TYPE),
+    graph.findEntitiesByType<Entities.SiteEntity>(Entities.SITE_ENTITY_TYPE),
   ]);
 
   return {
     accounts,
     users,
     groups,
+    sites,
+  };
+}
+
+export async function fetchRelationships(
+  graph: GraphClient,
+): Promise<JupiterOneRelationshipsData> {
+  const [
     userGroupRelationships,
+    siteUserRelationships,
+    accountUserRelationships,
+    accountGroupRelationships,
+  ] = await Promise.all([
+    graph.findRelationshipsByType(Entities.USER_GROUP_RELATIONSHIP_TYPE),
+    graph.findRelationshipsByType(Entities.SITE_USER_RELATIONSHIP_TYPE),
+    graph.findRelationshipsByType(Entities.ACCOUNT_USER_RELATIONSHIP_TYPE),
+    graph.findRelationshipsByType(Entities.ACCOUNT_GROUP_RELATIONSHIP_TYPE),
+  ]);
+
+  return {
+    userGroupRelationships,
+    siteUserRelationships,
     accountUserRelationships,
     accountGroupRelationships,
   };

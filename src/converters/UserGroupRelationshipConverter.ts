@@ -1,13 +1,14 @@
 import { Group, Member, MemberType, User } from "../gsuite/GSuiteClient";
 
 import {
+  GROUP_ENTITY_TYPE,
+  USER_ENTITY_TYPE,
   USER_GROUP_RELATIONSHIP_CLASS,
   USER_GROUP_RELATIONSHIP_TYPE,
   UserGroupRelationship,
 } from "../jupiterone";
 
-import { generateGroupKey } from "./GroupEntityConverter";
-import { generateUserKey } from "./UserEntityConverter";
+import generateKey from "../utils/generateKey";
 
 interface UsersDict {
   [email: string]: User;
@@ -27,7 +28,7 @@ export function createUserGroupRelationships(
   });
 
   return members.reduce((acc, member) => {
-    const parentKey = generateGroupKey(member.groupId);
+    const parentKey = generateKey(GROUP_ENTITY_TYPE, member.groupId);
     const childKey = findChildKey(member, usersDict, groups);
 
     if (!childKey) {
@@ -83,10 +84,10 @@ function findChildKey(
   switch (member.memberType) {
     case MemberType.GROUP:
       const group = findGroupByEmail(groups, member.email);
-      return generateGroupKey(group && group.id);
+      return generateKey(GROUP_ENTITY_TYPE, group && group.id);
     case MemberType.USER:
       const user = findUserByEmail(users, member.email);
-      return generateUserKey(user && user.id);
+      return generateKey(USER_ENTITY_TYPE, user && user.id);
     default:
       return null;
   }

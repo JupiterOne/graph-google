@@ -1,15 +1,17 @@
+const { defaults } = require("jest-config");
+
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.ts?$": "ts-jest",
   },
   testMatch: ["<rootDir>/src/**/*.test.{js,ts}"],
   collectCoverageFrom: [
     "src/**/*.ts",
-    "!<rootDir>/src/executionHandler.ts",
-    "!<rootDir>/src/initializeContext.ts",
+    "!src/executionHandler.ts",
+    "!src/index.ts",
+    "!src/initializeContext.ts",
   ],
-  coveragePathIgnorePatterns: ["<rootDir>/src/index.ts"],
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
+  moduleFileExtensions: [...defaults.moduleFileExtensions, "ts"],
   testEnvironment: "node",
   clearMocks: true,
   collectCoverage: true,

@@ -5,15 +5,13 @@ import {
   GroupEntity,
 } from "../jupiterone";
 
-export function generateGroupKey(id?: string) {
-  return `google-group-id-${id}`;
-}
+import generateKey from "../utils/generateKey";
 
 export function createGroupEntities(data: Group[]): GroupEntity[] {
   return data.map(group => {
     return {
       _class: GROUP_ENTITY_CLASS,
-      _key: generateGroupKey(group.id),
+      _key: generateKey(GROUP_ENTITY_TYPE, group.id),
       _type: GROUP_ENTITY_TYPE,
       id: group.id,
       adminCreated: group.adminCreated,

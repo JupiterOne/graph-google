@@ -1,13 +1,14 @@
 import { Account, User } from "../gsuite/GSuiteClient";
 
 import {
+  ACCOUNT_ENTITY_TYPE,
   ACCOUNT_USER_RELATIONSHIP_CLASS,
   ACCOUNT_USER_RELATIONSHIP_TYPE,
   AccountUserRelationship,
+  USER_ENTITY_TYPE,
 } from "../jupiterone";
 
-import { generateAccountKey } from "./AccountEntityConverter";
-import { generateUserKey } from "./UserEntityConverter";
+import generateKey from "../utils/generateKey";
 
 export function createAccountUserRelationships(
   users: User[],
@@ -16,8 +17,8 @@ export function createAccountUserRelationships(
   const defaultValue: AccountUserRelationship[] = [];
 
   return users.reduce((acc, user) => {
-    const parentKey = generateAccountKey(account.id);
-    const childKey = generateUserKey(user.id);
+    const parentKey = generateKey(ACCOUNT_ENTITY_TYPE, account.id);
+    const childKey = generateKey(USER_ENTITY_TYPE, user.id);
 
     const relationship: AccountUserRelationship = {
       _class: ACCOUNT_USER_RELATIONSHIP_CLASS,

@@ -53,10 +53,10 @@ test("Convert Groups", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.groups).toEqual([
+  expect(newData.entities.groups).toEqual([
     {
       _class: "UserGroup",
-      _key: "google-group-id-1",
+      _key: "google_group_1",
       _type: "google_group",
       adminCreated: true,
       description: "",
@@ -69,7 +69,7 @@ test("Convert Groups", async () => {
     },
     {
       _class: "UserGroup",
-      _key: "google-group-id-2",
+      _key: "google_group_2",
       _type: "google_group",
       adminCreated: true,
       description: "",
@@ -82,7 +82,7 @@ test("Convert Groups", async () => {
     },
     {
       _class: "UserGroup",
-      _key: "google-group-id-",
+      _key: "google_group_",
       _type: "google_group",
       adminCreated: true,
       description: "",
@@ -100,9 +100,9 @@ test("Convert Users", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.users).toEqual([
+  expect(newData.entities.users).toEqual([
     {
-      _key: "google-user-id-3",
+      _key: "google_user_3",
       _type: "google_user",
       _class: "User",
       id: "3",
@@ -115,12 +115,15 @@ test("Convert Users", async () => {
       archived: false,
       active: true,
       agreedToTerms: true,
+      aliases: ["fakeName1@example.com", "fakeFamilyName1@example.com"],
       changePasswordAtNextLogin: false,
       creationTime: "2019-01-28T17:42:32.000Z",
       customerId: "fakeID",
       deletionTime: undefined,
       gender: "male",
       hashFunction: undefined,
+      homeAddress: "Sample Streeet Samle country, 0000132",
+      homePhone: "79298282828282",
       includeInGlobalAddressList: true,
       ipWhitelisted: false,
       isAdmin: true,
@@ -130,16 +133,21 @@ test("Convert Users", async () => {
       isMailboxSetup: true,
       kind: "admin#directory#user",
       lastLoginTime: "2019-02-12T11:42:33.000Z",
+      managerRelation: "manager@example.com",
       orgUnitPath: "/",
+      organizationExternalId: "123",
       primaryEmail: "first.user@example.com",
       recoveryEmail: undefined,
       recoveryPhone: undefined,
       suspensionReason: undefined,
       thumbnailPhotoEtag: undefined,
       thumbnailPhotoUrl: undefined,
+      workAddress: "Sample Streeet Samle country, 000000",
+      workEmail: "first.user@dualbootpartners.com",
+      workPhone: "3123123",
     },
     {
-      _key: "google-user-id-4",
+      _key: "google_user_4",
       _type: "google_user",
       _class: "User",
       id: "4",
@@ -152,6 +160,7 @@ test("Convert Users", async () => {
       archived: true,
       active: true,
       agreedToTerms: true,
+      aliases: undefined,
       changePasswordAtNextLogin: false,
       creationTime: "2019-01-28T17:32:12.000Z",
       customerId: "fakeID",
@@ -176,7 +185,7 @@ test("Convert Users", async () => {
       thumbnailPhotoUrl: undefined,
     },
     {
-      _key: "google-user-id-5",
+      _key: "google_user_5",
       _type: "google_user",
       _class: "User",
       id: "5",
@@ -189,6 +198,7 @@ test("Convert Users", async () => {
       archived: false,
       active: true,
       agreedToTerms: true,
+      aliases: undefined,
       changePasswordAtNextLogin: true,
       creationTime: "2019-01-30T15:20:22.000Z",
       customerId: "fakeID",
@@ -214,11 +224,12 @@ test("Convert Users", async () => {
     },
     {
       _class: "User",
-      _key: "google-user-id-6",
+      _key: "google_user_6",
       _type: "google_user",
       email: "test1@example.com",
       active: true,
       agreedToTerms: true,
+      aliases: undefined,
       archived: false,
       changePasswordAtNextLogin: true,
       creationTime: "2019-01-30T15:20:22.000Z",
@@ -246,8 +257,8 @@ test("Convert Users", async () => {
       recoveryPhone: undefined,
       suspended: false,
       suspensionReason: undefined,
-      humbnailPhotoEtag: undefined,
-      humbnailPhotoUrl: undefined,
+      thumbnailPhotoEtag: undefined,
+      thumbnailPhotoUrl: undefined,
     },
   ]);
 });
@@ -256,13 +267,13 @@ test("Convert Users -> Group Relationships", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.userGroupRelationships).toEqual([
+  expect(newData.relationships.userGroupRelationships).toEqual([
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-1",
-      _key: "google-group-id-1_has_google-user-id-3",
+      _fromEntityKey: "google_group_1",
+      _key: "google_group_1_has_google_user_3",
       _type: "google_group_has_user",
-      _toEntityKey: "google-user-id-3",
+      _toEntityKey: "google_user_3",
       deliverySettings: undefined,
       email: "first.user@example.com",
       id: "3",
@@ -273,10 +284,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-1",
-      _key: "google-group-id-1_has_google-user-id-6",
+      _fromEntityKey: "google_group_1",
+      _key: "google_group_1_has_google_user_6",
       _type: "google_group_has_user",
-      _toEntityKey: "google-user-id-6",
+      _toEntityKey: "google_user_6",
       deliverySettings: undefined,
       email: "test@example.com",
       id: "5",
@@ -287,10 +298,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-1",
-      _key: "google-group-id-1_has_google-group-id-1",
+      _fromEntityKey: "google_group_1",
+      _key: "google_group_1_has_google_group_1",
       _type: "google_group_has_user",
-      _toEntityKey: "google-group-id-1",
+      _toEntityKey: "google_group_1",
       deliverySettings: undefined,
       email: "restricted.test@example.com",
       id: "104221518650717901111",
@@ -301,10 +312,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-1",
-      _key: "google-group-id-1_has_google-group-id-2",
+      _fromEntityKey: "google_group_1",
+      _key: "google_group_1_has_google_group_2",
       _type: "google_group_has_user",
-      _toEntityKey: "google-group-id-2",
+      _toEntityKey: "google_group_2",
       deliverySettings: undefined,
       email: "team.test.group@example.com",
       id: "104221518650717901222",
@@ -315,10 +326,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-2",
-      _key: "google-group-id-2_has_google-user-id-3",
+      _fromEntityKey: "google_group_2",
+      _key: "google_group_2_has_google_user_3",
       _type: "google_group_has_user",
-      _toEntityKey: "google-user-id-3",
+      _toEntityKey: "google_user_3",
       deliverySettings: undefined,
       email: "first.user@example.com",
       id: "3",
@@ -329,10 +340,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-2",
-      _key: "google-group-id-2_has_google-user-id-6",
+      _fromEntityKey: "google_group_2",
+      _key: "google_group_2_has_google_user_6",
       _type: "google_group_has_user",
-      _toEntityKey: "google-user-id-6",
+      _toEntityKey: "google_user_6",
       deliverySettings: undefined,
       email: "test@example.com",
       id: "5",
@@ -343,10 +354,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-2",
-      _key: "google-group-id-2_has_google-group-id-1",
+      _fromEntityKey: "google_group_2",
+      _key: "google_group_2_has_google_group_1",
       _type: "google_group_has_user",
-      _toEntityKey: "google-group-id-1",
+      _toEntityKey: "google_group_1",
       deliverySettings: undefined,
       email: "restricted.test@example.com",
       id: "104221518650717901111",
@@ -357,10 +368,10 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-group-id-2",
-      _key: "google-group-id-2_has_google-group-id-2",
+      _fromEntityKey: "google_group_2",
+      _key: "google_group_2_has_google_group_2",
       _type: "google_group_has_user",
-      _toEntityKey: "google-group-id-2",
+      _toEntityKey: "google_group_2",
       deliverySettings: undefined,
       email: "team.test.group@example.com",
       id: "104221518650717901222",
@@ -372,13 +383,48 @@ test("Convert Users -> Group Relationships", async () => {
   ]);
 });
 
+test("Convert Sites", async () => {
+  const { provider, account } = await initialize();
+  const newData = convert(await fetchGsuiteData(provider), account);
+
+  expect(newData.entities.sites).toEqual([
+    {
+      _class: "Site",
+      _key: "google_site_3_123",
+      _type: "google_site",
+      area: "desk",
+      buildingId: "123",
+      displayName: "123, 3, 2",
+      floorName: "3",
+      floorSection: "2",
+      id: "123",
+      type: "desk",
+    },
+  ]);
+});
+
+test("Convert User -> Site Relationships", async () => {
+  const { provider, account } = await initialize();
+  const newData = convert(await fetchGsuiteData(provider), account);
+
+  expect(newData.relationships.siteUserRelationships).toEqual([
+    {
+      _class: "HOSTS",
+      _fromEntityKey: "google_site_3_123",
+      _key: "google_site_3_123_hosts_google_user_3",
+      _toEntityKey: "google_user_3",
+      _type: "google_site_hosts_user",
+    },
+  ]);
+});
+
 test("Convert Account", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.accounts).toEqual([
+  expect(newData.entities.accounts).toEqual([
     {
-      _key: "google-account-key-fakeId",
+      _key: "google_account_fakeId",
       _type: "google_account",
       _class: "Account",
       displayName: "google_account_name",
@@ -391,33 +437,33 @@ test("Convert Account -> User Relationships", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.accountUserRelationships).toEqual([
+  expect(newData.relationships.accountUserRelationships).toEqual([
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-user-id-3",
-      _toEntityKey: "google-user-id-3",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_user_3",
+      _toEntityKey: "google_user_3",
       _type: "google_account_has_user",
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-user-id-4",
-      _toEntityKey: "google-user-id-4",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_user_4",
+      _toEntityKey: "google_user_4",
       _type: "google_account_has_user",
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-user-id-5",
-      _toEntityKey: "google-user-id-5",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_user_5",
+      _toEntityKey: "google_user_5",
       _type: "google_account_has_user",
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-user-id-6",
-      _toEntityKey: "google-user-id-6",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_user_6",
+      _toEntityKey: "google_user_6",
       _type: "google_account_has_user",
     },
   ]);
@@ -427,26 +473,26 @@ test("Convert Account -> Group Relationships", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.accountGroupRelationships).toEqual([
+  expect(newData.relationships.accountGroupRelationships).toEqual([
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-group-id-1",
-      _toEntityKey: "google-group-id-1",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_group_1",
+      _toEntityKey: "google_group_1",
       _type: "google_account_has_group",
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-group-id-2",
-      _toEntityKey: "google-group-id-2",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_group_2",
+      _toEntityKey: "google_group_2",
       _type: "google_account_has_group",
     },
     {
       _class: "HAS",
-      _fromEntityKey: "google-account-key-fakeId",
-      _key: "google-account-key-fakeId_has_google-group-id-",
-      _toEntityKey: "google-group-id-",
+      _fromEntityKey: "google_account_fakeId",
+      _key: "google_account_fakeId_has_google_group_",
+      _toEntityKey: "google_group_",
       _type: "google_account_has_group",
     },
   ]);

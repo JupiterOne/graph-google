@@ -43,6 +43,36 @@
           { "address": "fakeFamilyName1@example.com" },
           { "address": "fakeFamilyName1@example.com.test-google-a.com" }
         ],
+        "externalIds": [{ "value": "123", "type": "organization" }],
+        "relations": [{ "value": "manager@example.com", "type": "manager" }],
+        "addresses": [
+          {
+            "type": "home",
+            "formatted": "Sample Streeet Samle country, 000000"
+          },
+          {
+            "type": "work",
+            "formatted": "Sample Streeet Samle country, 000000"
+          },
+          {
+            "type": "home",
+            "formatted": "Sample Streeet Samle country, 0000132"
+          }
+        ],
+        "organizations": [
+          {
+            "title": "Team Lead",
+            "primary": true,
+            "customType": "",
+            "department": "Customer Relationship",
+            "description": "Developer",
+            "costCenter": "Cost Center"
+          }
+        ],
+        "phones": [
+          { "value": "79298282828282", "type": "home" },
+          { "value": "3123123", "type": "work" }
+        ],
         "aliases": ["fakeName1@example.com", "fakeFamilyName1@example.com"],
         "nonEditableAliases": [
           "first.user@example.com.test-google-a.com",
@@ -54,7 +84,16 @@
         "isMailboxSetup": true,
         "isEnrolledIn2Sv": false,
         "isEnforcedIn2Sv": false,
-        "includeInGlobalAddressList": true
+        "includeInGlobalAddressList": true,
+        "locations": [
+          {
+            "type": "desk",
+            "area": "desk",
+            "buildingId": "123",
+            "floorName": "3",
+            "floorSection": "2"
+          }
+        ]
       },
       {
         "kind": "admin#directory#user",

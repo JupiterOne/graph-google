@@ -1,13 +1,14 @@
 import { Account, Group } from "../gsuite/GSuiteClient";
 
 import {
+  ACCOUNT_ENTITY_TYPE,
   ACCOUNT_GROUP_RELATIONSHIP_CLASS,
   ACCOUNT_GROUP_RELATIONSHIP_TYPE,
   AccountGroupRelationship,
+  GROUP_ENTITY_TYPE,
 } from "../jupiterone";
 
-import { generateAccountKey } from "./AccountEntityConverter";
-import { generateGroupKey } from "./GroupEntityConverter";
+import generateKey from "../utils/generateKey";
 
 export function createAccountGroupRelationships(
   groups: Group[],
@@ -16,8 +17,8 @@ export function createAccountGroupRelationships(
   const defaultValue: AccountGroupRelationship[] = [];
 
   return groups.reduce((acc, group) => {
-    const parentKey = generateAccountKey(account.id);
-    const childKey = generateGroupKey(group.id);
+    const parentKey = generateKey(ACCOUNT_ENTITY_TYPE, account.id);
+    const childKey = generateKey(GROUP_ENTITY_TYPE, group.id);
 
     const relationship: AccountGroupRelationship = {
       _class: ACCOUNT_GROUP_RELATIONSHIP_CLASS,

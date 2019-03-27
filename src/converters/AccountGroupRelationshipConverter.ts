@@ -8,7 +8,7 @@ import {
   GROUP_ENTITY_TYPE,
 } from "../jupiterone";
 
-import generateKey from "../utils/generateKey";
+import generateEntityKey from "../utils/generateEntityKey";
 
 export function createAccountGroupRelationships(
   groups: Group[],
@@ -17,8 +17,8 @@ export function createAccountGroupRelationships(
   const defaultValue: AccountGroupRelationship[] = [];
 
   return groups.reduce((acc, group) => {
-    const parentKey = generateKey(ACCOUNT_ENTITY_TYPE, account.id);
-    const childKey = generateKey(GROUP_ENTITY_TYPE, group.id);
+    const parentKey = generateEntityKey(ACCOUNT_ENTITY_TYPE, account.id);
+    const childKey = generateEntityKey(GROUP_ENTITY_TYPE, group.id);
 
     const relationship: AccountGroupRelationship = {
       _class: ACCOUNT_GROUP_RELATIONSHIP_CLASS,

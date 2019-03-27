@@ -2,13 +2,13 @@ import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
 import toGenderProperty from "./toGenderProperty";
 
-import generateKey from "../utils/generateKey";
+import generateEntityKey from "../utils/generateEntityKey";
 import setCollectionAsFlattenFields from "../utils/setCollectionAsFlattenFields";
 
 export function createUserEntities(data: User[]): UserEntity[] {
   return data.map(user => {
     let userEntity: UserEntity = {
-      _key: generateKey(USER_ENTITY_TYPE, user.id),
+      _key: generateEntityKey(USER_ENTITY_TYPE, user.id),
       _type: USER_ENTITY_TYPE,
       _class: USER_ENTITY_CLASS,
       id: user.id,

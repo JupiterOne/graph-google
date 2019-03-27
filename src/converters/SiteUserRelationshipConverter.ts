@@ -8,7 +8,7 @@ import {
   USER_ENTITY_TYPE,
 } from "../jupiterone";
 
-import generateKey from "../utils/generateKey";
+import generateEntityKey from "../utils/generateEntityKey";
 
 export function createSiteUserRelationships(users: User[]) {
   const defaultValue: SiteUserRelationship[] = [];
@@ -18,10 +18,10 @@ export function createSiteUserRelationships(users: User[]) {
       return acc;
     }
 
-    const childKey = generateKey(USER_ENTITY_TYPE, user.id);
+    const childKey = generateEntityKey(USER_ENTITY_TYPE, user.id);
 
     const userRelationships = user.locations.map(location => {
-      const parentKey = generateKey(
+      const parentKey = generateEntityKey(
         SITE_ENTITY_TYPE,
         `${user.id}_${location.buildingId}`,
       );

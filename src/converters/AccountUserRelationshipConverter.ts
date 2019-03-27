@@ -8,7 +8,7 @@ import {
   USER_ENTITY_TYPE,
 } from "../jupiterone";
 
-import generateKey from "../utils/generateKey";
+import generateEntityKey from "../utils/generateEntityKey";
 
 export function createAccountUserRelationships(
   users: User[],
@@ -17,8 +17,8 @@ export function createAccountUserRelationships(
   const defaultValue: AccountUserRelationship[] = [];
 
   return users.reduce((acc, user) => {
-    const parentKey = generateKey(ACCOUNT_ENTITY_TYPE, account.id);
-    const childKey = generateKey(USER_ENTITY_TYPE, user.id);
+    const parentKey = generateEntityKey(ACCOUNT_ENTITY_TYPE, account.id);
+    const childKey = generateEntityKey(USER_ENTITY_TYPE, user.id);
 
     const relationship: AccountUserRelationship = {
       _class: ACCOUNT_USER_RELATIONSHIP_CLASS,

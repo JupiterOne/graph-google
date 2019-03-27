@@ -8,7 +8,7 @@ import {
   UserGroupRelationship,
 } from "../jupiterone";
 
-import generateKey from "../utils/generateKey";
+import generateEntityKey from "../utils/generateEntityKey";
 
 interface UsersDict {
   [email: string]: User;
@@ -28,7 +28,7 @@ export function createUserGroupRelationships(
   });
 
   return members.reduce((acc, member) => {
-    const parentKey = generateKey(GROUP_ENTITY_TYPE, member.groupId);
+    const parentKey = generateEntityKey(GROUP_ENTITY_TYPE, member.groupId);
     const childKey = findChildKey(member, usersDict, groups);
 
     if (!childKey) {
@@ -84,11 +84,11 @@ function findChildKey(
   switch (member.memberType) {
     case MemberType.GROUP:
       const group = findGroupByEmail(groups, member.email);
-      return generateKey(GROUP_ENTITY_TYPE, group && group.id);
+      return generateEntityKey(GROUP_ENTITY_TYPE, group && group.id);
     case MemberType.USER:
       const user = findUserByEmail(users, member.email);
       if (user && user.id) {
-        return generateKey(USER_ENTITY_TYPE, user.id);
+        return generateEntityKey(USER_ENTITY_TYPE, user.id);
       } else {
         return null;
       }

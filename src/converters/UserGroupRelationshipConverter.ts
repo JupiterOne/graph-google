@@ -84,13 +84,13 @@ function findChildKey(
   switch (member.memberType) {
     case MemberType.GROUP:
       const group = findGroupByEmail(groups, member.email);
-      return generateEntityKey(GROUP_ENTITY_TYPE, group && group.id);
+      if (group && group.id) {
+        return generateEntityKey(GROUP_ENTITY_TYPE, group.id);
+      }
     case MemberType.USER:
       const user = findUserByEmail(users, member.email);
       if (user && user.id) {
         return generateEntityKey(USER_ENTITY_TYPE, user.id);
-      } else {
-        return null;
       }
     default:
       return null;

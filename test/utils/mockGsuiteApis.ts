@@ -5,7 +5,7 @@ export interface ApiEndpoint {
 }
 
 export interface ApiEndpoints {
-  [endponitName: string]: ApiEndpoint;
+  [endpointName: string]: ApiEndpoint;
 }
 
 export function mockGsuiteApis(endpoints: ApiEndpoints) {

@@ -1,7 +1,7 @@
 import { User } from "../gsuite/GSuiteClient";
 import { SITE_ENTITY_CLASS, SITE_ENTITY_TYPE, SiteEntity } from "../jupiterone";
 
-import generateKey from "../utils/generateKey";
+import generateEntityKey from "../utils/generateEntityKey";
 
 export function createSiteEntities(data: User[]): SiteEntity[] {
   const defaultValue: SiteEntity[] = [];
@@ -19,7 +19,7 @@ export function createSiteEntities(data: User[]): SiteEntity[] {
       ].join(", ");
 
       return {
-        _key: generateKey(
+        _key: generateEntityKey(
           SITE_ENTITY_TYPE,
           `${user.id}_${location.buildingId}`,
         ),

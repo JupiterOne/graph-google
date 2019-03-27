@@ -67,6 +67,15 @@
         "role": "MEMBER",
         "type": "EXTERNAL",
         "status": "ACTIVE"
+      },
+      {
+        "kind": "admin#directory#member",
+        "etag": "\"GPUJN6YVAOElesyqxtgGs7jrFWY/UReUCuMlrvQ-aY-yW_xOk1wVI4c\"",
+        "id": "116216254206426985619",
+        "email": "example@other-gsuite-domain.com",
+        "role": "MEMBER",
+        "type": "USER",
+        "status": "ACTIVE"
       }
     ]
   },

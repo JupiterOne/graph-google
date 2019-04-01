@@ -14,6 +14,7 @@ export interface Account {
 }
 
 export interface User extends admin_directory_v1.Schema$User {
+  id: string;
   locations?: Location[];
 }
 
@@ -26,15 +27,14 @@ export interface Location {
 }
 
 export interface Member extends admin_directory_v1.Schema$Member {
+  id: string;
   groupId: string;
   memberType: MemberType;
 }
 
-export interface MembersDict {
-  [groupId: string]: Member[];
+export interface Group extends admin_directory_v1.Schema$Group {
+  id: string;
 }
-
-export type Group = admin_directory_v1.Schema$Group;
 
 export interface GSuiteDataModel {
   groups: Group[];
@@ -79,7 +79,19 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.groups;
+    return result.data.groups.reduce(
+      (acc, group) => {
+        if (typeof group.id === "string") {
+          const item: Group = {
+            ...group,
+            id: group.id,
+          };
+          return [...acc, item];
+        }
+        return acc;
+      },
+      [] as Group[],
+    );
   }
 
   public async fetchMembers(groupId: string): Promise<Member[]> {
@@ -91,11 +103,21 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.members.map(member => ({
-      ...member,
-      groupId,
-      memberType: member.type as MemberType,
-    }));
+    return result.data.members.reduce(
+      (acc, member) => {
+        if (typeof member.id === "string") {
+          const item: Member = {
+            ...member,
+            id: member.id,
+            groupId,
+            memberType: member.type as MemberType,
+          };
+          return [...acc, item];
+        }
+        return acc;
+      },
+      [] as Member[],
+    );
   }
 
   public async fetchUsers(): Promise<User[]> {
@@ -107,6 +129,18 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.users;
+    return result.data.users.reduce(
+      (acc, user) => {
+        if (typeof user.id === "string") {
+          const item: User = {
+            ...user,
+            id: user.id,
+          };
+          return [...acc, item];
+        }
+        return acc;
+      },
+      [] as User[],
+    );
   }
 }

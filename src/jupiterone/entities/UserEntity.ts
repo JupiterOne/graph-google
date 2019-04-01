@@ -4,7 +4,7 @@ export const USER_ENTITY_TYPE = "google_user";
 export const USER_ENTITY_CLASS = "User";
 
 export interface UserEntity extends EntityFromIntegration {
-  id?: string;
+  id: string;
   email?: string;
   firstName?: string;
   lastName?: string;

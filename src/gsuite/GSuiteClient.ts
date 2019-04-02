@@ -79,19 +79,10 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.groups.reduce(
-      (acc, group) => {
-        if (typeof group.id === "string") {
-          const item: Group = {
-            ...group,
-            id: group.id,
-          };
-          return [...acc, item];
-        }
-        return acc;
-      },
-      [] as Group[],
-    );
+    return result.data.groups.map(group => ({
+      ...group,
+      id: group.id as string,
+    }));
   }
 
   public async fetchMembers(groupId: string): Promise<Member[]> {
@@ -103,21 +94,12 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.members.reduce(
-      (acc, member) => {
-        if (typeof member.id === "string") {
-          const item: Member = {
-            ...member,
-            id: member.id,
-            groupId,
-            memberType: member.type as MemberType,
-          };
-          return [...acc, item];
-        }
-        return acc;
-      },
-      [] as Member[],
-    );
+    return result.data.members.map(member => ({
+      ...member,
+      groupId,
+      memberType: member.type as MemberType,
+      id: member.id as string,
+    }));
   }
 
   public async fetchUsers(): Promise<User[]> {
@@ -129,18 +111,9 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.users.reduce(
-      (acc, user) => {
-        if (typeof user.id === "string") {
-          const item: User = {
-            ...user,
-            id: user.id,
-          };
-          return [...acc, item];
-        }
-        return acc;
-      },
-      [] as User[],
-    );
+    return result.data.users.map(user => ({
+      ...user,
+      id: user.id as string,
+    }));
   }
 }

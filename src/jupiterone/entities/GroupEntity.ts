@@ -8,7 +8,7 @@ export interface GroupEntity extends EntityFromIntegration {
   description?: string;
   directMembersCount?: string;
   email?: string;
-  id?: string;
+  id: string;
   kind?: string;
   name?: string;
 }

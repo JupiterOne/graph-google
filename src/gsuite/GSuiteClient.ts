@@ -14,6 +14,7 @@ export interface Account {
 }
 
 export interface User extends admin_directory_v1.Schema$User {
+  id: string;
   locations?: Location[];
 }
 
@@ -26,15 +27,14 @@ export interface Location {
 }
 
 export interface Member extends admin_directory_v1.Schema$Member {
+  id: string;
   groupId: string;
   memberType: MemberType;
 }
 
-export interface MembersDict {
-  [groupId: string]: Member[];
+export interface Group extends admin_directory_v1.Schema$Group {
+  id: string;
 }
-
-export type Group = admin_directory_v1.Schema$Group;
 
 export interface GSuiteDataModel {
   groups: Group[];
@@ -79,7 +79,10 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.groups;
+    return result.data.groups.map(group => ({
+      ...group,
+      id: group.id as string,
+    }));
   }
 
   public async fetchMembers(groupId: string): Promise<Member[]> {
@@ -95,6 +98,7 @@ export default class GSuiteClient {
       ...member,
       groupId,
       memberType: member.type as MemberType,
+      id: member.id as string,
     }));
   }
 
@@ -107,6 +111,9 @@ export default class GSuiteClient {
       return [];
     }
 
-    return result.data.users;
+    return result.data.users.map(user => ({
+      ...user,
+      id: user.id as string,
+    }));
   }
 }

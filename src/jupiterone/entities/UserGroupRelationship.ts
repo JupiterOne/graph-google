@@ -1,6 +1,10 @@
-import { RelationshipFromIntegration } from "@jupiterone/jupiter-managed-integration-sdk";
+import {
+  MappedRelationshipFromIntegration,
+  RelationshipFromIntegration,
+} from "@jupiterone/jupiter-managed-integration-sdk";
 
-export interface UserGroupRelationship extends RelationshipFromIntegration {
+export interface UserGroupRelationshipFromIntegration
+  extends RelationshipFromIntegration {
   deliverySettings?: string;
   email?: string;
   id?: string;
@@ -9,6 +13,12 @@ export interface UserGroupRelationship extends RelationshipFromIntegration {
   status?: string;
   type?: string;
 }
+
+export type MappedUserGroupRelationshipFromIntegration = MappedRelationshipFromIntegration;
+
+export type UserGroupRelationship =
+  | UserGroupRelationshipFromIntegration
+  | MappedUserGroupRelationshipFromIntegration;
 
 export const USER_GROUP_RELATIONSHIP_TYPE = "google_group_has_user";
 export const USER_GROUP_RELATIONSHIP_CLASS = "HAS";

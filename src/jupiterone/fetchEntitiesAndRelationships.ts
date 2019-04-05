@@ -1,4 +1,10 @@
 import { GraphClient } from "@jupiterone/jupiter-managed-integration-sdk";
+import {
+  AccountGroupRelationship,
+  AccountUserRelationship,
+  SiteUserRelationship,
+  UserGroupRelationship,
+} from "./entities";
 
 import * as Entities from "./entities";
 
@@ -61,10 +67,18 @@ export async function fetchRelationships(
     accountUserRelationships,
     accountGroupRelationships,
   ] = await Promise.all([
-    graph.findRelationshipsByType(Entities.USER_GROUP_RELATIONSHIP_TYPE),
-    graph.findRelationshipsByType(Entities.SITE_USER_RELATIONSHIP_TYPE),
-    graph.findRelationshipsByType(Entities.ACCOUNT_USER_RELATIONSHIP_TYPE),
-    graph.findRelationshipsByType(Entities.ACCOUNT_GROUP_RELATIONSHIP_TYPE),
+    graph.findRelationshipsByType<UserGroupRelationship>(
+      Entities.USER_GROUP_RELATIONSHIP_TYPE,
+    ),
+    graph.findRelationshipsByType<SiteUserRelationship>(
+      Entities.SITE_USER_RELATIONSHIP_TYPE,
+    ),
+    graph.findRelationshipsByType<AccountUserRelationship>(
+      Entities.ACCOUNT_USER_RELATIONSHIP_TYPE,
+    ),
+    graph.findRelationshipsByType<AccountGroupRelationship>(
+      Entities.ACCOUNT_GROUP_RELATIONSHIP_TYPE,
+    ),
   ]);
 
   return {

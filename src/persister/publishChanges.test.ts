@@ -326,6 +326,36 @@ test("Convert Users -> Group Relationships", async () => {
     },
     {
       _class: "HAS",
+      _key: "google_group_1_has_user_example@other-gsuite-domain.com",
+      _mapping: {
+        relationshipDirection: "FORWARD",
+        skipTargetCreation: false,
+        sourceEntityKey: "google_group_1",
+        targetEntity: {
+          _class: "User",
+          email: "example@other-gsuite-domain.com",
+        },
+        targetFilterKeys: [["_class", "email"]],
+      },
+      _type: "google_group_has_user",
+    },
+    {
+      _class: "HAS",
+      _key: "google_group_1_has_group_group1@other-gsuite-domain.com",
+      _mapping: {
+        relationshipDirection: "FORWARD",
+        skipTargetCreation: false,
+        sourceEntityKey: "google_group_1",
+        targetEntity: {
+          _class: "UserGroup",
+          email: "group1@other-gsuite-domain.com",
+        },
+        targetFilterKeys: [["_class", "email"]],
+      },
+      _type: "google_group_has_user",
+    },
+    {
+      _class: "HAS",
       _fromEntityKey: "google_group_2",
       _key: "google_group_2_has_google_user_3",
       _type: "google_group_has_user",
@@ -379,6 +409,36 @@ test("Convert Users -> Group Relationships", async () => {
       role: "MEMBER",
       status: "ACTIVE",
       type: "GROUP",
+    },
+    {
+      _class: "HAS",
+      _key: "google_group_2_has_user_example@other-gsuite-domain.com",
+      _mapping: {
+        relationshipDirection: "FORWARD",
+        skipTargetCreation: false,
+        sourceEntityKey: "google_group_2",
+        targetEntity: {
+          _class: "User",
+          email: "example@other-gsuite-domain.com",
+        },
+        targetFilterKeys: [["_class", "email"]],
+      },
+      _type: "google_group_has_user",
+    },
+    {
+      _class: "HAS",
+      _key: "google_group_2_has_group_group1@other-gsuite-domain.com",
+      _mapping: {
+        relationshipDirection: "FORWARD",
+        skipTargetCreation: false,
+        sourceEntityKey: "google_group_2",
+        targetEntity: {
+          _class: "UserGroup",
+          email: "group1@other-gsuite-domain.com",
+        },
+        targetFilterKeys: [["_class", "email"]],
+      },
+      _type: "google_group_has_user",
     },
   ]);
 });

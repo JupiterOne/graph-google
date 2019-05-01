@@ -4,6 +4,4 @@ coverage/
 dist/
 yarn-error.log
 docker-compose.yml
-lifeomic-test-*.json
 .env
-.idea/

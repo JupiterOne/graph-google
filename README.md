@@ -157,7 +157,7 @@ and conversion from provider data to entities and relationships.
 
 To run tests locally:
 
-```shell
+```sh
 docker-compose run --rm integration yarn test
 ```
 
@@ -165,7 +165,7 @@ docker-compose run --rm integration yarn test
 
 You can start interactive session inside a container:
 
-```shell
+```sh
 docker-compose run --rm integration bash
 ```
 
@@ -175,6 +175,6 @@ Managed integrations are deployed into the JupiterOne infrastructure by staff
 engineers using internal projects that declare a dependency on the open source
 integration NPM package. The package will be published by the JupiterOne team.
 
-```shell
+```sh
 yarn build:publish
 ```

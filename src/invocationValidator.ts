@@ -1,9 +1,9 @@
 import {
-  IntegrationExecutionContext,
   IntegrationInstanceAuthenticationError,
   IntegrationInstanceConfigError,
-  IntegrationInvocationEvent,
+  IntegrationValidationContext,
 } from "@jupiterone/jupiter-managed-integration-sdk";
+
 import { createGSuiteClient } from "./gsuite";
 
 /**
@@ -15,15 +15,16 @@ import { createGSuiteClient } from "./gsuite";
  * ensure that credentials are valid. The function will be awaited to support
  * connecting to the provider for this purpose.
  *
- * @param executionContext
+ * @param context
  */
 export default async function invocationValidator(
-  executionContext: IntegrationExecutionContext<IntegrationInvocationEvent>,
+  context: IntegrationValidationContext,
 ) {
   const {
+    instance,
     instance: { config },
     invocationArgs,
-  } = executionContext;
+  } = context;
 
   if (!invocationArgs || !invocationArgs.serviceAccountCredentials) {
     throw new Error(
@@ -37,7 +38,7 @@ export default async function invocationValidator(
     );
   }
 
-  const provider = createGSuiteClient(executionContext);
+  const provider = createGSuiteClient(instance, context);
   try {
     await provider.authenticate();
   } catch (err) {

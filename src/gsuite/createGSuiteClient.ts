@@ -1,16 +1,16 @@
 import {
-  IntegrationExecutionContext,
-  IntegrationInvocationEvent,
+  IntegrationInstance,
+  IntegrationInvocationContext,
 } from "@jupiterone/jupiter-managed-integration-sdk";
+
 import GSuiteClient from "./GSuiteClient";
 
 export default function createGSuiteClient(
-  context: IntegrationExecutionContext<IntegrationInvocationEvent>,
+  instance: IntegrationInstance,
+  context: IntegrationInvocationContext,
 ) {
-  const {
-    instance: { config },
-    invocationArgs,
-  } = context;
+  const { config } = instance;
+  const { invocationArgs } = context;
 
   const creds = (invocationArgs as any).serviceAccountCredentials;
 

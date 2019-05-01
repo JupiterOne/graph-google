@@ -1,7 +1,4 @@
-import {
-  IntegrationExecutionContext,
-  IntegrationInvocationEvent,
-} from "@jupiterone/jupiter-managed-integration-sdk";
+import { IntegrationExecutionContext } from "@jupiterone/jupiter-managed-integration-sdk";
 import executionHandler from "./executionHandler";
 import initializeContext from "./initializeContext";
 
@@ -36,7 +33,7 @@ test("executionHandler", async () => {
     instance: {
       config: {},
     },
-  } as IntegrationExecutionContext<IntegrationInvocationEvent>;
+  } as IntegrationExecutionContext;
 
   await executionHandler(invocationContext);
 

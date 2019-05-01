@@ -1,5 +1,13 @@
+import { IntegrationInvocationConfig } from "@jupiterone/jupiter-managed-integration-sdk";
+
 import executionHandler from "./executionHandler";
 import invocationValidator from "./invocationValidator";
-import { ServiceAccountCredentials } from "./types";
 
-export { executionHandler, invocationValidator, ServiceAccountCredentials };
+const invocationConfig: IntegrationInvocationConfig = {
+  executionHandler,
+  invocationValidator,
+};
+
+export default invocationConfig;
+
+export { ServiceAccountCredentials } from "./types";

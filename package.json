@@ -2,7 +2,7 @@
   "name": "@jupiterone/jupiter-integration-google",
   "version": "2.2.1",
   "description": "A JupiterOne managed integration for Google",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/jupiterone/jupiter-integration-google",
   "license": "SEE LICENSE IN LICENSE",
   "files": [

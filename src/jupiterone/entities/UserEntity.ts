@@ -14,9 +14,10 @@ export interface UserEntity extends EntityFromIntegration {
   active: boolean;
   agreedToTerms?: boolean;
   changePasswordAtNextLogin?: boolean;
-  creationTime?: string;
+  creationTime?: number;
+  deletionTime?: number;
+  lastLoginTime?: number;
   customerId?: string;
-  deletionTime?: string;
   gender?: string;
   hashFunction?: string;
   includeInGlobalAddressList?: boolean;
@@ -27,7 +28,6 @@ export interface UserEntity extends EntityFromIntegration {
   isEnrolledIn2Sv?: boolean;
   isMailboxSetup?: boolean;
   kind?: string;
-  lastLoginTime?: string;
   orgUnitPath?: string;
   primaryEmail?: string;
   recoveryEmail?: string;

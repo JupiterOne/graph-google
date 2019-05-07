@@ -1,5 +1,6 @@
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
+import getTime from "../utils/getTime";
 import toGenderProperty from "./toGenderProperty";
 
 import generateEntityKey from "../utils/generateEntityKey";
@@ -22,9 +23,10 @@ export function createUserEntities(data: User[]): UserEntity[] {
       active: !user.suspended || !user.archived,
       agreedToTerms: user.agreedToTerms,
       changePasswordAtNextLogin: user.changePasswordAtNextLogin,
-      creationTime: user.creationTime,
+      creationTime: getTime(user.creationTime),
+      deletionTime: getTime(user.deletionTime),
+      lastLoginTime: getTime(user.lastLoginTime),
       customerId: user.customerId,
-      deletionTime: user.deletionTime,
       gender: toGenderProperty(user.gender),
       hashFunction: user.hashFunction,
       includeInGlobalAddressList: user.includeInGlobalAddressList,
@@ -35,7 +37,6 @@ export function createUserEntities(data: User[]): UserEntity[] {
       isEnrolledIn2Sv: user.isEnrolledIn2Sv,
       isMailboxSetup: user.isMailboxSetup,
       kind: user.kind,
-      lastLoginTime: user.lastLoginTime,
       orgUnitPath: user.orgUnitPath,
       primaryEmail: user.primaryEmail,
       recoveryEmail: user.recoveryEmail,

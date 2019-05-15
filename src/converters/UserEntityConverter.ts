@@ -47,6 +47,7 @@ export function createUserEntities(data: User[]): UserEntity[] {
       aliases: user.aliases,
     };
 
+    userEntity = assignUsername(user, userEntity);
     userEntity = assignAddresses(user, userEntity);
     userEntity = assignPhones(user, userEntity);
     userEntity = assignRelations(user, userEntity);
@@ -57,6 +58,21 @@ export function createUserEntities(data: User[]): UserEntity[] {
 
     return userEntity;
   });
+}
+
+function assignUsername(user: User, userEntity: UserEntity) {
+  if (!user.primaryEmail) {
+    return userEntity;
+  }
+
+  const usernameMatch = user.primaryEmail.match("(.*?)@.*");
+  if (!usernameMatch || !usernameMatch[1]) {
+    return userEntity;
+  }
+
+  userEntity.username = usernameMatch[1];
+
+  return userEntity;
 }
 
 function assignAddresses(user: User, userEntity: UserEntity) {

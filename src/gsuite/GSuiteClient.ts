@@ -14,9 +14,19 @@ export interface Account {
   name: string;
 }
 
+interface UserOrganization {
+  title?: string;
+  primary?: boolean;
+  customType?: string;
+  department?: string;
+  description?: string;
+  costCenter?: string;
+}
+
 export interface User extends admin_directory_v1.Schema$User {
   id: string;
   locations?: Location[];
+  organizations?: UserOrganization[];
 }
 
 export interface Location {

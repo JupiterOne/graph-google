@@ -1,3 +1,4 @@
+import { GaxiosResponse } from "gaxios";
 import { JWT, JWTOptions } from "google-auth-library";
 import { admin_directory_v1, google } from "googleapis";
 
@@ -71,49 +72,68 @@ export default class GSuiteClient {
   }
 
   public async fetchGroups(): Promise<Group[]> {
-    const result = await this.client.groups.list({
-      customer: this.accountId,
-    });
+    let groups: Group[] = [];
+    let pageToken: string | undefined = "";
 
-    if (!result.data || !result.data.groups) {
-      return [];
-    }
+    do {
+      const result = (await this.client.groups.list({
+        customer: this.accountId,
+        pageToken,
+      })) as GaxiosResponse<admin_directory_v1.Schema$Groups>;
 
-    return result.data.groups.map(group => ({
-      ...group,
-      id: group.id as string,
-    }));
+      if (result.data && result.data.groups) {
+        const pageGroups = result.data.groups as Group[];
+        groups = [...groups, ...pageGroups];
+        pageToken = result.data.nextPageToken;
+      }
+    } while (pageToken);
+
+    return groups;
   }
 
   public async fetchMembers(groupId: string): Promise<Member[]> {
-    const result = await this.client.members.list({
-      groupKey: groupId,
-    });
+    let members: Member[] = [];
+    let pageToken: string | undefined = "";
 
-    if (!result.data || !result.data.members) {
-      return [];
-    }
+    do {
+      const result = (await this.client.members.list({
+        groupKey: groupId,
+        pageToken,
+      })) as GaxiosResponse<admin_directory_v1.Schema$Members>;
 
-    return result.data.members.map(member => ({
-      ...member,
-      groupId,
-      memberType: member.type as MemberType,
-      id: member.id as string,
-    }));
+      if (result.data && result.data.members) {
+        const pageMembers = result.data.members.map(member => ({
+          ...member,
+          groupId,
+          memberType: member.type as MemberType,
+          id: member.id as string,
+        }));
+
+        members = [...members, ...pageMembers];
+        pageToken = result.data.nextPageToken;
+      }
+    } while (pageToken);
+
+    return members;
   }
 
   public async fetchUsers(): Promise<User[]> {
-    const result = await this.client.users.list({
-      customer: this.accountId,
-    });
+    let users: User[] = [];
+    let pageToken: string | undefined = "";
 
-    if (!result.data || !result.data.users) {
-      return [];
-    }
+    do {
+      const result = (await this.client.users.list({
+        customer: this.accountId,
+        pageToken,
+      })) as GaxiosResponse<admin_directory_v1.Schema$Users>;
 
-    return result.data.users.map(user => ({
-      ...user,
-      id: user.id as string,
-    }));
+      if (result.data && result.data.users) {
+        const pageUsers = result.data.users as User[];
+        users = [...users, ...pageUsers];
+        pageToken = result.data.nextPageToken;
+      }
+    } while (pageToken);
+
+    return users;
   }
 }

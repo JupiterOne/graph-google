@@ -1,7 +1,6 @@
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
 import getTime from "../utils/getTime";
-import toGenderProperty from "./toGenderProperty";
 
 import generateEntityKey from "../utils/generateEntityKey";
 import setCollectionAsFlattenFields from "../utils/setCollectionAsFlattenFields";
@@ -27,7 +26,6 @@ export function createUserEntities(data: User[]): UserEntity[] {
       deletionTime: getTime(user.deletionTime),
       lastLoginTime: getTime(user.lastLoginTime),
       customerId: user.customerId,
-      gender: toGenderProperty(user.gender),
       hashFunction: user.hashFunction,
       includeInGlobalAddressList: user.includeInGlobalAddressList,
       ipWhitelisted: user.ipWhitelisted,

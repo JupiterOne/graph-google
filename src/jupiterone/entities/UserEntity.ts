@@ -4,7 +4,7 @@ export const USER_ENTITY_TYPE = "google_user";
 export const USER_ENTITY_CLASS = "User";
 
 export interface UserEntity extends EntityFromIntegration {
-  id: string;
+  id?: string;
   email?: string;
   firstName?: string;
   lastName?: string;
@@ -18,7 +18,6 @@ export interface UserEntity extends EntityFromIntegration {
   deletionTime?: number;
   lastLoginTime?: number;
   customerId?: string;
-  gender?: string;
   hashFunction?: string;
   includeInGlobalAddressList?: boolean;
   ipWhitelisted?: boolean;
@@ -36,4 +35,14 @@ export interface UserEntity extends EntityFromIntegration {
   thumbnailPhotoEtag?: string;
   thumbnailPhotoUrl?: string;
   aliases?: string[];
+  title?: string;
+  primary?: boolean;
+  customType?: string;
+  department?: string;
+  employeeType?: string;
+  costCenter?: string;
+  managerRelation?: string;
+  manager?: string;
+  managerEmail?: string;
+  username?: string;
 }

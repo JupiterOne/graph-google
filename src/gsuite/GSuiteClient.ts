@@ -134,6 +134,7 @@ export default class GSuiteClient {
     do {
       const result = (await this.client.users.list({
         customer: this.accountId,
+        projection: "full",
         pageToken,
       })) as GaxiosResponse<admin_directory_v1.Schema$Users>;
 

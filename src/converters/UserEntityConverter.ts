@@ -1,7 +1,10 @@
 import { hasOwnProperty } from "tslint/lib/utils";
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
-import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+import {
+  capitalizeFirstLetter,
+  decapitalizeFirstLetter,
+} from "../utils/formatFirstLetter";
 import getTime from "../utils/getTime";
 
 import generateEntityKey from "../utils/generateEntityKey";
@@ -182,21 +185,23 @@ function assignCustomAttributes(user: User, userEntity: UserEntity) {
   if (!user.customSchemas) {
     return userEntity;
   }
-  const customAttributes = Object.values(user.customSchemas);
+  const categoryKeys = Object.keys(user.customSchemas);
+  const categoryValues = Object.values(user.customSchemas);
 
-  const userEntityWithCustomAttributes = customAttributes.reduce(
-    (acc, item) => {
+  const userEntityWithCustomAttributes = categoryValues.reduce(
+    (acc, item, itemIndex) => {
       const keys = Object.keys(item);
       const values = Object.values(item);
 
       for (let index = 0; index < keys.length; index++) {
+        const categoryName = decapitalizeFirstLetter(categoryKeys[itemIndex]);
         const newPropertyName = keys[index];
         const newPropertyValue = values[index];
 
-        const isPropertyDuplicate = hasOwnProperty(userEntity, newPropertyName);
+        const isPropertyDuplicate = hasOwnProperty(acc, newPropertyName);
 
         const fixedNewPropertyName = isPropertyDuplicate
-          ? "custom" + capitalizeFirstLetter(newPropertyName)
+          ? categoryName + capitalizeFirstLetter(newPropertyName)
           : newPropertyName;
         acc[fixedNewPropertyName] = newPropertyValue;
       }

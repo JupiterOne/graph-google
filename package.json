@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/jupiter-integration-google",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "A JupiterOne managed integration for Google",
   "main": "dist/index.js",
   "repository": "https://github.com/jupiterone/jupiter-integration-google",

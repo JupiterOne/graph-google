@@ -837,10 +837,10 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/yargs" "^12.0.9"
 
-"@jupiterone/jupiter-managed-integration-sdk@^23.0.3":
-  version "23.0.3"
-  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-23.0.3.tgz#d023d5546566794c9a24cb3b2c417ab76e22938d"
-  integrity sha512-R2JyTfqLbls8EynkaVxDexfl1k6BWubANr9N66jzD/Q71zZv9qIZ0R+m82BLLVkOj6GGzM3ZaO1izqpjtdPl0g==
+"@jupiterone/jupiter-managed-integration-sdk@^24.0.5":
+  version "24.0.5"
+  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-24.0.5.tgz#89953e65f8bb4d5728ea13085c8777d00ead0d44"
+  integrity sha512-ZDGoQxMyy34n19/LK5tVTR0A35xKYDwxD9e2TSnvwWZ96SNINwEcU8P1bWiWxwGcmtdVAtFjfG5VWDreZclniw==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"

@@ -1,5 +1,10 @@
+import { hasOwnProperty } from "tslint/lib/utils";
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
+import {
+  capitalizeFirstLetter,
+  decapitalizeFirstLetter,
+} from "../utils/formatFirstLetter";
 import getTime from "../utils/getTime";
 
 import generateEntityKey from "../utils/generateEntityKey";
@@ -53,6 +58,7 @@ export function createUserEntities(data: User[]): UserEntity[] {
     userEntity = assignEmails(user, userEntity);
     userEntity = assignManagementInfo(userEntity);
     userEntity = assignEmployeeInfo(user, userEntity);
+    userEntity = assignCustomAttributes(user, userEntity);
 
     return userEntity;
   });
@@ -127,12 +133,14 @@ function assignEmails(user: User, userEntity: UserEntity) {
     return userEntity;
   }
 
-  const emailsColletion = user.emails.filter((e: { type: string }) => !!e.type);
+  const emailsCollection = user.emails.filter(
+    (e: { type: string }) => !!e.type,
+  );
 
   return setCollectionAsFlattenFields<UserEntity>(
     userEntity,
     "Email",
-    emailsColletion,
+    emailsCollection,
     "address",
   );
 }
@@ -156,9 +164,9 @@ function assignEmployeeInfo(user: User, userEntity: UserEntity) {
     return userEntity;
   }
 
-  const primaryOrganizaton = user.organizations.find(o => !!o.primary);
+  const primaryOrganization = user.organizations.find(o => !!o.primary);
 
-  if (!primaryOrganizaton) {
+  if (!primaryOrganization) {
     return userEntity;
   }
 
@@ -171,4 +179,37 @@ function assignEmployeeInfo(user: User, userEntity: UserEntity) {
   userEntity.costCenter = employeeInfo.costCenter;
 
   return userEntity;
+}
+
+function assignCustomAttributes(user: User, userEntity: UserEntity) {
+  if (!user.customSchemas) {
+    return userEntity;
+  }
+  const categoryKeys = Object.keys(user.customSchemas);
+  const categoryValues = Object.values(user.customSchemas);
+
+  const userEntityWithCustomAttributes = categoryValues.reduce(
+    (acc, item, itemIndex) => {
+      const keys = Object.keys(item);
+      const values = Object.values(item);
+
+      for (let index = 0; index < keys.length; index++) {
+        const categoryName = decapitalizeFirstLetter(categoryKeys[itemIndex]);
+        const newPropertyName = keys[index];
+        const newPropertyValue = values[index];
+
+        const isPropertyDuplicate = hasOwnProperty(acc, newPropertyName);
+
+        const fixedNewPropertyName = isPropertyDuplicate
+          ? categoryName + capitalizeFirstLetter(newPropertyName)
+          : newPropertyName;
+        acc[fixedNewPropertyName] = newPropertyValue;
+      }
+
+      return acc;
+    },
+    userEntity as any,
+  );
+
+  return userEntityWithCustomAttributes;
 }

@@ -837,10 +837,10 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/yargs" "^12.0.9"
 
-"@jupiterone/jupiter-managed-integration-sdk@^24.0.5":
-  version "24.0.5"
-  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-24.0.5.tgz#89953e65f8bb4d5728ea13085c8777d00ead0d44"
-  integrity sha512-ZDGoQxMyy34n19/LK5tVTR0A35xKYDwxD9e2TSnvwWZ96SNINwEcU8P1bWiWxwGcmtdVAtFjfG5VWDreZclniw==
+"@jupiterone/jupiter-managed-integration-sdk@25.0.0-secretsmanager.0":
+  version "25.0.0-secretsmanager.0"
+  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-25.0.0-secretsmanager.0.tgz#c1bdb98d52c406dcdfdcb9a187c4d81703c7829b"
+  integrity sha512-Vlc0hdNReIqOd33x4oH4Mfpwu4bsilEOWkEI2smcQvbVUcu7sCLFoUnGCI4YaNc2c+ysSLqSceoF8W64CskWpA==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
@@ -895,6 +895,11 @@
   integrity sha512-w7iqhDH9mN8eLClQOYTkhdYUOSpp25eXxfc6VbFOGtzxW34JcvctH2bKjj4jD4++z4R5iO5D+pg48W2e03I65A==
   dependencies:
     "@types/node" "*"
+
+"@types/gremlin@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@types/gremlin/-/gremlin-3.4.2.tgz#aa60347828bdc0bb7fb51c5e41f06e14deb7c38b"
+  integrity sha512-FAnOC1BwTxRFcVqZpbi4qx2Vc0Vu5v9jgY36NnFuxCul32ga6HR0kiYhhR5JG7b42Z1JWVgJHgVFIOPeThlOJQ==
 
 "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.0"

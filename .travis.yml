@@ -20,5 +20,5 @@ deploy:
   on:
     tags: true
     branch: master
-    repo: JupiterOne/jupiter-integration-google
+    repo: JupiterOne/graph-google
     node: '8'

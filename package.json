@@ -1,5 +1,5 @@
 {
-  "name": "@jupiterone/jupiter-integration-google",
+  "name": "@jupiterone/graph-google",
   "version": "2.5.1",
   "description": "A JupiterOne managed integration for Google",
   "main": "dist/index.js",

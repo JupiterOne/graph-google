@@ -18,6 +18,9 @@ jest.mock("googleapis", () => {
     members: {
       list: `${__dirname}/../../test/fixtures/members.json`,
     },
+    domains: {
+      list: `${__dirname}/../../test/fixtures/domains.json`,
+    },
   };
 
   return Gsuite.mockGsuiteApis(scheme);
@@ -495,6 +498,10 @@ test("Convert Account", async () => {
       _class: "Account",
       displayName: "google_account_name",
       name: "google_account_name",
+      domains: ["test.com"],
+      primaryDomain: "test.com",
+      accountId: "test.com",
+      id: "fakeId",
     },
   ]);
 });

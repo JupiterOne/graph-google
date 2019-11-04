@@ -106,7 +106,7 @@ export function convertEntities(
   account: Account,
 ): JupiterOneEntitiesData {
   return {
-    accounts: [createAccountEntity(account)],
+    accounts: [createAccountEntity(account, gsuiteData.domains)],
     groups: createGroupEntities(gsuiteData.groups),
     users: createUserEntities(gsuiteData.users),
     sites: createSiteEntities(gsuiteData.users),

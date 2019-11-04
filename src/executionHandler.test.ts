@@ -20,6 +20,7 @@ test("executionHandler", async () => {
       fetchUsers: jest.fn().mockReturnValue([]),
       fetchGroups: jest.fn().mockReturnValue([]),
       fetchRoles: jest.fn().mockReturnValue([]),
+      fetchDomains: jest.fn().mockReturnValue([]),
     },
     account: {
       id: "",
@@ -40,7 +41,7 @@ test("executionHandler", async () => {
   expect(initializeContext).toHaveBeenCalledWith(invocationContext);
   expect(executionContext.provider.fetchUsers).toHaveBeenCalledTimes(1);
   expect(executionContext.provider.fetchGroups).toHaveBeenCalledTimes(1);
-  expect(executionContext.provider.fetchGroups).toHaveBeenCalledTimes(1);
+  expect(executionContext.provider.fetchDomains).toHaveBeenCalledTimes(1);
   expect(executionContext.persister.processEntities).toHaveBeenCalledTimes(5);
   expect(
     executionContext.persister.publishPersisterOperations,

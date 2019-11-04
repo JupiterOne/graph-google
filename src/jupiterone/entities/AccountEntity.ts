@@ -5,4 +5,8 @@ export const ACCOUNT_ENTITY_CLASS = "Account";
 
 export interface AccountEntity extends EntityFromIntegration {
   name: string;
+  domains: string[];
+  primaryDomain: string | undefined;
+  accountId: string | undefined;
+  id: string;
 }

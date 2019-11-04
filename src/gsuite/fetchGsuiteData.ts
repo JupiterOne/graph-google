@@ -3,9 +3,10 @@ import GSuiteClient, { GSuiteDataModel } from "./GSuiteClient";
 export default async function fetchGsuiteData(
   client: GSuiteClient,
 ): Promise<GSuiteDataModel> {
-  const [users, groups] = await Promise.all([
+  const [users, groups, domains] = await Promise.all([
     client.fetchUsers(),
     client.fetchGroups(),
+    client.fetchDomains(),
   ]);
 
   const groupsMembers = await Promise.all(
@@ -18,5 +19,5 @@ export default async function fetchGsuiteData(
     return acc.concat(value);
   }, []);
 
-  return { users, groups, members: allMembers };
+  return { users, groups, members: allMembers, domains };
 }

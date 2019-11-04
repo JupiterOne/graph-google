@@ -47,10 +47,16 @@ export interface Group extends admin_directory_v1.Schema$Group {
   id: string;
 }
 
+export interface Domains {
+  domains: string[];
+  primaryDomain?: string;
+}
+
 export interface GSuiteDataModel {
   groups: Group[];
   users: User[];
   members: Member[];
+  domains: Domains;
 }
 
 export default class GSuiteClient {
@@ -79,6 +85,30 @@ export default class GSuiteClient {
       version: "directory_v1",
       auth,
     });
+  }
+
+  public async fetchDomains(): Promise<Domains> {
+    const domains: Domains = {
+      domains: [],
+    };
+
+    const result = (await this.client.domains.list({
+      customer: this.accountId,
+    })) as GaxiosResponse<admin_directory_v1.Schema$Domains2>;
+
+    if (result.data && result.data.domains) {
+      for (const domain of result.data.domains) {
+        const domainName = domain.domainName;
+        if (domainName !== undefined) {
+          domains.domains.push(domainName);
+          if (domain.isPrimary) {
+            domains.primaryDomain = domainName;
+          }
+        }
+      }
+    }
+
+    return domains;
   }
 
   public async fetchGroups(): Promise<Group[]> {

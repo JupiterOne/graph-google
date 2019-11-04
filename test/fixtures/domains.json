@@ -1,0 +1,14 @@
+{
+  "config": {},
+  "data": {
+    "domains": [
+      {
+        "domainName": "test.com",
+        "isPrimary": true
+      }
+    ]
+  },
+  "headers": {},
+  "status": 200,
+  "statusText": "OK"
+}

@@ -10,13 +10,17 @@ export default function createGSuiteClient(
   context: IntegrationInvocationContext,
 ) {
   const { config } = instance;
-  const { invocationArgs } = context;
+  const { invocationArgs, logger } = context;
 
   const creds = (invocationArgs as any).serviceAccountCredentials;
 
-  return new GSuiteClient(config.googleAccountId, {
-    email: creds.client_email,
-    key: creds.private_key,
-    subject: config.domainAdminEmail,
-  });
+  return new GSuiteClient(
+    config.googleAccountId,
+    {
+      email: creds.client_email,
+      key: creds.private_key,
+      subject: config.domainAdminEmail,
+    },
+    logger,
+  );
 }

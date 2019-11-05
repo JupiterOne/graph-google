@@ -35,16 +35,18 @@ beforeEach(() => {
 });
 
 describe("bad response", () => {
-  mockEndpoints.mockReturnValue({
-    groups: {
-      list: readFixture(`${__dirname}/../../test/fixtures/badResponse.json`),
-    },
-    users: {
-      list: readFixture(`${__dirname}/../../test/fixtures/badResponse.json`),
-    },
-    members: {
-      list: readFixture(`${__dirname}/../../test/fixtures/badResponse.json`),
-    },
+  beforeAll(() => {
+    mockEndpoints.mockReturnValue({
+      groups: {
+        list: readFixture(`${__dirname}/../../test/fixtures/badResponse.json`),
+      },
+      users: {
+        list: readFixture(`${__dirname}/../../test/fixtures/badResponse.json`),
+      },
+      members: {
+        list: readFixture(`${__dirname}/../../test/fixtures/badResponse.json`),
+      },
+    });
   });
 
   test("fetch users with bad response", async () => {
@@ -67,15 +69,17 @@ describe("bad response", () => {
 });
 
 describe("forbidden", () => {
-  mockEndpoints.mockReturnValue({
-    groups: {
-      list: jest.fn().mockImplementation(() => {
-        throw { code: 403, message: "Forbidden" };
-      }),
-    },
+  beforeAll(() => {
+    mockEndpoints.mockReturnValue({
+      groups: {
+        list: jest.fn().mockImplementation(() => {
+          throw { code: 403, message: "Forbidden" };
+        }),
+      },
+    });
   });
 
-  test.only("fetch groups with forbidden response", async () => {
+  test("fetch groups with forbidden response", async () => {
     const client = await getGsuiteData();
     await expect(client.fetchGroups()).rejects.toMatchObject({ code: 403 });
     expect(mockLogger.error).toHaveBeenCalledTimes(1);

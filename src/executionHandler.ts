@@ -24,7 +24,7 @@ export default async function executionHandler(
   } catch (err) {
     if (err.code === 403) {
       throw new IntegrationInstanceConfigError(
-        "Please grant access this integration access to domains, groups, group members, and users!",
+        "Please grant this integration access to domains, groups, group members, and users!",
       );
     } else {
       throw err;

@@ -1,30 +1,30 @@
+import readFixture from "../../test/utils/readFixture";
+
+const mockEndpoints = jest.fn().mockReturnValue({
+  groups: {
+    list: readFixture(`${__dirname}/../../test/fixtures/groups.json`),
+  },
+  users: {
+    list: readFixture(`${__dirname}/../../test/fixtures/users.json`),
+  },
+  members: {
+    list: readFixture(`${__dirname}/../../test/fixtures/members.json`),
+  },
+  domains: {
+    list: readFixture(`${__dirname}/../../test/fixtures/domains.json`),
+  },
+});
+jest.doMock("googleapis", () => ({
+  google: {
+    admin: mockEndpoints,
+  },
+}));
+
 import { createTestIntegrationExecutionContext } from "@jupiterone/jupiter-managed-integration-sdk";
+import { readFileSync } from "fs";
 import fetchGsuiteData from "../gsuite/fetchGsuiteData";
 import initializeContext from "../initializeContext";
-
-import { readFileSync } from "fs";
 import { convert } from "./publishChanges";
-
-jest.mock("googleapis", () => {
-  const Gsuite = require(`${__dirname}/../../test/utils/mockGsuiteApis`);
-
-  const scheme = {
-    groups: {
-      list: `${__dirname}/../../test/fixtures/groups.json`,
-    },
-    users: {
-      list: `${__dirname}/../../test/fixtures/users.json`,
-    },
-    members: {
-      list: `${__dirname}/../../test/fixtures/members.json`,
-    },
-    domains: {
-      list: `${__dirname}/../../test/fixtures/domains.json`,
-    },
-  };
-
-  return Gsuite.mockGsuiteApis(scheme);
-});
 
 jest.mock("google-auth-library");
 

@@ -198,7 +198,8 @@ export default class GSuiteClient {
     doFetch: () => Promise<Return>,
   ): Promise<Return> {
     try {
-      return doFetch();
+      const result = await doFetch();
+      return result;
     } catch (err) {
       this.logger.error(err, `fetching ${resource} failed with error`);
       throw err;

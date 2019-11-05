@@ -30,10 +30,6 @@ async function getGsuiteData() {
   return client;
 }
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe("bad response", () => {
   beforeAll(() => {
     mockEndpoints.mockReturnValue({

@@ -79,15 +79,15 @@ From your Google Admin console:
 
 1. Click Users, then Add new user
 
-2. Enter First name "JupiterOne", Last name "SystemUser", Primary email
+1. Enter First name "JupiterOne", Last name "SystemUser", Primary email
    "jupiterone-admin"
 
-3. Click Add new user and collect the temporary, generated password
+1. Click Add new user and collect the temporary, generated password
 
-4. Log in as the new user to set a complex password and accept the G Suite Terms
+1. Log in as the new user to set a complex password and accept the G Suite Terms
    of Service
 
-5. Enter the new user email into the Admin Email field in the JupiterOne
+1. Enter the new user email into the Admin Email field in the JupiterOne
    integration configuration
 
 You may dispose of the password as it will not be used and may be reset by a
@@ -100,15 +100,15 @@ From your Google Admin console:
 
 1. Click Users, then click on the "JupiterOne SystemUser"
 
-2. Click Admin roles and privileges, then click the icon to edit the user's
+1. Click Admin roles and privileges, then click the icon to edit the user's
    roles
 
-3. Click Create custom role, then click Create a new role
+1. Click Create custom role, then click Create a new role
 
-4. Name "JupiterOne System", Description "Role for JupiterOne user to enable
+1. Name "JupiterOne System", Description "Role for JupiterOne user to enable
    read-only access to G Suite Admin APIs."
 
-5. In Privileges, the Admin API Privileges section, check these permissions:
+1. In Privileges, the Admin API Privileges section, check these permissions:
 
    - Users -> Read
    - Groups -> Read

@@ -7,6 +7,28 @@ directly to the G Suite Admin API to obtain account metadata and analyze
 resource relationships. Customers authorize read-only to access to a JupiterOne
 Service Account.
 
+## Entities
+
+The following entity resources are ingested when the integration runs:
+
+| Google Entity Resource | \_type : \_class of the Entity |
+| ---------------------- | ------------------------------ |
+| Account                | `google_account` : `Account`   |
+| Group                  | `google_group` : `UserGroup`   |
+| User                   | `google_user` : `User`         |
+| User location          | `google_site` : `Site`         |
+
+## Relationships
+
+The following relationships are created/mapped:
+
+| From             | Type    | To             |
+| ---------------- | ------- | -------------- |
+| `google_account` | **HAS** | `google_group` |
+| `google_account` | **HAS** | `google_user`  |
+| `google_group`   | **HAS** | `google_user`  |
+| `google_site`    | **HAS** | `google_user`  |
+
 ## Integration Instance Configuration
 
 The integration is triggered by an event containing the information for a
@@ -14,7 +36,9 @@ specific integration instance.
 
 The integration instance configuration requires the Organization Account ID and
 an administrator email. The JupiterOne Service Account must be added as an
-authorized API client with required permission scopes.
+authorized API client with required permission scopes, and a domain email
+address that is a member of an Admin Group with read only permissions must be
+specified to obtain an OAuth token for API requests.
 
 ### Getting Organization Account ID
 
@@ -46,27 +70,46 @@ https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.goo
 ```
 
 1. Click Authorize
-1. Return to the Admin console, click Security, then API reference
-1. Check Enable API access
+1. Return to the Admin console, click Security, then API Permissions
+1. Enable API access
 
-## Entities
+### Admin User Email
 
-The following entity resources are ingested when the integration runs:
+From your Google Admin console:
 
-| Google Entity Resource | \_type : \_class of the Entity |
-| ---------------------- | ------------------------------ |
-| Account                | `google_account` : `Account`   |
-| Group                  | `google_group` : `UserGroup`   |
-| User                   | `google_user` : `User`         |
-| User location          | `google_site` : `Site`         |
+1. Click Users, then Add new user
 
-## Relationships
+2. Enter First name "JupiterOne", Last name "SystemUser", Primary email
+   "jupiterone-admin"
 
-The following relationships are created/mapped:
+3. Click Add new user and collect the temporary, generated password
 
-| From             | Type    | To             |
-| ---------------- | ------- | -------------- |
-| `google_account` | **HAS** | `google_group` |
-| `google_account` | **HAS** | `google_user`  |
-| `google_group`   | **HAS** | `google_user`  |
-| `google_site`    | **HAS** | `google_user`  |
+4. Log in as the new user to set a complex password and accept the G Suite Terms
+   of Service
+
+5. Enter the new user email into the Admin Email field in the JupiterOne
+   integration configuration
+
+You may dispose of the password as it will not be used and may be reset by a
+Super Admin in the future if necessary.
+
+Next, create a new role that will have only the permissions required by
+JupiterOne, and which will include only the `jupiterone-admin` system user.
+
+From your Google Admin console:
+
+1. Click Users, then click on the "JupiterOne SystemUser"
+
+2. Click Admin roles and privileges, then click the icon to edit the user's
+   roles
+
+3. Click Create custom role, then click Create a new role
+
+4. Name "JupiterOne System", Description "Role for JupiterOne user to enable
+   read-only access to G Suite Admin APIs."
+
+5. In Privileges, the Admin API Privileges section, check these permissions:
+
+   - Users -> Read
+   - Groups -> Read
+   - Domain Management

@@ -9,4 +9,5 @@ export interface AccountEntity extends EntityFromIntegration {
   primaryDomain: string | undefined;
   accountId: string | undefined;
   id: string;
+  vendor: string;
 }

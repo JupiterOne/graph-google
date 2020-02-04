@@ -13,6 +13,7 @@ export function createGroupEntities(data: Group[]): GroupEntity[] {
       _class: GROUP_ENTITY_CLASS,
       _key: generateEntityKey(GROUP_ENTITY_TYPE, group.id),
       _type: GROUP_ENTITY_TYPE,
+      _rawData: [{ name: "default", rawData: group }],
       id: group.id,
       adminCreated: group.adminCreated,
       directMembersCount: group.directMembersCount,

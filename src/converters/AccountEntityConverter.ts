@@ -21,5 +21,6 @@ export function createAccountEntity(
     primaryDomain: domains.primaryDomain,
     accountId: domains.primaryDomain,
     id: account.id,
+    vendor: "Google",
   };
 }

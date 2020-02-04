@@ -16,6 +16,7 @@ export function createUserEntities(data: User[]): UserEntity[] {
       _key: generateEntityKey(USER_ENTITY_TYPE, user.id),
       _type: USER_ENTITY_TYPE,
       _class: USER_ENTITY_CLASS,
+      _rawData: [{ name: "default", rawData: user }],
       id: user.id,
       email: user.primaryEmail,
       displayName: (user.name && user.name.fullName) || "",
@@ -160,22 +161,17 @@ function assignManagementInfo(userEntity: UserEntity) {
 }
 
 function assignEmployeeInfo(user: User, userEntity: UserEntity) {
-  if (!user.organizations) {
+  if (!user.organizations || user.organizations.length === 0) {
     return userEntity;
   }
 
   const primaryOrganization = user.organizations.find(o => !!o.primary);
-
-  if (!primaryOrganization) {
-    return userEntity;
-  }
-
-  const employeeInfo = user.organizations[0];
+  const employeeInfo = primaryOrganization || user.organizations[0];
 
   userEntity.title = employeeInfo.title;
   userEntity.customType = employeeInfo.customType;
   userEntity.department = employeeInfo.department;
-  userEntity.employeeType = employeeInfo.description;
+  userEntity.role = employeeInfo.description;
   userEntity.costCenter = employeeInfo.costCenter;
 
   return userEntity;

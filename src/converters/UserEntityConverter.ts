@@ -171,7 +171,7 @@ function assignEmployeeInfo(user: User, userEntity: UserEntity) {
   userEntity.title = employeeInfo.title;
   userEntity.customType = employeeInfo.customType;
   userEntity.department = employeeInfo.department;
-  userEntity.employeeType = employeeInfo.description;
+  userEntity.role = employeeInfo.description;
   userEntity.costCenter = employeeInfo.costCenter;
 
   return userEntity;

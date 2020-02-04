@@ -56,7 +56,7 @@ test("Convert Groups", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.entities.groups).toEqual([
+  expect(newData.entities.groups).toMatchObject([
     {
       _class: "UserGroup",
       _key: "google_group_1",
@@ -103,7 +103,7 @@ test("Convert Users", async () => {
   const { provider, account } = await initialize();
   const newData = convert(await fetchGsuiteData(provider), account);
 
-  expect(newData.entities.users).toEqual([
+  expect(newData.entities.users).toMatchObject([
     {
       _class: "User",
       _key: "google_user_3",
@@ -121,7 +121,6 @@ test("Convert Users", async () => {
       deletionTime: undefined,
       department: "Customer Relationship",
       email: "first.user@example.com",
-      employeeType: "Developer",
       firstName: "fakeName",
       managerEmail: "manager@example.com",
       homeAddress: "Sample Streeet Samle country, 0000132",
@@ -150,6 +149,7 @@ test("Convert Users", async () => {
       orgUnitPath: "/",
       organizationExternalId: "123",
       primaryEmail: "first.user@example.com",
+      role: "Developer",
       suspended: false,
       workAddress: "Sample Streeet Samle country, 000000",
       workEmail: "first.user@dualbootpartners.com",
@@ -502,6 +502,7 @@ test("Convert Account", async () => {
       primaryDomain: "test.com",
       accountId: "test.com",
       id: "fakeId",
+      vendor: "Google",
     },
   ]);
 });

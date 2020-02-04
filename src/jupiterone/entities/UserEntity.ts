@@ -45,4 +45,5 @@ export interface UserEntity extends EntityFromIntegration {
   manager?: string;
   managerEmail?: string;
   username?: string;
+  role?: string;
 }

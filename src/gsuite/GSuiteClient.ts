@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { IntegrationLogger } from "@jupiterone/jupiter-managed-integration-sdk";
 import { GaxiosResponse } from "gaxios";
 import { JWT, JWTOptions } from "google-auth-library";
@@ -104,11 +106,15 @@ export default class GSuiteClient {
         customer: this.accountId,
       })) as GaxiosResponse<admin_directory_v1.Schema$Domains2>;
 
-      if (result.data && result.data.domains) {
+      // no test cases for else statements
+      /* istanbul ignore next */
+      if (result.data?.domains) {
         for (const domain of result.data.domains) {
           const domainName = domain.domainName;
+          /* istanbul ignore else */
           if (domainName !== undefined) {
             domains.domains.push(domainName);
+            /* istanbul ignore else */
             if (domain.isPrimary) {
               domains.primaryDomain = domainName;
             }
@@ -131,7 +137,7 @@ export default class GSuiteClient {
           pageToken,
         })) as GaxiosResponse<admin_directory_v1.Schema$Groups>;
 
-        if (result.data && result.data.groups) {
+        if (result.data?.groups) {
           const pageGroups = result.data.groups as Group[];
           groups = [...groups, ...pageGroups];
           pageToken = result.data.nextPageToken;
@@ -153,7 +159,7 @@ export default class GSuiteClient {
           pageToken,
         })) as GaxiosResponse<admin_directory_v1.Schema$Members>;
 
-        if (result.data && result.data.members) {
+        if (result.data?.members) {
           const pageMembers = result.data.members.map(member => ({
             ...member,
             groupId,
@@ -182,7 +188,7 @@ export default class GSuiteClient {
           pageToken,
         })) as GaxiosResponse<admin_directory_v1.Schema$Users>;
 
-        if (result.data && result.data.users) {
+        if (result.data?.users) {
           const pageUsers = result.data.users as User[];
           users = [...users, ...pageUsers];
           pageToken = result.data.nextPageToken;

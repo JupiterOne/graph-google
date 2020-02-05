@@ -1,6 +1,11 @@
 const { defaults } = require("jest-config");
 
 module.exports = {
+  globals: {
+    "ts-jest": {
+      babelConfig: true,
+    },
+  },
   transform: {
     "^.+\\.ts?$": "ts-jest",
   },

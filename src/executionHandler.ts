@@ -1,9 +1,9 @@
 import {
   IntegrationExecutionContext,
   IntegrationExecutionResult,
-  IntegrationInstanceConfigError,
   summarizePersisterOperationsResults,
 } from "@jupiterone/jupiter-managed-integration-sdk";
+
 import deleteDeprecatedTypes from "./deleteDeprecatedTypes";
 import fetchGsuiteData from "./gsuite/fetchGsuiteData";
 import initializeContext from "./initializeContext";
@@ -18,18 +18,7 @@ export default async function executionHandler(
   );
 
   const oldData = await fetchEntitiesAndRelationships(graph);
-  let gsuiteData;
-  try {
-    gsuiteData = await fetchGsuiteData(provider);
-  } catch (err) {
-    if (err.code === 403) {
-      throw new IntegrationInstanceConfigError(
-        "Please grant this integration access to domains, groups, group members, and users!",
-      );
-    } else {
-      throw err;
-    }
-  }
+  const gsuiteData = await fetchGsuiteData(provider);
 
   return {
     operations: summarizePersisterOperationsResults(

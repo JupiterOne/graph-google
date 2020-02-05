@@ -1091,10 +1091,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@jupiterone/jupiter-managed-integration-sdk@^26.0.0":
-  version "26.0.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-26.0.0.tgz#a37e0d52b057ef86d345b52a0942d7fc5ceb6cd8"
-  integrity sha512-1q6oFn8IdHHwVn1/XG2+Dfe0MGCghGa/15dVD9ZXgnkUueyxmj6IgpFtmelV/DuFwc9I3bUWHm3RyoMG/Ynvrg==
+"@jupiterone/jupiter-managed-integration-sdk@^33.0.0":
+  version "33.0.0"
+  resolved "https://registry.yarnpkg.com/@jupiterone/jupiter-managed-integration-sdk/-/jupiter-managed-integration-sdk-33.0.0.tgz#42554f04b42dfe371bdc33fafe48163e316eff27"
+  integrity sha512-a8ixoqb+o58WsJ/g1qky0O/nB8gLvpNwsdy4unqCLO7RUHIAFa2z8i1/sHnGCB/RW+yEjXw9x5xmGx9WLxToow==
 
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"

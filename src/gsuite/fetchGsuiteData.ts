@@ -1,23 +1,19 @@
-import GSuiteClient, { GSuiteDataModel } from "./GSuiteClient";
+import GSuiteClient, { GSuiteDataModel, Member } from "./GSuiteClient";
 
 export default async function fetchGsuiteData(
   client: GSuiteClient,
 ): Promise<GSuiteDataModel> {
-  const [users, groups, domains] = await Promise.all([
-    client.fetchUsers(),
-    client.fetchGroups(),
-    client.fetchDomains(),
-  ]);
+  const users = await client.fetchUsers();
+  const groups = await client.fetchGroups();
+  const domains = await client.fetchDomains();
 
-  const groupsMembers = await Promise.all(
-    groups.map(group => {
-      return group.id ? client.fetchMembers(group.id) : [];
-    }),
-  );
+  let members: Member[] = [];
+  for (const group of groups) {
+    if (group.id) {
+      const groupMembers = await client.fetchMembers(group.id);
+      members = [...members, ...groupMembers];
+    }
+  }
 
-  const allMembers = groupsMembers.reduce((acc, value) => {
-    return acc.concat(value);
-  }, []);
-
-  return { users, groups, members: allMembers, domains };
+  return { users, groups, members, domains };
 }

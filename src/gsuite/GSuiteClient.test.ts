@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const mockEndpoints = jest.fn();
 jest.doMock("googleapis", () => ({
   google: {
@@ -11,10 +13,10 @@ import GSuiteClient from "./GSuiteClient";
 jest.mock("google-auth-library");
 
 const mockLogger = {
-  error: jest.fn(),
+  warn: jest.fn(),
 };
 
-async function getGsuiteData() {
+async function getGsuiteData(): Promise<GSuiteClient> {
   const client = new GSuiteClient(
     "fakeId",
     {
@@ -64,20 +66,32 @@ describe("bad response", () => {
   });
 });
 
-describe("forbidden", () => {
-  beforeAll(() => {
+describe("403", () => {
+  test("unknown error", async () => {
     mockEndpoints.mockReturnValue({
       groups: {
         list: jest.fn().mockImplementation(() => {
-          throw { code: 403, message: "Forbidden" };
+          throw { code: 403, message: "Something else" };
         }),
       },
     });
-  });
 
-  test("fetch groups with forbidden response", async () => {
     const client = await getGsuiteData();
     await expect(client.fetchGroups()).rejects.toMatchObject({ code: 403 });
-    expect(mockLogger.error).toHaveBeenCalledTimes(1);
+    expect(mockLogger.warn).not.toHaveBeenCalled();
+  });
+
+  test("unauthorized endpoint", async () => {
+    mockEndpoints.mockReturnValue({
+      groups: {
+        list: jest.fn().mockImplementation(() => {
+          throw { code: 403, message: "Not Authorized" };
+        }),
+      },
+    });
+
+    const client = await getGsuiteData();
+    await expect(client.fetchGroups()).resolves.toEqual([]);
+    expect(mockLogger.warn).toHaveBeenCalledTimes(1);
   });
 });

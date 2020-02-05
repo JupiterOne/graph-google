@@ -1,4 +1,3 @@
-import { hasOwnProperty } from "tslint/lib/utils";
 import { User } from "../gsuite/GSuiteClient";
 import { USER_ENTITY_CLASS, USER_ENTITY_TYPE, UserEntity } from "../jupiterone";
 import {
@@ -65,12 +64,12 @@ export function createUserEntities(data: User[]): UserEntity[] {
   });
 }
 
-function assignUsername(user: User, userEntity: UserEntity) {
+function assignUsername(user: User, userEntity: UserEntity): UserEntity {
   if (!user.primaryEmail) {
     return userEntity;
   }
 
-  const usernameMatch = user.primaryEmail.match("(.*?)@.*");
+  const usernameMatch = /(.*?)@.*/.exec(user.primaryEmail);
   if (!usernameMatch || !usernameMatch[1]) {
     return userEntity;
   }
@@ -80,7 +79,7 @@ function assignUsername(user: User, userEntity: UserEntity) {
   return userEntity;
 }
 
-function assignAddresses(user: User, userEntity: UserEntity) {
+function assignAddresses(user: User, userEntity: UserEntity): UserEntity {
   if (!user.addresses) {
     return userEntity;
   }
@@ -92,7 +91,7 @@ function assignAddresses(user: User, userEntity: UserEntity) {
   );
 }
 
-function assignPhones(user: User, userEntity: UserEntity) {
+function assignPhones(user: User, userEntity: UserEntity): UserEntity {
   if (!user.phones) {
     return userEntity;
   }
@@ -104,7 +103,7 @@ function assignPhones(user: User, userEntity: UserEntity) {
   );
 }
 
-function assignRelations(user: User, userEntity: UserEntity) {
+function assignRelations(user: User, userEntity: UserEntity): UserEntity {
   if (!user.relations) {
     return userEntity;
   }
@@ -117,7 +116,7 @@ function assignRelations(user: User, userEntity: UserEntity) {
   );
 }
 
-function assignExternalIds(user: User, userEntity: UserEntity) {
+function assignExternalIds(user: User, userEntity: UserEntity): UserEntity {
   if (!user.externalIds) {
     return userEntity;
   }
@@ -129,7 +128,7 @@ function assignExternalIds(user: User, userEntity: UserEntity) {
   );
 }
 
-function assignEmails(user: User, userEntity: UserEntity) {
+function assignEmails(user: User, userEntity: UserEntity): UserEntity {
   if (!user.emails) {
     return userEntity;
   }
@@ -146,12 +145,12 @@ function assignEmails(user: User, userEntity: UserEntity) {
   );
 }
 
-function assignManagementInfo(userEntity: UserEntity) {
+function assignManagementInfo(userEntity: UserEntity): UserEntity {
   if (!userEntity.managerRelation) {
     return userEntity;
   }
 
-  if (userEntity.managerRelation.match("@")) {
+  if (userEntity.managerRelation.includes("@")) {
     userEntity.managerEmail = userEntity.managerRelation;
   } else {
     userEntity.manager = userEntity.managerRelation;
@@ -160,7 +159,7 @@ function assignManagementInfo(userEntity: UserEntity) {
   return userEntity;
 }
 
-function assignEmployeeInfo(user: User, userEntity: UserEntity) {
+function assignEmployeeInfo(user: User, userEntity: UserEntity): UserEntity {
   if (!user.organizations || user.organizations.length === 0) {
     return userEntity;
   }
@@ -177,7 +176,10 @@ function assignEmployeeInfo(user: User, userEntity: UserEntity) {
   return userEntity;
 }
 
-function assignCustomAttributes(user: User, userEntity: UserEntity) {
+function assignCustomAttributes(
+  user: User,
+  userEntity: UserEntity,
+): UserEntity {
   if (!user.customSchemas) {
     return userEntity;
   }
@@ -185,7 +187,8 @@ function assignCustomAttributes(user: User, userEntity: UserEntity) {
   const categoryValues = Object.values(user.customSchemas);
 
   const userEntityWithCustomAttributes = categoryValues.reduce(
-    (acc, item, itemIndex) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (acc: any, item, itemIndex) => {
       const keys = Object.keys(item);
       const values = Object.values(item);
 
@@ -194,7 +197,7 @@ function assignCustomAttributes(user: User, userEntity: UserEntity) {
         const newPropertyName = keys[index];
         const newPropertyValue = values[index];
 
-        const isPropertyDuplicate = hasOwnProperty(acc, newPropertyName);
+        const isPropertyDuplicate = newPropertyName in acc;
 
         const fixedNewPropertyName = isPropertyDuplicate
           ? categoryName + capitalizeFirstLetter(newPropertyName)
@@ -204,7 +207,7 @@ function assignCustomAttributes(user: User, userEntity: UserEntity) {
 
       return acc;
     },
-    userEntity as any,
+    userEntity,
   );
 
   return userEntityWithCustomAttributes;

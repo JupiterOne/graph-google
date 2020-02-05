@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { createUserEntities } from "./UserEntityConverter";
 
-test("convert users", async () => {
+test("convert users", () => {
   const users = [
     {
       kind: "admin#directory#user",

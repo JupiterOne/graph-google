@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import { IntegrationLogger } from "@jupiterone/jupiter-managed-integration-sdk";
-import { GaxiosResponse } from "gaxios";
 import { JWT, JWTOptions } from "google-auth-library";
 import { admin_directory_v1, google } from "googleapis";
 
@@ -78,7 +77,7 @@ export default class GSuiteClient {
     this.logger = logger;
   }
 
-  public async authenticate() {
+  public async authenticate(): Promise<void> {
     const auth = new JWT({
       ...this.credentials,
       scopes: [
@@ -97,118 +96,127 @@ export default class GSuiteClient {
   }
 
   public async fetchDomains(): Promise<Domains> {
-    return this.fetchWithLog("domains", async () => {
-      const domains: Domains = {
-        domains: [],
-      };
+    const domains: Domains = {
+      domains: [],
+    };
 
-      const result = (await this.client.domains.list({
+    const response = await this.makeRequest("domains", client =>
+      client.domains.list({
         customer: this.accountId,
-      })) as GaxiosResponse<admin_directory_v1.Schema$Domains2>;
+      }),
+    );
 
-      // no test cases for else statements
-      /* istanbul ignore next */
-      if (result.data?.domains) {
-        for (const domain of result.data.domains) {
-          const domainName = domain.domainName;
+    /* istanbul ignore next */
+    if (response?.data?.domains) {
+      for (const domain of response.data.domains) {
+        const domainName = domain.domainName;
+        /* istanbul ignore else */
+        if (domainName !== undefined) {
+          domains.domains.push(domainName);
           /* istanbul ignore else */
-          if (domainName !== undefined) {
-            domains.domains.push(domainName);
-            /* istanbul ignore else */
-            if (domain.isPrimary) {
-              domains.primaryDomain = domainName;
-            }
+          if (domain.isPrimary) {
+            domains.primaryDomain = domainName;
           }
         }
       }
+    }
 
-      return domains;
-    });
+    return domains;
   }
 
   public async fetchGroups(): Promise<Group[]> {
-    return this.fetchWithLog("groups", async () => {
-      let groups: Group[] = [];
-      let pageToken: string | undefined = "";
+    let groups: Group[] = [];
+    let pageToken: string | undefined = "";
 
-      do {
-        const result = (await this.client.groups.list({
+    do {
+      const response = await this.makeRequest("groups", client =>
+        client.groups.list({
           customer: this.accountId,
           pageToken,
-        })) as GaxiosResponse<admin_directory_v1.Schema$Groups>;
+        }),
+      );
 
-        if (result.data?.groups) {
-          const pageGroups = result.data.groups as Group[];
-          groups = [...groups, ...pageGroups];
-          pageToken = result.data.nextPageToken;
-        }
-      } while (pageToken);
+      /* istanbul ignore next */
+      if (response?.data?.groups) {
+        const pageGroups = response.data.groups as Group[];
+        groups = [...groups, ...pageGroups];
+        pageToken = response.data.nextPageToken;
+      }
+    } while (pageToken);
 
-      return groups;
-    });
+    return groups;
   }
 
   public async fetchMembers(groupId: string): Promise<Member[]> {
-    return this.fetchWithLog("members", async () => {
-      let members: Member[] = [];
-      let pageToken: string | undefined = "";
+    let members: Member[] = [];
+    let pageToken: string | undefined = "";
 
-      do {
-        const result = (await this.client.members.list({
+    do {
+      const response = await this.makeRequest("members", client =>
+        client.members.list({
           groupKey: groupId,
           pageToken,
-        })) as GaxiosResponse<admin_directory_v1.Schema$Members>;
+        }),
+      );
 
-        if (result.data?.members) {
-          const pageMembers = result.data.members.map(member => ({
-            ...member,
-            groupId,
-            memberType: member.type as MemberType,
-            id: member.id as string,
-          }));
+      /* istanbul ignore next */
+      if (response?.data?.members) {
+        const pageMembers = (response.data
+          .members as admin_directory_v1.Schema$Member[]).map(member => ({
+          ...member,
+          groupId,
+          memberType: member.type as MemberType,
+          id: member.id as string,
+        }));
 
-          members = [...members, ...pageMembers];
-          pageToken = result.data.nextPageToken;
-        }
-      } while (pageToken);
+        members = [...members, ...pageMembers];
+        pageToken = response.data.nextPageToken;
+      }
+    } while (pageToken);
 
-      return members;
-    });
+    return members;
   }
 
   public async fetchUsers(): Promise<User[]> {
-    return this.fetchWithLog("users", async () => {
-      let users: User[] = [];
-      let pageToken: string | undefined = "";
+    let users: User[] = [];
+    let pageToken: string | undefined = "";
 
-      do {
-        const result = (await this.client.users.list({
+    do {
+      const response = await this.makeRequest("users", client =>
+        client.users.list({
           customer: this.accountId,
           projection: "full",
           pageToken,
-        })) as GaxiosResponse<admin_directory_v1.Schema$Users>;
+        }),
+      );
 
-        if (result.data?.users) {
-          const pageUsers = result.data.users as User[];
-          users = [...users, ...pageUsers];
-          pageToken = result.data.nextPageToken;
-        }
-      } while (pageToken);
+      /* istanbul ignore next */
+      if (response?.data?.users) {
+        const pageUsers = response.data.users as User[];
+        users = [...users, ...pageUsers];
+        pageToken = response.data.nextPageToken;
+      }
+    } while (pageToken);
 
-      return users;
-    });
+    return users;
   }
 
-  private async fetchWithLog<Return>(
+  /* eslint-disable */
+  private async makeRequest(
     resource: string,
-    doFetch: () => Promise<Return>,
-  ): Promise<Return> {
+    doFetch: (client: admin_directory_v1.Admin) => Promise<any>,
+  ): Promise<any | undefined> {
     try {
-      const result = await doFetch();
+      const result = await doFetch(this.client);
       return result;
     } catch (err) {
-      this.logger.error(err, `fetching ${resource} failed with error`);
-      throw err;
+      /* istanbul ignore next */
+      if (err.code === 403 && err.message?.includes("Not Authorized")) {
+        this.logger.warn(err, `fetching ${resource} failed with error`);
+      } else {
+        throw err;
+      }
     }
   }
+  /* eslint-enable */
 }

@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createGroupEntity should convert to entity 1`] = `
+Object {
+  "_class": Array [
+    "UserGroup",
+  ],
+  "_key": "google_group_0184mhaj0imamcg",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "adminCreated": true,
+        "aliases": Array [
+          "randomdistro@jupiterone.com",
+        ],
+        "description": "randomdistro@jupiterone.io distribution list",
+        "directMembersCount": "5",
+        "email": "randomdistro@jupiterone.io",
+        "etag": "abc123",
+        "id": "0184mhaj0imamcg",
+        "kind": "admin#directory#group",
+        "name": "Random",
+        "nonEditableAliases": Array [
+          "randomdistro@jupiterone.io.test-google-a.com",
+        ],
+      },
+    },
+  ],
+  "_type": "google_group",
+  "adminCreated": true,
+  "createdOn": undefined,
+  "description": "randomdistro@jupiterone.io distribution list",
+  "directMembersCount": "5",
+  "displayName": "Random",
+  "email": "randomdistro@jupiterone.io",
+  "id": "0184mhaj0imamcg",
+  "kind": "admin#directory#group",
+  "name": "Random",
+}
+`;
+
+exports[`#createGroupHasGroupMappedRelationship should convert to mapped relationship 1`] = `
+Object {
+  "_class": "HAS",
+  "_key": "google_group_0184mhaj0imamcg_has_group_abc123email@jupiterone.com",
+  "_mapping": Object {
+    "relationshipDirection": "FORWARD",
+    "skipTargetCreation": false,
+    "sourceEntityKey": "google_group_0184mhaj0imamcg",
+    "targetEntity": Object {
+      "_class": "UserGroup",
+      "email": "abc123email@jupiterone.com",
+    },
+    "targetFilterKeys": Array [
+      Array [
+        "_class",
+        "email",
+      ],
+    ],
+  },
+  "_type": "google_group_has_user",
+  "displayName": "HAS",
+}
+`;
+
+exports[`#createGroupHasGroupRelationship should convert to relationship 1`] = `
+Object {
+  "_class": "HAS",
+  "_fromEntityKey": "google_group_0184mhaj0imamcg",
+  "_key": "google_group_0184mhaj0imamcg|has|google_group_999",
+  "_toEntityKey": "google_group_999",
+  "_type": "google_group_has_group",
+  "deliverySettings": undefined,
+  "displayName": "HAS",
+  "email": "abc123email@jupiterone.com",
+  "id": "abc123",
+  "kind": "admin#directory#member",
+  "role": "MEMBER",
+  "status": "ACTIVE",
+  "type": "GROUP",
+}
+`;
+
+exports[`#createGroupHasUserMappedRelationship should convert to mapped relationship 1`] = `
+Object {
+  "_class": "HAS",
+  "_key": "google_group_0184mhaj0imamcg_has_user_abc123email@jupiterone.com",
+  "_mapping": Object {
+    "relationshipDirection": "FORWARD",
+    "skipTargetCreation": false,
+    "sourceEntityKey": "google_group_0184mhaj0imamcg",
+    "targetEntity": Object {
+      "_class": "User",
+      "email": "abc123email@jupiterone.com",
+    },
+    "targetFilterKeys": Array [
+      Array [
+        "_class",
+        "email",
+      ],
+    ],
+  },
+  "_type": "google_group_has_user",
+  "displayName": "HAS",
+}
+`;
+
+exports[`#createGroupHasUserRelationship should convert to relationship 1`] = `
+Object {
+  "_class": "HAS",
+  "_fromEntityKey": "google_group_0184mhaj0imamcg",
+  "_key": "google_group_0184mhaj0imamcg|has|google_user_123456789",
+  "_toEntityKey": "google_user_123456789",
+  "_type": "google_group_has_user",
+  "deliverySettings": undefined,
+  "displayName": "HAS",
+  "email": "abc123email@jupiterone.com",
+  "id": "abc123",
+  "kind": "admin#directory#member",
+  "role": "MEMBER",
+  "status": "ACTIVE",
+  "type": "GROUP",
+}
+`;

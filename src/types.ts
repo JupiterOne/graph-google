@@ -1,28 +1,19 @@
 import {
-  GraphClient,
-  IntegrationExecutionContext,
-  PersisterClient,
-} from "@jupiterone/jupiter-managed-integration-sdk";
+  IntegrationInstanceConfig,
+  IntegrationStepExecutionContext,
+} from '@jupiterone/integration-sdk-core';
+import { ParsedServiceAccountKeyFile } from './utils/parseServiceAccountKeyFile';
 
-import GSuiteClient from "./gsuite/GSuiteClient";
+export type IntegrationStepContext = IntegrationStepExecutionContext<
+  IntegrationConfig
+>;
 
-export interface GSuiteExecutionContext extends IntegrationExecutionContext {
-  graph: GraphClient;
-  persister: PersisterClient;
-  provider: GSuiteClient;
-}
-
-export interface GoogleIntegrationInstanceConfig {
-  googleAccountId: string;
+export interface SerializedIntegrationConfig extends IntegrationInstanceConfig {
+  serviceAccountKeyFile: string;
   domainAdminEmail: string;
+  googleAccountId: string;
 }
 
-/**
- * Google Service Account credentials, allowing code to run as the service
- * account, securely maintained by the execution environment and provided at
- * runtime in the `context.invocationArgs.serviceAccountCredentials`.
- */
-export interface ServiceAccountCredentials {
-  client_email: string;
-  private_key: string;
+export interface IntegrationConfig extends SerializedIntegrationConfig {
+  serviceAccountKeyConfig: ParsedServiceAccountKeyFile;
 }

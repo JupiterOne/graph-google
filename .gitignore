@@ -1,7 +1,6 @@
 node_modules/
-build/
-coverage/
 dist/
-yarn-error.log
-docker-compose.yml
+.j1-integration/
 .env
+.eslintcache
+tsconfig.tsbuildinfo

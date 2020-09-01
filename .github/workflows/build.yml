@@ -3,19 +3,16 @@ on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        node-version: [12.x]
-        os: [ubuntu-latest]
 
     steps:
       - id: setup-node
         name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12.x
 
       - name: Check out code repository source code
         uses: actions/checkout@v2
@@ -29,16 +26,12 @@ jobs:
       - name: Run build
         run: yarn build
 
-  # Publishing is done in a separate job to allow
-  # for all matrix builds to complete.
   release:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     strategy:
       fail-fast: false
-      matrix:
-        node: [12]
 
     steps:
       - name: Setup Node

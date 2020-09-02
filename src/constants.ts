@@ -51,7 +51,7 @@ type RelationshipConstantKeys =
   | 'GROUP_HAS_USER'
   | 'GROUP_HAS_GROUP'
   | 'ACCOUNT_HAS_GROUP'
-  | 'USER_TRUSTS_TOKEN';
+  | 'USER_ASSIGNED_TOKEN';
 
 export const relationships: Record<
   RelationshipConstantKeys,
@@ -88,9 +88,9 @@ export const relationships: Record<
     sourceType: entities.ACCOUNT._type,
     targetType: entities.GROUP._type,
   },
-  USER_TRUSTS_TOKEN: {
-    _type: 'google_user_trusts_token',
-    _class: RelationshipClass.TRUSTS,
+  USER_ASSIGNED_TOKEN: {
+    _type: 'google_user_assigned_token',
+    _class: RelationshipClass.ASSIGNED,
     sourceType: entities.USER._type,
     targetType: entities.TOKEN._type,
   },

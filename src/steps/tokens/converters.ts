@@ -34,12 +34,12 @@ export function createTokenEntity(data: admin_directory_v1.Schema$Token) {
   });
 }
 
-export function createUserTrustsTokenRelationship(params: {
+export function createUserAssignedTokenRelationship(params: {
   userEntity: Entity;
   tokenEntity: Entity;
 }): Relationship {
   return createDirectRelationship({
-    _class: RelationshipClass.TRUSTS,
+    _class: RelationshipClass.ASSIGNED,
     from: params.userEntity,
     to: params.tokenEntity,
   });

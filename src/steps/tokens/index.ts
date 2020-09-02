@@ -4,7 +4,7 @@ import { entities, relationships } from '../../constants';
 import { GSuiteTokenClient } from '../../gsuite/clients/GSuiteTokenClient';
 import {
   createTokenEntity,
-  createUserTrustsTokenRelationship,
+  createUserAssignedTokenRelationship,
 } from './converters';
 
 export async function fetchTokens(
@@ -26,7 +26,7 @@ export async function fetchTokens(
       await client.iterateTokens(email, async (token) => {
         const tokenEntity = await jobState.addEntity(createTokenEntity(token));
         await jobState.addRelationship(
-          createUserTrustsTokenRelationship({
+          createUserAssignedTokenRelationship({
             userEntity,
             tokenEntity,
           }),
@@ -41,7 +41,7 @@ export const tokenSteps: IntegrationStep<IntegrationConfig>[] = [
     id: 'step-fetch-tokens',
     name: 'Tokens',
     entities: [entities.TOKEN],
-    relationships: [relationships.USER_TRUSTS_TOKEN],
+    relationships: [relationships.USER_ASSIGNED_TOKEN],
     dependsOn: ['step-fetch-users'],
     executionHandler: fetchTokens,
   },

@@ -129,7 +129,7 @@ The following relationships are created/mapped:
 | `google_account`      | **HAS**               | `google_group`        |
 | `google_account`      | **HAS**               | `google_user`         |
 | `google_site`         | **HAS**               | `google_user`         |
-| `google_user`         | **TRUSTS**            | `google_token`        |
+| `google_user`         | **ASSIGNED**          | `google_token`        |
 
 <!--
 ********************************************************************************

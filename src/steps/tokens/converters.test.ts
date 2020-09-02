@@ -1,7 +1,7 @@
 import { admin_directory_v1 } from 'googleapis';
 import {
   createTokenEntity,
-  createUserTrustsTokenRelationship,
+  createUserAssignedTokenRelationship,
 } from './converters';
 import { getMockUser } from '../../../test/mocks';
 import { createUserEntity } from '../users/converters';
@@ -31,10 +31,10 @@ describe('#createTokenEntity', () => {
   });
 });
 
-describe('#createUserTrustsTokenRelationship', () => {
+describe('#createUserAssignedTokenRelationship', () => {
   test('should convert to relationship', () => {
     expect(
-      createUserTrustsTokenRelationship({
+      createUserAssignedTokenRelationship({
         userEntity: createUserEntity(getMockUser()),
         tokenEntity: createTokenEntity(getMockToken()),
       }),

@@ -10,7 +10,7 @@ and this project adheres to
 
 ### Added
 
-- Ingest `google_token` and build `google_user` **TRUSTS** `google_token`
+- Ingest `google_token` and build `google_user` **ASSIGNED** `google_token`
   relationship
 
 ## 3.0.0 - 2020-08-31

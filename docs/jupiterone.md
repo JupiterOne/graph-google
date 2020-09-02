@@ -44,7 +44,7 @@ From your Google Admin console:
 1. Add the following API scopes (comma separated):
 
 ```text
-https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
+https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security
 ```
 
 1. Click Authorize
@@ -91,6 +91,7 @@ From your Google Admin console:
    - Users -> Read
    - Groups -> Read
    - Domain Management
+   - User Security Management
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--

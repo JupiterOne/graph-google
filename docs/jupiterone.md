@@ -113,9 +113,10 @@ The following entities are created:
 | --------- | ---------------- | --------------- |
 | Domain    | `google_domain`  | `Domain`        |
 | Account   | `google_account` | `Account`       |
+| Group     | `google_group`   | `UserGroup`     |
 | User      | `google_user`    | `User`          |
 | Site      | `google_site`    | `Site`          |
-| Group     | `google_group`   | `UserGroup`     |
+| Token     | `google_token`   | `AccessKey`     |
 
 ### Relationships
 
@@ -123,11 +124,12 @@ The following relationships are created/mapped:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
-| `google_account`      | **HAS**               | `google_user`         |
-| `google_site`         | **HAS**               | `google_user`         |
 | `google_group`        | **HAS**               | `google_user`         |
 | `google_group`        | **HAS**               | `google_group`        |
 | `google_account`      | **HAS**               | `google_group`        |
+| `google_account`      | **HAS**               | `google_user`         |
+| `google_site`         | **HAS**               | `google_user`         |
+| `google_user`         | **TRUSTS**            | `google_token`        |
 
 <!--
 ********************************************************************************

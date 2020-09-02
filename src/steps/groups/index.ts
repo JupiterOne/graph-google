@@ -114,8 +114,11 @@ async function createRelationshipFromGroupMemberTypeUser(
 export async function fetchGroups(
   context: IntegrationStepContext,
 ): Promise<void> {
-  const { jobState, instance } = context;
-  const client = new GSuiteGroupClient(instance.config);
+  const { jobState, instance, logger } = context;
+  const client = new GSuiteGroupClient({
+    config: instance.config,
+    logger,
+  });
 
   // Create all of the group entities up front and later iterate the group
   // members. There may be mapped relationships we have to create, so we need

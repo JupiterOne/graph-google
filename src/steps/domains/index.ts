@@ -7,7 +7,10 @@ import { GSuiteDomainClient } from '../../gsuite/clients/GSuiteDomainClient';
 export async function fetchDomains(
   context: IntegrationStepContext,
 ): Promise<void> {
-  const client = new GSuiteDomainClient(context.instance.config);
+  const client = new GSuiteDomainClient({
+    config: context.instance.config,
+    logger: context.logger,
+  });
 
   await client.iterateDomains(async (domain) => {
     await context.jobState.addEntity(createDomainEntity(domain));

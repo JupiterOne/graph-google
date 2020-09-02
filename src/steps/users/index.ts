@@ -13,8 +13,13 @@ import getAccountEntity from '../../utils/getAccountEntity';
 export async function fetchUsers(
   context: IntegrationStepContext,
 ): Promise<void> {
-  const { instance } = context;
-  const client = new GSuiteUserClient(instance.config);
+  const { instance, logger } = context;
+
+  const client = new GSuiteUserClient({
+    config: instance.config,
+    logger,
+  });
+
   const buildingIdSet = new Set<string>();
   const accountEntity = await getAccountEntity(context);
 

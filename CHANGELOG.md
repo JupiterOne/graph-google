@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Ingest `google_token` and build `google_user` **ASSIGNED** `google_token`
+  relationship
+
 ## 3.0.0 - 2020-08-31
 
 ### Changed

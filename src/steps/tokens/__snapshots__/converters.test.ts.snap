@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createTokenEntity should convert to entity 1`] = `
+Object {
+  "_class": Array [
+    "AccessKey",
+  ],
+  "_key": "user:123456789123456789:client:1234-abcdefg.apps.googleusercontent.com",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "anonymous": false,
+        "clientId": "1234-abcdefg.apps.googleusercontent.com",
+        "displayText": "Slack",
+        "etag": "abc123",
+        "kind": "admin#directory#token",
+        "nativeApp": false,
+        "scopes": Array [
+          "https://www.googleapis.com/auth/activity",
+          "https://www.googleapis.com/auth/drive.activity",
+          "https://www.googleapis.com/auth/userinfo.email",
+          "openid",
+          "https://www.googleapis.com/auth/drive",
+        ],
+        "userKey": "123456789123456789",
+      },
+    },
+  ],
+  "_type": "google_token",
+  "anonymous": false,
+  "clientId": "1234-abcdefg.apps.googleusercontent.com",
+  "createdOn": undefined,
+  "displayName": "Slack",
+  "name": "Slack",
+  "nativeApp": false,
+  "scopes": Array [
+    "https://www.googleapis.com/auth/activity",
+    "https://www.googleapis.com/auth/drive.activity",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "openid",
+    "https://www.googleapis.com/auth/drive",
+  ],
+  "userKey": "123456789123456789",
+}
+`;
+
+exports[`#createUserAssignedTokenRelationship should convert to relationship 1`] = `
+Object {
+  "_class": "ASSIGNED",
+  "_fromEntityKey": "google_user_123456789",
+  "_key": "google_user_123456789|assigned|user:123456789123456789:client:1234-abcdefg.apps.googleusercontent.com",
+  "_toEntityKey": "user:123456789123456789:client:1234-abcdefg.apps.googleusercontent.com",
+  "_type": "google_user_assigned_token",
+  "displayName": "ASSIGNED",
+}
+`;

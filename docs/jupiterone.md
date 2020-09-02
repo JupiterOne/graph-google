@@ -44,7 +44,7 @@ From your Google Admin console:
 1. Add the following API scopes (comma separated):
 
 ```text
-https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly
+https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security
 ```
 
 1. Click Authorize
@@ -91,6 +91,7 @@ From your Google Admin console:
    - Users -> Read
    - Groups -> Read
    - Domain Management
+   - User Security Management
 
 <!-- {J1_DOCUMENTATION_MARKER_START} -->
 <!--
@@ -113,9 +114,10 @@ The following entities are created:
 | --------- | ---------------- | --------------- |
 | Domain    | `google_domain`  | `Domain`        |
 | Account   | `google_account` | `Account`       |
+| Group     | `google_group`   | `UserGroup`     |
 | User      | `google_user`    | `User`          |
 | Site      | `google_site`    | `Site`          |
-| Group     | `google_group`   | `UserGroup`     |
+| Token     | `google_token`   | `AccessKey`     |
 
 ### Relationships
 
@@ -123,11 +125,12 @@ The following relationships are created/mapped:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
 | --------------------- | --------------------- | --------------------- |
-| `google_account`      | **HAS**               | `google_user`         |
-| `google_site`         | **HAS**               | `google_user`         |
 | `google_group`        | **HAS**               | `google_user`         |
 | `google_group`        | **HAS**               | `google_group`        |
 | `google_account`      | **HAS**               | `google_group`        |
+| `google_account`      | **HAS**               | `google_user`         |
+| `google_site`         | **HAS**               | `google_user`         |
+| `google_user`         | **ASSIGNED**          | `google_token`        |
 
 <!--
 ********************************************************************************

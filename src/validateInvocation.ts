@@ -13,6 +13,7 @@ export default async function validateInvocation(
 ) {
   const {
     instance: { config: serializedIntegrationConfig },
+    logger,
   } = context;
 
   if (
@@ -31,7 +32,7 @@ export default async function validateInvocation(
     serializedIntegrationConfig,
   ));
 
-  const client = new GSuiteClient(config);
+  const client = new GSuiteClient({ config, logger });
 
   try {
     await client.getAuthenticatedServiceClient();

@@ -2,6 +2,7 @@ import { JWT, JWTOptions } from 'google-auth-library';
 import { admin_directory_v1, google } from 'googleapis';
 import { GaxiosResponse } from 'gaxios';
 import { IntegrationConfig } from '../../types';
+import { IntegrationLogger } from '@jupiterone/integration-sdk-core';
 
 export interface PageableResponse {
   nextPageToken?: string;
@@ -13,13 +14,20 @@ export type PageableGaxiosResponse<T> = GaxiosResponse<
   }
 >;
 
+export interface CreateGSuiteClientParams {
+  config: IntegrationConfig;
+  logger: IntegrationLogger;
+}
+
 export default class GSuiteClient {
   readonly accountId: string;
+  readonly logger: IntegrationLogger;
 
   private client: admin_directory_v1.Admin;
   private credentials: JWTOptions;
 
-  constructor(config: IntegrationConfig) {
+  constructor({ config, logger }: CreateGSuiteClientParams) {
+    this.logger = logger;
     this.accountId = config.googleAccountId;
     this.credentials = {
       email: config.serviceAccountKeyConfig.client_email,
@@ -35,6 +43,7 @@ export default class GSuiteClient {
         'https://www.googleapis.com/auth/admin.directory.user.readonly',
         'https://www.googleapis.com/auth/admin.directory.group.readonly',
         'https://www.googleapis.com/auth/admin.directory.domain.readonly',
+        'https://www.googleapis.com/auth/admin.directory.user.security',
       ],
     });
 

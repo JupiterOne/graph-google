@@ -4,7 +4,13 @@ import {
   StepRelationshipMetadata,
 } from '@jupiterone/integration-sdk-core';
 
-type EntityConstantKeys = 'DOMAIN' | 'USER' | 'GROUP' | 'ACCOUNT' | 'SITE';
+type EntityConstantKeys =
+  | 'DOMAIN'
+  | 'USER'
+  | 'GROUP'
+  | 'ACCOUNT'
+  | 'SITE'
+  | 'TOKEN';
 
 export const entities: Record<EntityConstantKeys, StepEntityMetadata> = {
   DOMAIN: {
@@ -32,6 +38,11 @@ export const entities: Record<EntityConstantKeys, StepEntityMetadata> = {
     _type: 'google_site',
     _class: 'Site',
   },
+  TOKEN: {
+    resourceName: 'Token',
+    _type: 'google_token',
+    _class: 'AccessKey',
+  },
 };
 
 type RelationshipConstantKeys =
@@ -39,7 +50,8 @@ type RelationshipConstantKeys =
   | 'SITE_HOSTS_USER'
   | 'GROUP_HAS_USER'
   | 'GROUP_HAS_GROUP'
-  | 'ACCOUNT_HAS_GROUP';
+  | 'ACCOUNT_HAS_GROUP'
+  | 'USER_ASSIGNED_TOKEN';
 
 export const relationships: Record<
   RelationshipConstantKeys,
@@ -75,5 +87,11 @@ export const relationships: Record<
     _class: RelationshipClass.HAS,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.GROUP._type,
+  },
+  USER_ASSIGNED_TOKEN: {
+    _type: 'google_user_assigned_token',
+    _class: RelationshipClass.ASSIGNED,
+    sourceType: entities.USER._type,
+    targetType: entities.TOKEN._type,
   },
 };

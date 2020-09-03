@@ -1,7 +1,6 @@
 import {
   IntegrationExecutionContext,
   IntegrationConfigLoadError,
-  IntegrationProviderAuthenticationError,
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from './types';
@@ -33,10 +32,5 @@ export default async function validateInvocation(
   ));
 
   const client = new GSuiteClient({ config, logger });
-
-  try {
-    await client.getAuthenticatedServiceClient();
-  } catch (err) {
-    throw new IntegrationProviderAuthenticationError(err);
-  }
+  await client.getAuthenticatedServiceClient();
 }

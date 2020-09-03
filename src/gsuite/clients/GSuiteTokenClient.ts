@@ -1,8 +1,17 @@
-import GSuiteClient from './GSuiteClient';
+import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
 
 import { admin_directory_v1 } from 'googleapis';
 
 export class GSuiteTokenClient extends GSuiteClient {
+  constructor(params: CreateGSuiteClientParams) {
+    super({
+      ...params,
+      requiredScopes: [
+        'https://www.googleapis.com/auth/admin.directory.user.security',
+      ],
+    });
+  }
+
   async iterateTokens(
     userKey: string,
     callback: (data: admin_directory_v1.Schema$Token) => Promise<void>,

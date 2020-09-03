@@ -1,4 +1,7 @@
-import { IntegrationStep } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationStep,
+  IntegrationProviderAuthorizationError,
+} from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships } from '../../constants';
 import { GSuiteTokenClient } from '../../gsuite/clients/GSuiteTokenClient';
@@ -16,24 +19,39 @@ export async function fetchTokens(
     logger,
   });
 
-  await jobState.iterateEntities(
-    {
-      _type: entities.USER._type,
-    },
-    async (userEntity) => {
-      const email = userEntity.email as string;
+  try {
+    await jobState.iterateEntities(
+      {
+        _type: entities.USER._type,
+      },
+      async (userEntity) => {
+        const email = userEntity.email as string;
 
-      await client.iterateTokens(email, async (token) => {
-        const tokenEntity = await jobState.addEntity(createTokenEntity(token));
-        await jobState.addRelationship(
-          createUserAssignedTokenRelationship({
-            userEntity,
-            tokenEntity,
-          }),
-        );
-      });
-    },
-  );
+        await client.iterateTokens(email, async (token) => {
+          const tokenEntity = await jobState.addEntity(
+            createTokenEntity(token),
+          );
+          await jobState.addRelationship(
+            createUserAssignedTokenRelationship({
+              userEntity,
+              tokenEntity,
+            }),
+          );
+        });
+      },
+    );
+  } catch (err) {
+    if (err instanceof IntegrationProviderAuthorizationError) {
+      context.logger.warn(
+        `Could not ingest token entities. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )})`,
+      );
+      return;
+    }
+
+    throw err;
+  }
 }
 
 export const tokenSteps: IntegrationStep<IntegrationConfig>[] = [

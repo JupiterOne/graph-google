@@ -1,8 +1,11 @@
-import { JWT, JWTOptions } from 'google-auth-library';
+import { JWTOptions } from 'google-auth-library';
 import { admin_directory_v1, google } from 'googleapis';
 import { GaxiosResponse } from 'gaxios';
 import { IntegrationConfig } from '../../types';
-import { IntegrationLogger } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationLogger,
+  IntegrationProviderAuthorizationError,
+} from '@jupiterone/integration-sdk-core';
 
 export interface PageableResponse {
   nextPageToken?: string;
@@ -17,18 +20,37 @@ export type PageableGaxiosResponse<T> = GaxiosResponse<
 export interface CreateGSuiteClientParams {
   config: IntegrationConfig;
   logger: IntegrationLogger;
+  requiredScopes?: string[];
 }
+
+const DEFAULT_GSUITE_OAUTH_SCOPES: string[] = [
+  // These scopes have been set since the beginning of this integration, so
+  // all integration instances should have these scopes.
+  'https://www.googleapis.com/auth/admin.directory.user.readonly',
+  'https://www.googleapis.com/auth/admin.directory.group.readonly',
+  'https://www.googleapis.com/auth/admin.directory.domain.readonly',
+];
 
 export default class GSuiteClient {
   readonly accountId: string;
   readonly logger: IntegrationLogger;
+  readonly requiredScopes: string[] = DEFAULT_GSUITE_OAUTH_SCOPES;
 
   private client: admin_directory_v1.Admin;
   private credentials: JWTOptions;
 
-  constructor({ config, logger }: CreateGSuiteClientParams) {
+  constructor({
+    config,
+    logger,
+    requiredScopes = [],
+  }: CreateGSuiteClientParams) {
     this.logger = logger;
     this.accountId = config.googleAccountId;
+
+    this.requiredScopes = Array.from(
+      new Set([...this.requiredScopes, ...requiredScopes]),
+    );
+
     this.credentials = {
       email: config.serviceAccountKeyConfig.client_email,
       key: config.serviceAccountKeyConfig.private_key,
@@ -37,17 +59,29 @@ export default class GSuiteClient {
   }
 
   private async getClient(): Promise<admin_directory_v1.Admin> {
-    const auth = new JWT({
+    const auth = new google.auth.JWT({
       ...this.credentials,
-      scopes: [
-        'https://www.googleapis.com/auth/admin.directory.user.readonly',
-        'https://www.googleapis.com/auth/admin.directory.group.readonly',
-        'https://www.googleapis.com/auth/admin.directory.domain.readonly',
-        'https://www.googleapis.com/auth/admin.directory.user.security',
-      ],
+      scopes: this.requiredScopes,
     });
 
-    await auth.authorize();
+    try {
+      await auth.authorize();
+    } catch (err) {
+      const status = err.response?.status;
+      const endpoint = err.response?.request?.responseURL;
+      const statusText = `${
+        err.response?.data?.error_description
+      } Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/master/docs/jupiterone.md#admin-api-enablement (scopes=${Array.from(
+        this.requiredScopes,
+      ).join(', ')})`;
+
+      throw new IntegrationProviderAuthorizationError({
+        cause: err,
+        endpoint,
+        status,
+        statusText,
+      });
+    }
 
     return google.admin({
       version: 'directory_v1',
@@ -56,10 +90,11 @@ export default class GSuiteClient {
   }
 
   async getAuthenticatedServiceClient(): Promise<admin_directory_v1.Admin> {
-    if (!this.client) {
-      this.client = await this.getClient();
+    if (this.client) {
+      return this.client;
     }
 
+    this.client = await this.getClient();
     return this.client;
   }
 

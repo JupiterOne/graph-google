@@ -1,8 +1,17 @@
-import GSuiteClient from './GSuiteClient';
+import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
 
 import { admin_directory_v1 } from 'googleapis';
 
 export class GSuiteTokenClient extends GSuiteClient {
+  constructor(params: CreateGSuiteClientParams) {
+    super({
+      ...params,
+      requiredScopes: [
+        'https://www.googleapis.com/auth/admin.directory.user.security',
+      ],
+    });
+  }
+
   async iterateTokens(
     userKey: string,
     callback: (data: admin_directory_v1.Schema$Token) => Promise<void>,
@@ -13,12 +22,11 @@ export class GSuiteTokenClient extends GSuiteClient {
     try {
       ({ data: tokenResponse } = await client.tokens.list({ userKey }));
     } catch (err) {
-      this.logger.warn(
-        {
-          err,
-        },
-        `Could not list tokens for user. NOTE: The tokens of users who have higher permissions than the domain admin used by this integration cannot be listed.`,
-      );
+      this.logger.warn({ err }, 'Could not list tokens for user');
+      this.logger.publishEvent({
+        name: 'list_token_error',
+        description: `Could not list tokens for user. NOTE: The tokens of users who have higher permissions than the domain admin used by this integration cannot be listed.`,
+      });
       return;
     }
 

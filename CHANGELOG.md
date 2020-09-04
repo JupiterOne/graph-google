@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.1.1 - 2020-09-04
+
+### Fixed
+
+- [#70](https://github.com/JupiterOne/graph-google/issues/70) - Step
+  authorization should handle missing OAuth scopes
+
 ## 3.1.0 - 2020-08-31
 
 ### Added

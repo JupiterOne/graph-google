@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.1.1 - 2020-09-04
+
 ### Fixed
 
 - [#70](https://github.com/JupiterOne/graph-google/issues/70) - Step

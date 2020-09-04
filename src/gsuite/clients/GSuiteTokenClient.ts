@@ -22,12 +22,11 @@ export class GSuiteTokenClient extends GSuiteClient {
     try {
       ({ data: tokenResponse } = await client.tokens.list({ userKey }));
     } catch (err) {
-      this.logger.warn(
-        {
-          err,
-        },
-        `Could not list tokens for user. NOTE: The tokens of users who have higher permissions than the domain admin used by this integration cannot be listed.`,
-      );
+      this.logger.warn({ err }, 'Could not list tokens for user');
+      this.logger.publishEvent({
+        name: 'list_token_error',
+        description: `Could not list tokens for user. NOTE: The tokens of users who have higher permissions than the domain admin used by this integration cannot be listed.`,
+      });
       return;
     }
 

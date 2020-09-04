@@ -91,7 +91,7 @@ describe('GSuiteClient.getAuthenticatedServiceClient', () => {
     await expect(
       gsuiteClient.getAuthenticatedServiceClient(),
     ).rejects.toThrowError(
-      'Provider authorization failed at https://www.googleapis.com/oauth2/v4/token: 401 Client is unauthorized to retrieve access tokens using this method, or client not authorized for any of the scopes requested. Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/master/docs/jupiterone.md#admin-api-enablement (scopes=https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.domain.readonly)',
+      'Provider authorization failed at https://www.googleapis.com/oauth2/v4/token: 401 Client is unauthorized to retrieve access tokens using this method, or client not authorized for any of the scopes requested. Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/master/docs/jupiterone.md#admin-api-enablement (requiredScopes=https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.domain.readonly)',
     );
   });
 

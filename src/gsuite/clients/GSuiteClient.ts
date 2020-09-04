@@ -34,7 +34,7 @@ const DEFAULT_GSUITE_OAUTH_SCOPES: string[] = [
 export default class GSuiteClient {
   readonly accountId: string;
   readonly logger: IntegrationLogger;
-  readonly requiredScopes: string[] = DEFAULT_GSUITE_OAUTH_SCOPES;
+  readonly requiredScopes: string[];
 
   private client: admin_directory_v1.Admin;
   private credentials: JWTOptions;
@@ -48,7 +48,7 @@ export default class GSuiteClient {
     this.accountId = config.googleAccountId;
 
     this.requiredScopes = Array.from(
-      new Set([...this.requiredScopes, ...requiredScopes]),
+      new Set([...DEFAULT_GSUITE_OAUTH_SCOPES, ...requiredScopes]),
     );
 
     this.credentials = {
@@ -71,7 +71,7 @@ export default class GSuiteClient {
       const endpoint = err.response?.request?.responseURL;
       const statusText = `${
         err.response?.data?.error_description
-      } Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/master/docs/jupiterone.md#admin-api-enablement (scopes=${Array.from(
+      } Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/master/docs/jupiterone.md#admin-api-enablement (requiredScopes=${Array.from(
         this.requiredScopes,
       ).join(', ')})`;
 

@@ -28,7 +28,7 @@ function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
 
   collection.forEach((item) => {
     flattendRecordFields[`${item.type}${suffix}`] = item[valueMethod];
-    if (item[valueMethod].match(/.+\@.+\..+/)) {
+    if (item[valueMethod].match(/.+@.+\..+/)) {
       flattendRecordFields[`${item.type}Email`] = item[valueMethod];
     }
   });

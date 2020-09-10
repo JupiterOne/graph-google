@@ -95,6 +95,7 @@ Object {
   "kind": "admin#directory#user",
   "lastLoginTime": 1598489879000,
   "lastName": "Doe",
+  "managerEmail": "john.doe.manager@jupiterone.io",
   "managerRelation": "john.doe.manager@jupiterone.io",
   "mfaEnabled": true,
   "name": "John Doe",

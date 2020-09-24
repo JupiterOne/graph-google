@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- Converting `user.addresses` objects to flattened fields failed on
+  `formatted: undefined` value
+
 ## 3.1.1 - 2020-09-04
 
 ### Fixed

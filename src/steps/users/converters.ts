@@ -19,7 +19,7 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   valueMethod: string;
 }
 
-function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
+export function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
   collection,
   suffix,
   valueMethod,
@@ -28,7 +28,7 @@ function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
 
   collection.forEach((item) => {
     flattendRecordFields[`${item.type}${suffix}`] = item[valueMethod];
-    if (item[valueMethod].match(/.+@.+\..+/)) {
+    if (/.+@.+\..+/.exec(item[valueMethod])) {
       flattendRecordFields[`${item.type}Email`] = item[valueMethod];
     }
   });

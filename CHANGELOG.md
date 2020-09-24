@@ -8,10 +8,19 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.1.3 - 2020-09-24
+
 ### Fixed
 
 - Converting `user.addresses` objects to flattened fields failed on
   `formatted: undefined` value
+
+## 3.1.2 - 2020-09-10
+
+### Added
+
+- Capture `user.managerEmail` so that the Person can be mapped to his/her
+  manager
 
 ## 3.1.1 - 2020-09-04
 

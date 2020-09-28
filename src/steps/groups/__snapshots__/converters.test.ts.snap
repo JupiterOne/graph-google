@@ -49,12 +49,12 @@ Object {
     "skipTargetCreation": false,
     "sourceEntityKey": "google_group_0184mhaj0imamcg",
     "targetEntity": Object {
-      "_class": "UserGroup",
+      "_type": "google_group",
       "email": "abc123email@jupiterone.com",
     },
     "targetFilterKeys": Array [
       Array [
-        "_class",
+        "_type",
         "email",
       ],
     ],
@@ -91,12 +91,12 @@ Object {
     "skipTargetCreation": false,
     "sourceEntityKey": "google_group_0184mhaj0imamcg",
     "targetEntity": Object {
-      "_class": "User",
+      "_type": "google_user",
       "email": "abc123email@jupiterone.com",
     },
     "targetFilterKeys": Array [
       Array [
-        "_class",
+        "_type",
         "email",
       ],
     ],

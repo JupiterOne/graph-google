@@ -51,7 +51,8 @@ type RelationshipConstantKeys =
   | 'GROUP_HAS_USER'
   | 'GROUP_HAS_GROUP'
   | 'ACCOUNT_HAS_GROUP'
-  | 'USER_ASSIGNED_TOKEN';
+  | 'USER_ASSIGNED_TOKEN'
+  | 'TOKEN_ALLOWS_VENDOR';
 
 export const relationships: Record<
   RelationshipConstantKeys,
@@ -93,5 +94,11 @@ export const relationships: Record<
     _class: RelationshipClass.ASSIGNED,
     sourceType: entities.USER._type,
     targetType: entities.TOKEN._type,
+  },
+  TOKEN_ALLOWS_VENDOR: {
+    _type: 'google_token_allows_mapped_vendor',
+    _class: RelationshipClass.ALLOWS,
+    sourceType: entities.TOKEN._type,
+    targetType: 'mapped_entity (class Vendor)',
   },
 };

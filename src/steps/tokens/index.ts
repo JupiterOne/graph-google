@@ -50,8 +50,8 @@ export async function fetchTokens(
                 targetFilterKeys: [['_class', 'name']],
                 targetEntity: {
                   _class: 'Vendor',
-                  displayName: token.displayText || undefined,
-                  name: token.displayText || undefined,
+                  displayName: token.displayText || 'Unknown Vendor',
+                  name: token.displayText || 'Unknown Vendor',
                   validated: false,
                   active: true,
                 },

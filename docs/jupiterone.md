@@ -123,14 +123,15 @@ The following entities are created:
 
 The following relationships are created/mapped:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
-| --------------------- | --------------------- | --------------------- |
-| `google_group`        | **HAS**               | `google_user`         |
-| `google_group`        | **HAS**               | `google_group`        |
-| `google_account`      | **HAS**               | `google_group`        |
-| `google_account`      | **HAS**               | `google_user`         |
-| `google_site`         | **HAS**               | `google_user`         |
-| `google_user`         | **ASSIGNED**          | `google_token`        |
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type`          |
+| --------------------- | --------------------- | ------------------------------ |
+| `google_group`        | **HAS**               | `google_user`                  |
+| `google_group`        | **HAS**               | `google_group`                 |
+| `google_account`      | **HAS**               | `google_group`                 |
+| `google_account`      | **HAS**               | `google_user`                  |
+| `google_site`         | **HAS**               | `google_user`                  |
+| `google_user`         | **ASSIGNED**          | `google_token`                 |
+| `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
 
 <!--
 ********************************************************************************

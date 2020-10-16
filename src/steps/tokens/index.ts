@@ -1,6 +1,9 @@
 import {
   IntegrationStep,
   IntegrationProviderAuthorizationError,
+  createMappedRelationship,
+  RelationshipClass,
+  RelationshipDirection,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships } from '../../constants';
@@ -37,6 +40,24 @@ export async function fetchTokens(
               tokenEntity,
             }),
           );
+          await jobState.addRelationship(
+            createMappedRelationship({
+              _class: RelationshipClass.ALLOWS,
+              _type: relationships.TOKEN_ALLOWS_VENDOR._type,
+              _mapping: {
+                sourceEntityKey: tokenEntity._key,
+                relationshipDirection: RelationshipDirection.FORWARD,
+                targetFilterKeys: [['_class', 'name']],
+                targetEntity: {
+                  _class: 'Vendor',
+                  displayName: token.displayText || 'Unknown Vendor',
+                  name: token.displayText || 'Unknown Vendor',
+                  validated: false,
+                  active: true,
+                },
+              },
+            }),
+          );
         });
       },
     );
@@ -61,7 +82,10 @@ export const tokenSteps: IntegrationStep<IntegrationConfig>[] = [
     id: 'step-fetch-tokens',
     name: 'Tokens',
     entities: [entities.TOKEN],
-    relationships: [relationships.USER_ASSIGNED_TOKEN],
+    relationships: [
+      relationships.USER_ASSIGNED_TOKEN,
+      relationships.TOKEN_ALLOWS_VENDOR,
+    ],
     dependsOn: ['step-fetch-users'],
     executionHandler: fetchTokens,
   },

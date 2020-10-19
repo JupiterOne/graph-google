@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.2.0 - 2020-10-19
+
 ### Added
 
 - Create relationship mapping from google_token Entities to Vendor entities

@@ -23,6 +23,7 @@ export class GSuiteGroupClient extends GSuiteClient {
     );
   }
 
+  // It looks like google groups allows 2 users with the same email address.
   async iterateGroupMembers(
     groupId: string,
     callback: (data: admin_directory_v1.Schema$Member) => Promise<void>,

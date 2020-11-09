@@ -1,0 +1,6 @@
+{
+    "projectManager.git.baseFolders": [
+        "dev/github",
+        "dev/bitbucket"
+    ]
+}

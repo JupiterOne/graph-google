@@ -100,6 +100,7 @@ async function createRelationshipFromGroupMemberTypeUser(
   jobState: JobState,
 ): Promise<Relationship> {
   const userId = groupMember.id as string;
+  // This is not working properly
   const targetUserEntity = await jobState.findEntity(userId);
 
   return targetUserEntity

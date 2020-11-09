@@ -107,4 +107,14 @@ describe('#createGroupHasUserRelationship', () => {
       }),
     ).toMatchSnapshot();
   });
+
+  test('should convert to relationship', () => {
+    expect(
+      createGroupHasUserRelationship({
+        sourceGroupEntity: createGroupEntity(getMockGroup()),
+        targetUserEntity: createUserEntity(getMockUser()),
+        groupMember: getMockGroupMemberTypeGroup(),
+      }),
+    ).toMatchSnapshot();
+  });
 });

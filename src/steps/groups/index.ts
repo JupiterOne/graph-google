@@ -98,7 +98,7 @@ async function createRelationshipFromGroupMemberTypeUser(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
   jobState: JobState,
-): Promise<Relationship> {
+): Promise<Relationship | undefined> {
   const userId = groupMember.id as string;
   const targetUserEntity = await jobState.findEntity(userId);
 

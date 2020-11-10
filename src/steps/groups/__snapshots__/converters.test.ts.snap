@@ -51,11 +51,12 @@ Object {
     "targetEntity": Object {
       "_type": "google_group",
       "email": "abc123email@jupiterone.com",
+      "id": "abc123",
     },
     "targetFilterKeys": Array [
       Array [
         "_type",
-        "email",
+        "id",
       ],
     ],
   },
@@ -93,11 +94,12 @@ Object {
     "targetEntity": Object {
       "_type": "google_user",
       "email": "abc123email@jupiterone.com",
+      "id": "1234567890",
     },
     "targetFilterKeys": Array [
       Array [
         "_type",
-        "email",
+        "id",
       ],
     ],
   },

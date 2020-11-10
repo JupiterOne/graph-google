@@ -79,7 +79,7 @@ function createRelationshipFromGroupMemberTypeGroup(
   groupEntities: Entity[],
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
-): Relationship {
+): Relationship | undefined {
   const targetGroupEntity = findGroupByEmail(
     groupEntities,
     groupMember.email as string,
@@ -132,23 +132,24 @@ export async function fetchGroups(
     client,
     async (groupEntity, groupMember) => {
       switch (groupMember.type) {
-        case MemberType.GROUP:
-          await jobState.addRelationship(
-            createRelationshipFromGroupMemberTypeGroup(
-              groupEntities,
-              groupEntity,
-              groupMember,
-            ),
+        case MemberType.GROUP: {
+          const relationship = createRelationshipFromGroupMemberTypeGroup(
+            groupEntities,
+            groupEntity,
+            groupMember,
           );
+          if (relationship) await jobState.addRelationship(relationship);
           break;
+        }
         case MemberType.USER:
-          await jobState.addRelationship(
-            await createRelationshipFromGroupMemberTypeUser(
+          {
+            const relationship = await createRelationshipFromGroupMemberTypeUser(
               groupEntity,
               groupMember,
               jobState,
-            ),
-          );
+            );
+            if (relationship) await jobState.addRelationship(relationship);
+          }
           break;
         default:
           context.logger.trace(

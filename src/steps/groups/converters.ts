@@ -46,7 +46,7 @@ export function createGroupHasGroupMappedRelationship(
 ) {
   const targetGroupEntityKey = generateEntityKey(
     'group',
-    groupMember.id as string, // Google doesn't ensure the uniqueness of emails in their groups.
+    groupMember.id as string,
   );
 
   return createMappedRelationship({
@@ -89,14 +89,13 @@ export function createGroupHasGroupRelationship(params: {
   });
 }
 
-// This means that there is no user found in this integration with user groupMember.id -- ie: this is an EXTERNAL group member
 export function createGroupHasUserMappedRelationship(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
 ) {
   const targetUserEntityKey = generateEntityKey(
     'user',
-    groupMember.id as string, // Google doesn't ensure the uniqueness of emails in their groups.
+    groupMember.id as string,
   );
 
   // Create a mapped relationship

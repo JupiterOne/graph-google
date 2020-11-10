@@ -123,21 +123,3 @@ Object {
   "type": "GROUP",
 }
 `;
-
-exports[`#createGroupHasUserRelationship should convert to relationship 2`] = `
-Object {
-  "_class": "HAS",
-  "_fromEntityKey": "google_group_0184mhaj0imamcg",
-  "_key": "google_group_0184mhaj0imamcg|has|google_user_123456789",
-  "_toEntityKey": "google_user_123456789",
-  "_type": "google_group_has_user",
-  "deliverySettings": undefined,
-  "displayName": "HAS",
-  "email": "abc123email@jupiterone.com",
-  "id": "abc123",
-  "kind": "admin#directory#member",
-  "role": "MEMBER",
-  "status": "ACTIVE",
-  "type": "GROUP",
-}
-`;

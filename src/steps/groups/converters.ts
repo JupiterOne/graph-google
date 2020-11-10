@@ -44,10 +44,9 @@ export function createGroupHasGroupMappedRelationship(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
 ) {
-  const targetGroupEntityKey = generateEntityKey(
-    'group',
-    groupMember.email as string,
-  );
+  const userId = groupMember.id as string;
+  if (!userId) return;
+  const targetGroupEntityKey = generateEntityKey('group', userId);
 
   return createMappedRelationship({
     _class: RelationshipClass.HAS,
@@ -57,9 +56,10 @@ export function createGroupHasGroupMappedRelationship(
       relationshipDirection: RelationshipDirection.FORWARD,
       sourceEntityKey: sourceGroupEntity._key,
       skipTargetCreation: false,
-      targetFilterKeys: [['_type', 'email']],
+      targetFilterKeys: [['_type', 'id']],
       targetEntity: {
         _type: entities.GROUP._type,
+        id: userId,
         email: groupMember.email,
       },
     },
@@ -93,10 +93,9 @@ export function createGroupHasUserMappedRelationship(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
 ) {
-  const targetUserEntityKey = generateEntityKey(
-    'user',
-    groupMember.email as string,
-  );
+  const userId = groupMember.id as string;
+  if (!userId) return;
+  const targetUserEntityKey = generateEntityKey('user', userId);
 
   // Create a mapped relationship
   return createMappedRelationship({
@@ -107,9 +106,10 @@ export function createGroupHasUserMappedRelationship(
       relationshipDirection: RelationshipDirection.FORWARD,
       sourceEntityKey: sourceGroupEntity._key,
       skipTargetCreation: false,
-      targetFilterKeys: [['_type', 'email']],
+      targetFilterKeys: [['_type', 'id']],
       targetEntity: {
         _type: entities.USER._type,
+        id: userId,
         email: groupMember.email,
       },
     },

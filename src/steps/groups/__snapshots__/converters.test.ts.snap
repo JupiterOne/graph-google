@@ -43,7 +43,7 @@ Object {
 exports[`#createGroupHasGroupMappedRelationship should convert to mapped relationship 1`] = `
 Object {
   "_class": "HAS",
-  "_key": "google_group_0184mhaj0imamcg_has_group_abc123email@jupiterone.com",
+  "_key": "google_group_0184mhaj0imamcg_has_group_abc123",
   "_mapping": Object {
     "relationshipDirection": "FORWARD",
     "skipTargetCreation": false,
@@ -51,11 +51,12 @@ Object {
     "targetEntity": Object {
       "_type": "google_group",
       "email": "abc123email@jupiterone.com",
+      "id": "abc123",
     },
     "targetFilterKeys": Array [
       Array [
         "_type",
-        "email",
+        "id",
       ],
     ],
   },
@@ -85,7 +86,7 @@ Object {
 exports[`#createGroupHasUserMappedRelationship should convert to mapped relationship 1`] = `
 Object {
   "_class": "HAS",
-  "_key": "google_group_0184mhaj0imamcg_has_user_abc123email@jupiterone.com",
+  "_key": "google_group_0184mhaj0imamcg_has_user_1234567890",
   "_mapping": Object {
     "relationshipDirection": "FORWARD",
     "skipTargetCreation": false,
@@ -93,11 +94,12 @@ Object {
     "targetEntity": Object {
       "_type": "google_user",
       "email": "abc123email@jupiterone.com",
+      "id": "1234567890",
     },
     "targetFilterKeys": Array [
       Array [
         "_type",
-        "email",
+        "id",
       ],
     ],
   },

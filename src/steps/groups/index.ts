@@ -141,16 +141,15 @@ export async function fetchGroups(
           if (relationship) await jobState.addRelationship(relationship);
           break;
         }
-        case MemberType.USER:
-          {
-            const relationship = await createRelationshipFromGroupMemberTypeUser(
-              groupEntity,
-              groupMember,
-              jobState,
-            );
-            if (relationship) await jobState.addRelationship(relationship);
-          }
+        case MemberType.USER: {
+          const relationship = await createRelationshipFromGroupMemberTypeUser(
+            groupEntity,
+            groupMember,
+            jobState,
+          );
+          if (relationship) await jobState.addRelationship(relationship);
           break;
+        }
         default:
           context.logger.trace(
             {

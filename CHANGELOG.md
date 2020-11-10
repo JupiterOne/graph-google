@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.3.1 - 2020-11-09
+
+### Changed
+
+- User uniqueness to use id instead of email
+
 ## 3.3.0 - 2020-10-29
 
 ### Changed

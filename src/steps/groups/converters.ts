@@ -46,7 +46,7 @@ export function createGroupHasGroupMappedRelationship(
 ) {
   const targetGroupEntityKey = generateEntityKey(
     'group',
-    groupMember.email as string,
+    groupMember.id as string,
   );
 
   return createMappedRelationship({
@@ -95,7 +95,7 @@ export function createGroupHasUserMappedRelationship(
 ) {
   const targetUserEntityKey = generateEntityKey(
     'user',
-    groupMember.email as string,
+    groupMember.id as string,
   );
 
   // Create a mapped relationship

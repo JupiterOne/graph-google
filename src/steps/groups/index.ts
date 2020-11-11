@@ -18,6 +18,7 @@ import {
 } from './converters';
 import { admin_directory_v1 } from 'googleapis';
 import getAccountEntity from '../../utils/getAccountEntity';
+import { getUserEntityKey } from '../users/converters';
 
 async function createGroupEntities(
   context: IntegrationStepContext,
@@ -100,7 +101,7 @@ async function createRelationshipFromGroupMemberTypeUser(
   jobState: JobState,
 ): Promise<Relationship | undefined> {
   const userId = groupMember.id as string;
-  const targetUserEntity = await jobState.findEntity(userId);
+  const targetUserEntity = await jobState.findEntity(getUserEntityKey(userId));
 
   return targetUserEntity
     ? createGroupHasUserRelationship({

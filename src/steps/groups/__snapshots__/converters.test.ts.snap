@@ -57,7 +57,7 @@ Object {
     "targetFilterKeys": Array [
       Array [
         "_type",
-        "id",
+        "email",
       ],
     ],
   },
@@ -104,7 +104,7 @@ Object {
     "targetFilterKeys": Array [
       Array [
         "_type",
-        "id",
+        "email",
       ],
     ],
   },

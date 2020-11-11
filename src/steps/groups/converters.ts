@@ -56,7 +56,7 @@ export function createGroupHasGroupMappedRelationship(
       relationshipDirection: RelationshipDirection.FORWARD,
       sourceEntityKey: sourceGroupEntity._key,
       skipTargetCreation: false,
-      targetFilterKeys: [['_type', 'email']],
+      targetFilterKeys: [['_type', 'id']],
       targetEntity: {
         _type: entities.GROUP._type,
         name: groupMember.email,
@@ -112,7 +112,7 @@ export function createGroupHasUserMappedRelationship(
       relationshipDirection: RelationshipDirection.FORWARD,
       sourceEntityKey: sourceGroupEntity._key,
       skipTargetCreation: false,
-      targetFilterKeys: [['_type', 'email']],
+      targetFilterKeys: [['_type', 'id']],
       targetEntity: {
         _type: entities.USER._type,
         name: groupMember.email,

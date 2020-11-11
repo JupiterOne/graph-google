@@ -50,8 +50,9 @@ Object {
     "sourceEntityKey": "google_group_0184mhaj0imamcg",
     "targetEntity": Object {
       "_type": "google_group",
+      "displayName": "abc123email@jupiterone.com",
       "email": "abc123email@jupiterone.com",
-      "id": "abc123",
+      "name": "abc123email@jupiterone.com",
     },
     "targetFilterKeys": Array [
       Array [
@@ -62,6 +63,9 @@ Object {
   },
   "_type": "google_group_has_user",
   "displayName": "HAS",
+  "kind": "admin#directory#member",
+  "role": "MEMBER",
+  "type": "GROUP",
 }
 `;
 
@@ -93,8 +97,9 @@ Object {
     "sourceEntityKey": "google_group_0184mhaj0imamcg",
     "targetEntity": Object {
       "_type": "google_user",
+      "displayName": "abc123email@jupiterone.com",
       "email": "abc123email@jupiterone.com",
-      "id": "1234567890",
+      "name": "abc123email@jupiterone.com",
     },
     "targetFilterKeys": Array [
       Array [
@@ -105,6 +110,9 @@ Object {
   },
   "_type": "google_group_has_user",
   "displayName": "HAS",
+  "kind": "admin#directory#member",
+  "role": "MEMBER",
+  "type": "USER",
 }
 `;
 

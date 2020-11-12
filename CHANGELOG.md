@@ -8,6 +8,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.3.1 - 2020-11-12
+
+### Added
+
+- A warning when multiple users in the same group have the same email address
+- For group members, added `name`, `displayName` to mapped users and groups
+- For group member relationships, added member properties `email`, `id`, `kind`,
+  `role`, `status`, and `type to better expose properties of the membership
+
 ## 3.3.0 - 2020-10-29
 
 ### Changed

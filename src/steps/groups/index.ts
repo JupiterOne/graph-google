@@ -18,6 +18,7 @@ import {
 } from './converters';
 import { admin_directory_v1 } from 'googleapis';
 import getAccountEntity from '../../utils/getAccountEntity';
+import { getUserEntityKey } from '../users/converters';
 
 async function createGroupEntities(
   context: IntegrationStepContext,
@@ -100,7 +101,7 @@ async function createRelationshipFromGroupMemberTypeUser(
   jobState: JobState,
 ): Promise<Relationship> {
   const userId = groupMember.id as string;
-  const targetUserEntity = await jobState.findEntity(userId);
+  const targetUserEntity = await jobState.findEntity(getUserEntityKey(userId));
 
   return targetUserEntity
     ? createGroupHasUserRelationship({
@@ -119,6 +120,8 @@ export async function fetchGroups(
     config: instance.config,
     logger,
   });
+
+  const duplicateKeyTracker = new Set<string>();
 
   // Create all of the group entities up front and later iterate the group
   // members. There may be mapped relationships we have to create, so we need
@@ -141,15 +144,34 @@ export async function fetchGroups(
             ),
           );
           break;
-        case MemberType.USER:
-          await jobState.addRelationship(
-            await createRelationshipFromGroupMemberTypeUser(
-              groupEntity,
-              groupMember,
-              jobState,
-            ),
+        case MemberType.USER: {
+          const relationship = await createRelationshipFromGroupMemberTypeUser(
+            groupEntity,
+            groupMember,
+            jobState,
           );
+          // Due to the fact that multiple users can have the same email address,
+          // mapped group->member relationships are liable to be duplicated. Handle
+          // these specific cases.
+          if (
+            typeof relationship.email === 'string' &&
+            duplicateKeyTracker.has(relationship._key)
+          ) {
+            logger.warn(
+              {
+                relationship,
+              },
+              `There are multiple users in the group ${groupEntity.displayName} with the same email address: ${groupMember.email}. This is against Google's policies.` +
+                groupEntity.webLink
+                ? ` Please fix this issue here: ${groupEntity.webLink}`
+                : '',
+            );
+          } else {
+            duplicateKeyTracker.add(relationship._key as string);
+            await jobState.addRelationship(relationship);
+          }
           break;
+        }
         default:
           context.logger.trace(
             {

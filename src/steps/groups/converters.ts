@@ -60,8 +60,18 @@ export function createGroupHasGroupMappedRelationship(
       targetFilterKeys: [['_type', 'email']],
       targetEntity: {
         _type: entities.GROUP._type,
+        name: groupMember.email,
+        displayName: groupMember.email as string,
         email: groupMember.email,
       },
+    },
+    properties: {
+      email: groupMember.email,
+      id: groupMember.id,
+      kind: groupMember.kind,
+      role: groupMember.role,
+      status: groupMember.status,
+      type: groupMember.type,
     },
   });
 }
@@ -110,8 +120,18 @@ export function createGroupHasUserMappedRelationship(
       targetFilterKeys: [['_type', 'email']],
       targetEntity: {
         _type: entities.USER._type,
+        name: groupMember.email,
+        displayName: groupMember.email as string,
         email: groupMember.email,
       },
+    },
+    properties: {
+      email: groupMember.email,
+      id: groupMember.id,
+      kind: groupMember.kind,
+      role: groupMember.role,
+      status: groupMember.status,
+      type: groupMember.type,
     },
   });
 }

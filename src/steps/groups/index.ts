@@ -80,7 +80,7 @@ function createRelationshipFromGroupMemberTypeGroup(
   groupEntities: Entity[],
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
-): Relationship | undefined {
+): Relationship {
   const targetGroupEntity = findGroupByEmail(
     groupEntities,
     groupMember.email as string,
@@ -99,7 +99,7 @@ async function createRelationshipFromGroupMemberTypeUser(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
   jobState: JobState,
-): Promise<Relationship | undefined> {
+): Promise<Relationship> {
   const userId = groupMember.id as string;
   const targetUserEntity = await jobState.findEntity(getUserEntityKey(userId));
 
@@ -121,6 +121,8 @@ export async function fetchGroups(
     logger,
   });
 
+  const duplicateKeyTracker = new Set<string>();
+
   // Create all of the group entities up front and later iterate the group
   // members. There may be mapped relationships we have to create, so we need
   // of the group information up front.
@@ -133,22 +135,41 @@ export async function fetchGroups(
     client,
     async (groupEntity, groupMember) => {
       switch (groupMember.type) {
-        case MemberType.GROUP: {
-          const relationship = createRelationshipFromGroupMemberTypeGroup(
-            groupEntities,
-            groupEntity,
-            groupMember,
+        case MemberType.GROUP:
+          await jobState.addRelationship(
+            createRelationshipFromGroupMemberTypeGroup(
+              groupEntities,
+              groupEntity,
+              groupMember,
+            ),
           );
-          if (relationship) await jobState.addRelationship(relationship);
           break;
-        }
         case MemberType.USER: {
           const relationship = await createRelationshipFromGroupMemberTypeUser(
             groupEntity,
             groupMember,
             jobState,
           );
-          if (relationship) await jobState.addRelationship(relationship);
+          // Due to the fact that multiple users can have the same email address,
+          // mapped group->member relationships are liable to be duplicated. Handle
+          // these specific cases.
+          if (
+            typeof relationship.email === 'string' &&
+            duplicateKeyTracker.has(relationship._key)
+          ) {
+            logger.warn(
+              {
+                relationship,
+              },
+              `There are multiple users in the group ${groupEntity.displayName} with the same email address: ${groupMember.email}. This is against Google's policies.` +
+                groupEntity.webLink
+                ? ` Please fix this issue here: ${groupEntity.webLink}`
+                : '',
+            );
+          } else {
+            duplicateKeyTracker.add(relationship._key as string);
+            await jobState.addRelationship(relationship);
+          }
           break;
         }
         default:

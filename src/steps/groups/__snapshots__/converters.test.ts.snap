@@ -43,7 +43,7 @@ Object {
 exports[`#createGroupHasGroupMappedRelationship should convert to mapped relationship 1`] = `
 Object {
   "_class": "HAS",
-  "_key": "google_group_0184mhaj0imamcg_has_group_abc123",
+  "_key": "google_group_0184mhaj0imamcg_has_group_abc123email@jupiterone.com",
   "_mapping": Object {
     "relationshipDirection": "FORWARD",
     "skipTargetCreation": false,
@@ -63,8 +63,11 @@ Object {
   },
   "_type": "google_group_has_user",
   "displayName": "HAS",
+  "email": "abc123email@jupiterone.com",
+  "id": "abc123",
   "kind": "admin#directory#member",
   "role": "MEMBER",
+  "status": "ACTIVE",
   "type": "GROUP",
 }
 `;
@@ -90,7 +93,7 @@ Object {
 exports[`#createGroupHasUserMappedRelationship should convert to mapped relationship 1`] = `
 Object {
   "_class": "HAS",
-  "_key": "google_group_0184mhaj0imamcg_has_user_1234567890",
+  "_key": "google_group_0184mhaj0imamcg_has_user_abc123email@jupiterone.com",
   "_mapping": Object {
     "relationshipDirection": "FORWARD",
     "skipTargetCreation": false,
@@ -110,8 +113,11 @@ Object {
   },
   "_type": "google_group_has_user",
   "displayName": "HAS",
+  "email": "abc123email@jupiterone.com",
+  "id": "1234567890",
   "kind": "admin#directory#member",
   "role": "MEMBER",
+  "status": "ACTIVE",
   "type": "USER",
 }
 `;

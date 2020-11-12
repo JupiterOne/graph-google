@@ -44,9 +44,10 @@ export function createGroupHasGroupMappedRelationship(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
 ) {
-  const userId = groupMember.id as string;
-  if (!userId) return;
-  const targetGroupEntityKey = generateEntityKey('group', userId);
+  const targetGroupEntityKey = generateEntityKey(
+    'group',
+    groupMember.email as string,
+  );
 
   return createMappedRelationship({
     _class: RelationshipClass.HAS,
@@ -65,9 +66,12 @@ export function createGroupHasGroupMappedRelationship(
       },
     },
     properties: {
-      type: groupMember.type,
+      email: groupMember.email,
+      id: groupMember.id,
       kind: groupMember.kind,
       role: groupMember.role,
+      status: groupMember.status,
+      type: groupMember.type,
     },
   });
 }
@@ -99,9 +103,10 @@ export function createGroupHasUserMappedRelationship(
   sourceGroupEntity: Entity,
   groupMember: admin_directory_v1.Schema$Member,
 ) {
-  const userId = groupMember.id as string;
-  if (!userId) return;
-  const targetUserEntityKey = generateEntityKey('user', userId);
+  const targetUserEntityKey = generateEntityKey(
+    'user',
+    groupMember.email as string,
+  );
 
   // Create a mapped relationship
   return createMappedRelationship({
@@ -121,9 +126,12 @@ export function createGroupHasUserMappedRelationship(
       },
     },
     properties: {
-      type: groupMember.type,
+      email: groupMember.email,
+      id: groupMember.id,
       kind: groupMember.kind,
       role: groupMember.role,
+      status: groupMember.status,
+      type: groupMember.type,
     },
   });
 }

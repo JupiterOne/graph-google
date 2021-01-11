@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.3.2 - 2021-01-11
+
+## Added
+
+- Error handling for API errors.
+
 ## 3.3.1 - 2020-11-12
 
 ### Added

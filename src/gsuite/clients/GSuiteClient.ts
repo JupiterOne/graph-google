@@ -3,9 +3,12 @@ import { admin_directory_v1, google } from 'googleapis';
 import { GaxiosResponse } from 'gaxios';
 import { IntegrationConfig } from '../../types';
 import {
+  IntegrationError,
   IntegrationLogger,
+  IntegrationProviderAPIError,
   IntegrationProviderAuthorizationError,
 } from '@jupiterone/integration-sdk-core';
+import { createErrorProps } from './utils/createErrorProps';
 
 export interface PageableResponse {
   nextPageToken?: string;
@@ -105,9 +108,35 @@ export default class GSuiteClient {
     let nextPageToken: string | undefined;
 
     do {
-      const result = await fn(nextPageToken);
+      const result = await withErrorHandling(fn)(nextPageToken);
       nextPageToken = result.data.nextPageToken || undefined;
       await callback(result.data);
     } while (nextPageToken);
   }
+}
+
+export function withErrorHandling<T extends (...params: any) => any>(fn: T) {
+  return async (...params: any) => {
+    try {
+      return await fn(...params);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+}
+
+/**
+ * Codes unknown error into JupiterOne errors
+ */
+function handleError(error: any): never {
+  // If the error was already handled, forward it on
+  if (error instanceof IntegrationError) {
+    throw error;
+  }
+  let ErrorConstructor = IntegrationProviderAPIError;
+  if ([401, 403].includes(error.code)) {
+    ErrorConstructor = IntegrationProviderAuthorizationError;
+  }
+  const err = new ErrorConstructor(createErrorProps(error));
+  throw err;
 }

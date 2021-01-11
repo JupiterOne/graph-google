@@ -1,10 +1,14 @@
-import GSuiteClient from './GSuiteClient';
+import GSuiteClient, { withErrorHandling } from './GSuiteClient';
 import { google } from 'googleapis';
 import { Credentials } from 'google-auth-library';
 import { admin_directory_v1 } from 'googleapis';
 import { createMockIntegrationLogger } from '@jupiterone/integration-sdk-testing';
 
 import { getMockIntegrationConfig } from '../../../test/config';
+import {
+  IntegrationProviderAPIError,
+  IntegrationProviderAuthorizationError,
+} from '@jupiterone/integration-sdk-core';
 
 function getMockCredentials(): Credentials {
   return {};
@@ -119,5 +123,78 @@ describe('GSuiteClient.getAuthenticatedServiceClient', () => {
     expect(client1 instanceof admin_directory_v1.Admin).toEqual(true);
     expect(authorizeMockFn).toHaveBeenCalledTimes(1);
     expect(client).toBe(client1);
+  });
+});
+
+describe('withErrorHandling', () => {
+  [IntegrationProviderAuthorizationError, IntegrationProviderAPIError].forEach(
+    (J1Error) => {
+      test('should forward on errors that have already been handled', async () => {
+        const mockForbiddenError = new J1Error({
+          endpoint: 'test endpoint',
+          status: 999,
+          statusText: 'test',
+        }) as any;
+        const executionHandler = jest
+          .fn()
+          .mockRejectedValue(mockForbiddenError);
+        const handledFunction = withErrorHandling(executionHandler);
+        await expect(handledFunction()).rejects.toThrow(J1Error);
+      });
+    },
+  );
+
+  test('should handle errors of unknown format', async () => {
+    const mockUnknownError = new Error() as any;
+    const executionHandler = jest.fn().mockRejectedValue(mockUnknownError);
+    const handledFunction = withErrorHandling(executionHandler);
+    await expect(handledFunction()).rejects.toThrow(
+      IntegrationProviderAPIError,
+    );
+  });
+
+  test('should throw an IntegrationProviderAuthorizationError on 401 errors', async () => {
+    const mockForbiddenError = new Error() as any;
+    mockForbiddenError.code = 401;
+    mockForbiddenError.message = mockForbiddenError.name =
+      'unauthorized_client';
+    const executionHandler = jest.fn().mockRejectedValue(mockForbiddenError);
+    const handledFunction = withErrorHandling(executionHandler);
+    await expect(handledFunction()).rejects.toThrow(
+      IntegrationProviderAuthorizationError,
+    );
+  });
+
+  test('should throw an IntegrationProviderAuthorizationError on 403 errors', async () => {
+    const mockForbiddenError = new Error() as any;
+    mockForbiddenError.code = 403;
+    mockForbiddenError.message = 'Not Authorized to access this resource/api';
+    mockForbiddenError.name = 'Error';
+    const executionHandler = jest.fn().mockRejectedValue(mockForbiddenError);
+    const handledFunction = withErrorHandling(executionHandler);
+    await expect(handledFunction()).rejects.toThrow(
+      IntegrationProviderAuthorizationError,
+    );
+  });
+
+  test('should throw an IntegrationProviderAPIError on all unknown errors', async () => {
+    const executionHandler = jest
+      .fn()
+      .mockRejectedValue(new Error('Something esploded'));
+    const handledFunction = withErrorHandling(executionHandler);
+    await expect(handledFunction()).rejects.toThrow(
+      IntegrationProviderAPIError,
+    );
+  });
+
+  test('should pass parameters to the wrapped function return the result if no errors', async () => {
+    const executionHandler = jest
+      .fn()
+      .mockImplementation((...params) => Promise.resolve(params));
+    const handledFunction = withErrorHandling(executionHandler);
+    await expect(handledFunction('param1', 'param2')).resolves.toEqual([
+      'param1',
+      'param2',
+    ]);
   });
 });

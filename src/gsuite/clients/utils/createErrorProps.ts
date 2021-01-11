@@ -1,5 +1,6 @@
 import { IntegrationProviderAPIError } from '@jupiterone/integration-sdk-core';
 import { GaxiosError } from 'gaxios';
+import { GetConstructorArgs } from './typeFunctions';
 
 const UNKNOWN_VALUE = 'UNKNOWN';
 

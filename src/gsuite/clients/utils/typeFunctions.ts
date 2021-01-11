@@ -3,6 +3,6 @@
  * EXAMPLE:
  * GetConstructorArgs<typeof Error> === [message: string | undefined]
  */
-type GetConstructorArgs<T> = T extends new (...args: infer U) => any
+export type GetConstructorArgs<T> = T extends new (...args: infer U) => any
   ? U
   : never;

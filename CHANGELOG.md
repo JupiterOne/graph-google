@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.4.0 - 2021-01-27
+
 - Update to `@jupiterone/integration-sdk-*@5.6.1`
 - Increase groups and members pagination `maxResults: 200`
 

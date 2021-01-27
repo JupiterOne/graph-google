@@ -25,12 +25,12 @@
     "prepack": "yarn build"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^4.0.0"
+    "@jupiterone/integration-sdk-core": "^5.6.1"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^4.0.0",
-    "@jupiterone/integration-sdk-dev-tools": "^4.0.0",
-    "@jupiterone/integration-sdk-testing": "^4.0.0",
+    "@jupiterone/integration-sdk-core": "^5.6.1",
+    "@jupiterone/integration-sdk-dev-tools": "^5.6.1",
+    "@jupiterone/integration-sdk-testing": "^5.6.1",
     "dotenv": "^8.2.0",
     "ts-node": "^8.10.2"
   },

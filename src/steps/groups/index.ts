@@ -1,24 +1,28 @@
+import { admin_directory_v1 } from 'googleapis';
+
 import {
+  Entity,
   IntegrationStep,
   JobState,
-  Entity,
   Relationship,
 } from '@jupiterone/integration-sdk-core';
-import { IntegrationConfig, IntegrationStepContext } from '../../types';
+
 import { entities, relationships } from '../../constants';
 import { GSuiteGroupClient } from '../../gsuite/clients/GSuiteGroupClient';
+import { IntegrationConfig, IntegrationStepContext } from '../../types';
+import getAccountEntity from '../../utils/getAccountEntity';
+import { getUserEntityKey } from '../users/converters';
 import {
   createAccountHasGroupRelationship,
   createGroupEntity,
-  createGroupHasGroupRelationship,
-  MemberType,
   createGroupHasGroupMappedRelationship,
-  createGroupHasUserRelationship,
+  createGroupHasGroupRelationship,
   createGroupHasUserMappedRelationship,
+  createGroupHasUserRelationship,
+  MemberType,
 } from './converters';
-import { admin_directory_v1 } from 'googleapis';
-import getAccountEntity from '../../utils/getAccountEntity';
-import { getUserEntityKey } from '../users/converters';
+
+const GROUPS_LOG_INTERVAL = 50;
 
 async function createGroupEntities(
   context: IntegrationStepContext,
@@ -26,6 +30,8 @@ async function createGroupEntities(
 ) {
   const groupEntities: Entity[] = [];
   const accountEntity = await getAccountEntity(context);
+
+  let groupsProcessed = 0;
 
   await client.iterateGroups(async (group) => {
     const groupEntity = await context.jobState.addEntity(
@@ -40,7 +46,20 @@ async function createGroupEntities(
         accountEntity,
       }),
     );
+
+    groupsProcessed++;
+    if (groupsProcessed % GROUPS_LOG_INTERVAL === 0) {
+      context.logger.info(
+        { groupsProcessed },
+        'Generating entities for directory groups...',
+      );
+    }
   });
+
+  context.logger.info(
+    { groupsProcessed },
+    'Generating entities for directory groups completed.',
+  );
 
   return groupEntities;
 }
@@ -121,8 +140,6 @@ export async function fetchGroups(
     logger,
   });
 
-  const duplicateKeyTracker = new Set<string>();
-
   // Create all of the group entities up front and later iterate the group
   // members. There may be mapped relationships we have to create, so we need
   // of the group information up front.
@@ -130,10 +147,25 @@ export async function fetchGroups(
   // See: https://github.com/JupiterOne/graph-google/issues/27
   const groupEntities = await createGroupEntities(context, client);
 
+  let groupsProcessed = 0;
+  let totalGroupMembersProcessed = 0;
+
+  let currentGroupKey;
+  let currentGroupMembersProcessed;
+
   await iterateGroupMembers(
     groupEntities,
     client,
     async (groupEntity, groupMember) => {
+      if (!currentGroupKey || currentGroupKey !== groupEntity._key) {
+        currentGroupMembersProcessed = 0;
+        currentGroupKey = groupEntity._key;
+        groupsProcessed++;
+      }
+
+      currentGroupMembersProcessed++;
+      totalGroupMembersProcessed++;
+
       switch (groupMember.type) {
         case MemberType.GROUP:
           await jobState.addRelationship(
@@ -155,7 +187,7 @@ export async function fetchGroups(
           // these specific cases.
           if (
             typeof relationship.email === 'string' &&
-            duplicateKeyTracker.has(relationship._key)
+            jobState.hasKey(relationship._key)
           ) {
             logger.warn(
               {
@@ -167,7 +199,6 @@ export async function fetchGroups(
                 : '',
             );
           } else {
-            duplicateKeyTracker.add(relationship._key as string);
             await jobState.addRelationship(relationship);
           }
           break;
@@ -181,7 +212,27 @@ export async function fetchGroups(
           );
           break;
       }
+
+      if (groupsProcessed % GROUPS_LOG_INTERVAL === 0) {
+        context.logger.info(
+          {
+            groupsProcessed,
+            totalGroupMembersProcessed,
+            currentGroupMembersProcessed,
+          },
+          'Generating member relationships for directory groups...',
+        );
+      }
     },
+  );
+
+  context.logger.info(
+    {
+      groupsProcessed,
+      totalGroupMembersProcessed,
+      currentGroupMembersProcessed,
+    },
+    'Generating member relationships for directory groups completed.',
   );
 }
 

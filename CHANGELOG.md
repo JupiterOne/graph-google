@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.4.1 - 2021-01-27
+
 - Add interval logging of group ingestion activity
 
 ## 3.4.0 - 2021-01-27

@@ -13,6 +13,7 @@ export class GSuiteGroupClient extends GSuiteClient {
         return client.groups.list({
           customer: this.accountId,
           pageToken: nextPageToken,
+          maxResults: 200,
         });
       },
       async (data: admin_directory_v1.Schema$Groups) => {
@@ -34,6 +35,7 @@ export class GSuiteGroupClient extends GSuiteClient {
         return client.members.list({
           groupKey: groupId,
           pageToken: nextPageToken,
+          maxResults: 200,
         });
       },
       async (data: admin_directory_v1.Schema$Members) => {

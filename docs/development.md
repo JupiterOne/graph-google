@@ -1,28 +1,18 @@
 # Development
 
-Add details here to give a brief overview of how to work with the provider APIs.
-Please reference any SDKs or API docs used to help build the integration here.
-
-## Prerequisites
-
-Supply details about software or tooling (like maybe Docker or Terraform) that
-is needed for development here.
-
-Please supply references to documentation that details how to install those
-dependencies here.
-
-Tools like Node.js and NPM are already covered in the [README](../README.md) so
-don't bother documenting that here.
-
-## Provider account setup
-
-Please provide information about the steps needed to create an account with a
-provider. Images and references to a provider's documentation is very helpful
-for new developers picking up your work.
-
 ## Authentication
 
-Supply details here for information on how to authenticate with a provider so
-that developers have an idea of what's needed to hit APIs. It may be useful to
-provide explanations for each value specified in
-[../src/instanceConfigFields.json](../src/instanceConfigFields.json).
+The integration executes as a Google Service Account granted access to Google
+Workspace domains by super administrators. The JupiterOne managed deployment of
+the integration utilizes a single Service Account maintained by JupiterOne, who
+is also responsible for protecting the credentials of the Service Account.
+Domain super administrators will perform steps in their Google Workspace Admin
+Console to grant the JupiterOne Service Account access to their data.
+
+It is important to understand that
+[Google Workspace Domain-wide Delegation](https://developers.google.com/admin-sdk/directory/v1/guides/delegation)
+allows an authenticated Service Account to act as any user in the authorized
+domain. The integration will "impersonate" a user granted permission to utilize
+**Admin APIs**. The Service Account may only utilize **API scopes** specified by
+the domain super administrator, and the Service Account is further restricted to
+the capabilities of the user it impersonates.

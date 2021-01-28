@@ -8,11 +8,19 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Improved logging of group ingestion activity
+
 ## 3.4.1 - 2021-01-27
+
+### Added
 
 - Add interval logging of group ingestion activity
 
 ## 3.4.0 - 2021-01-27
+
+### Changed
 
 - Update to `@jupiterone/integration-sdk-*@5.6.1`
 - Increase groups and members pagination `maxResults: 200`

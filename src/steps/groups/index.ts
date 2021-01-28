@@ -150,6 +150,7 @@ export async function fetchGroups(
   let groupsProcessed = 0;
   let totalGroupMembersProcessed = 0;
 
+  let previousGroupKey;
   let currentGroupKey;
   let currentGroupMembersProcessed;
 
@@ -213,7 +214,11 @@ export async function fetchGroups(
           break;
       }
 
-      if (groupsProcessed % GROUPS_LOG_INTERVAL === 0) {
+      if (
+        (previousGroupKey != currentGroupKey &&
+          groupsProcessed % GROUPS_LOG_INTERVAL === 0) ||
+        totalGroupMembersProcessed % GROUPS_LOG_INTERVAL === 0
+      ) {
         context.logger.info(
           {
             groupsProcessed,
@@ -223,6 +228,8 @@ export async function fetchGroups(
           'Generating member relationships for directory groups...',
         );
       }
+
+      previousGroupKey = currentGroupKey;
     },
   );
 

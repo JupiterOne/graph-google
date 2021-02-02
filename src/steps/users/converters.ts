@@ -250,12 +250,15 @@ function getEmployeeInfo(
   }
 
   const primaryOrganization = data.organizations.find((o) => !!o.primary);
-  const employeeInfo = primaryOrganization || data.organizations[0];
+  const org = primaryOrganization || data.organizations[0];
 
-  return {
-    ...convertProperties(employeeInfo),
+  const employeeInfo = {
+    ...convertProperties(org),
     // `employeeInfo.description` corresponds to "Type of Employee" in the
     // Google Admin UI under "Employee Information" section.
-    employeeType: employeeInfo.description,
+    employeeType: org.description,
   };
+
+  delete employeeInfo.primary;
+  return employeeInfo;
 }

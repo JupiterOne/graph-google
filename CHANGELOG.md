@@ -16,8 +16,8 @@ and this project adheres to
     `isEnforcedIn2Sv`)
   - Removed `thumbnailPhotoEtag` since it is not a useful property to
     index/query on
-  - Added normalized timestamp properties: `createdOn`, `deletedOn`, and
-    `lastLoginOn`
+  - Added normalized timestamp properties: `admin`, `createdOn`, `deletedOn`,
+    and `lastLoginOn`
   - Set `employeeType` from `employeeInfo.description`, which corresponds to
     "Type of Employee" in the Google Admin UI under "Employee Information"
     section

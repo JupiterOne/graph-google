@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.5.0 - 2021-02-01
+
 - Update the following properties on `google_user` entities:
 
   - Updated `active` to true when the user is not suspended and not archived and

@@ -38,7 +38,9 @@ export function getMockUser(
     organizations: [
       {
         title: 'CMO',
+        description: 'Full-time',
         primary: true,
+        costCenter: '01A',
         customType: '',
         department: 'Marketing',
       },

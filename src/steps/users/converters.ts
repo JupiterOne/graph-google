@@ -1,10 +1,11 @@
 import generateEntityKey from '../../utils/generateEntityKey';
 import {
-  getTime,
+  parseTimePropertyValue,
   createIntegrationEntity,
   Entity,
   createDirectRelationship,
   RelationshipClass,
+  convertProperties,
 } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
@@ -59,19 +60,23 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         username: getUsername(data),
         firstName: data.name?.givenName,
         lastName: data.name?.familyName,
-        mfaEnabled: !!(data.isEnforcedIn2Sv && data.isEnrolledIn2Sv),
+        mfaEnabled: !!data.isEnrolledIn2Sv,
         suspended: data.suspended,
         archived: data.archived,
-        active: !data.suspended || !data.archived,
+        active: !data.suspended && !data.archived && data.agreedToTerms,
         agreedToTerms: data.agreedToTerms,
         changePasswordAtNextLogin: data.changePasswordAtNextLogin,
-        creationTime: getTime(data.creationTime),
-        deletionTime: getTime(data.deletionTime),
-        lastLoginTime: getTime(data.lastLoginTime),
+        createdOn: parseTimePropertyValue(data.creationTime),
+        creationTime: parseTimePropertyValue(data.creationTime),
+        deletedOn: parseTimePropertyValue(data.deletionTime),
+        deletionTime: parseTimePropertyValue(data.deletionTime),
+        lastLoginOn: parseTimePropertyValue(data.lastLoginTime),
+        lastLoginTime: parseTimePropertyValue(data.lastLoginTime),
         customerId: data.customerId,
         hashFunction: data.hashFunction,
         includeInGlobalAddressList: data.includeInGlobalAddressList,
         ipWhitelisted: data.ipWhitelisted,
+        admin: data.isAdmin || data.isDelegatedAdmin,
         isAdmin: data.isAdmin,
         isDelegatedAdmin: data.isDelegatedAdmin,
         isEnforcedIn2Sv: data.isEnforcedIn2Sv,
@@ -83,7 +88,6 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         recoveryEmail: data.recoveryEmail,
         recoveryPhone: data.recoveryPhone,
         suspensionReason: data.suspensionReason,
-        thumbnailPhotoEtag: data.thumbnailPhotoEtag,
         thumbnailPhotoUrl: data.thumbnailPhotoUrl,
         aliases: data.aliases,
         ...getAddresses(data),
@@ -234,7 +238,7 @@ interface EmployeeInfo {
   title: string;
   customType: string;
   department: string;
-  role: string;
+  employeeType: string;
   costCenter: string;
 }
 
@@ -246,13 +250,15 @@ function getEmployeeInfo(
   }
 
   const primaryOrganization = data.organizations.find((o) => !!o.primary);
-  const employeeInfo = primaryOrganization || data.organizations[0];
+  const org = primaryOrganization || data.organizations[0];
 
-  return {
-    title: employeeInfo.title,
-    customType: employeeInfo.customType,
-    department: employeeInfo.department,
-    role: employeeInfo.description,
-    costCenter: employeeInfo.costCenter,
+  const employeeInfo = {
+    ...convertProperties(org),
+    // `employeeInfo.description` corresponds to "Type of Employee" in the
+    // Google Admin UI under "Employee Information" section.
+    employeeType: org.description,
   };
+
+  delete employeeInfo.primary;
+  return employeeInfo;
 }

@@ -8,6 +8,22 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.5.0 - 2021-02-01
+
+- Update the following properties on `google_user` entities:
+
+  - Updated `active` to true when the user is not suspended and not archived and
+    agreed to terms
+  - Updated `mfaEnabled` to true when user is enrolled in 2SV (removed check for
+    `isEnforcedIn2Sv`)
+  - Removed `thumbnailPhotoEtag` since it is not a useful property to
+    index/query on
+  - Added normalized timestamp properties: `admin`, `createdOn`, `deletedOn`,
+    and `lastLoginOn`
+  - Set `employeeType` from `employeeInfo.description`, which corresponds to
+    "Type of Employee" in the Google Admin UI under "Employee Information"
+    section
+
 ## 3.4.1 - 2021-01-27
 
 - Add interval logging of group ingestion activity

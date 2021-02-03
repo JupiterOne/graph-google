@@ -5,6 +5,8 @@
 - Visualize Google Workspace domain user groups, users, and their authorized
   tokens in the JupiterOne graph.
 - Map Google Workspace users to employees in your JupiterOne account.
+- Use queries to help perform access reviews, group assignments, OAuth
+  application authorizations, and other permission settings
 - Workspace users identified as employees are mapped to their managers to
   provide an organization chart in JupiterOne.
 - Monitor changes to Google Workspace users using JupiterOne alerts.
@@ -138,6 +140,15 @@ permissions required by JupiterOne, and which will include only the
 8. Enter the **email address** of the user created during setup of Google
    Workspace.
 9. Click **Create Configuration** once all values are provided.
+
+### Integration Jobs Events
+
+A common log when running the integration job is `list_token_error`. Although it
+appears to be an error, this is actually just a warning returned from Google
+APIs because the **"JupiterOne SystemUser"** configured for integration purposes
+does not have the right permissions to list the tokens for users with higher
+privileges, such as the "Super Admin" Role. These tokens are not necessary for the job
+to complete and all other data will still be retrieved.
 
 # How to Uninstall
 

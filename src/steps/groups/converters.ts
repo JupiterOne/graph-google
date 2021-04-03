@@ -1,14 +1,17 @@
-import generateEntityKey from '../../utils/generateEntityKey';
+import { admin_directory_v1, groupssettings_v1 } from 'googleapis';
+
 import {
-  createIntegrationEntity,
   createDirectRelationship,
-  RelationshipClass,
-  Entity,
+  createIntegrationEntity,
   createMappedRelationship,
+  Entity,
+  parseStringPropertyValue,
+  RelationshipClass,
   RelationshipDirection,
 } from '@jupiterone/integration-sdk-core';
-import { admin_directory_v1 } from 'googleapis';
+
 import { entities, relationships } from '../../constants';
+import generateEntityKey from '../../utils/generateEntityKey';
 
 export enum MemberType {
   CUSTOMER = 'CUSTOMER',
@@ -35,6 +38,89 @@ export function createGroupEntity(data: admin_directory_v1.Schema$Group) {
         kind: data.kind,
         name: data.name,
         description: data.description,
+      },
+    },
+  });
+}
+
+/**
+ * Creates an entity with the properties of a group's settings. Note that
+ * properties marked as deprecated in the documentation are not included and
+ * users should reference the replacement properties.
+ *
+ * @param group the group data
+ * @param data the group settings data
+ */
+export function createGroupSettingsEntity(
+  group: admin_directory_v1.Schema$Group,
+  data: groupssettings_v1.Schema$Groups,
+) {
+  return createIntegrationEntity({
+    entityData: {
+      source: data,
+      assign: {
+        _key: generateEntityKey(entities.GROUP_SETTINGS._type, group.id!),
+        _type: entities.GROUP_SETTINGS._type,
+        _class: entities.GROUP_SETTINGS._class,
+        id: group.id!,
+        name: group.email!,
+        displayName: group.email!,
+        email: data.email!,
+        description: data.description,
+        webLink: `https://admin.google.com/ac/groups/${group.id}/settings`,
+
+        // Deprecated properties should not be included below
+        // See https://developers.google.com/admin-sdk/groups-settings/v1/reference/groups#json
+
+        // TODO: https://github.com/JupiterOne/sdk/pull/450 will avoid
+        // `parseStringPropertyValue(data.prop!)` (use of !)
+        whoCanJoin: data.whoCanJoin,
+        whoCanViewMembership: data.whoCanViewMembership,
+        whoCanViewGroup: data.whoCanViewGroup,
+        allowExternalMembers: parseStringPropertyValue(
+          data.allowExternalMembers!,
+        ),
+        whoCanPostMessage: data.whoCanPostMessage,
+        allowWebPosting: parseStringPropertyValue(data.allowWebPosting!),
+        primaryLanguage: data.primaryLanguage,
+        isArchived: parseStringPropertyValue(data.isArchived!),
+        archiveOnly: parseStringPropertyValue(data.archiveOnly!),
+        messageModerationLevel: data.messageModerationLevel,
+        spamModerationLevel: data.spamModerationLevel,
+        replyTo: data.replyTo,
+        customReplyTo: data.customReplyTo,
+        includeCustomFooter: parseStringPropertyValue(
+          data.includeCustomFooter!,
+        ),
+        customFooterText: data.customFooterText,
+        sendMessageDenyNotification: parseStringPropertyValue(
+          data.sendMessageDenyNotification!,
+        ),
+        defaultMessageDenyNotificationText:
+          data.defaultMessageDenyNotificationText,
+        membersCanPostAsTheGroup: parseStringPropertyValue(
+          data.membersCanPostAsTheGroup!,
+        ),
+        includeInGlobalAddressList: parseStringPropertyValue(
+          data.includeInGlobalAddressList!,
+        ),
+        whoCanLeaveGroup: data.whoCanLeaveGroup,
+        whoCanContactOwner: data.whoCanContactOwner,
+        favoriteRepliesOnTop: parseStringPropertyValue(
+          data.favoriteRepliesOnTop!,
+        ),
+        whoCanApproveMembers: data.whoCanApproveMembers,
+        whoCanBanUsers: data.whoCanBanUsers,
+        whoCanModerateMembers: data.whoCanModerateMembers,
+        whoCanModerateContent: data.whoCanModerateContent,
+        whoCanAssistContent: data.whoCanAssistContent,
+        customRolesEnabledForSettingsToBeMerged: parseStringPropertyValue(
+          data.customRolesEnabledForSettingsToBeMerged!,
+        ),
+        enableCollaborativeInbox: parseStringPropertyValue(
+          data.enableCollaborativeInbox!,
+        ),
+        whoCanDiscoverGroup: data.whoCanDiscoverGroup,
       },
     },
   });

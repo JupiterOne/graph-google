@@ -1,6 +1,6 @@
 import {
-  StepEntityMetadata,
   RelationshipClass,
+  StepEntityMetadata,
   StepRelationshipMetadata,
 } from '@jupiterone/integration-sdk-core';
 
@@ -8,6 +8,7 @@ type EntityConstantKeys =
   | 'DOMAIN'
   | 'USER'
   | 'GROUP'
+  | 'GROUP_SETTINGS'
   | 'ACCOUNT'
   | 'SITE'
   | 'TOKEN';
@@ -27,6 +28,11 @@ export const entities: Record<EntityConstantKeys, StepEntityMetadata> = {
     resourceName: 'Group',
     _type: 'google_group',
     _class: 'UserGroup',
+  },
+  GROUP_SETTINGS: {
+    resourceName: 'Group Settings',
+    _type: 'google_group_settings',
+    _class: 'Configuration',
   },
   ACCOUNT: {
     resourceName: 'Account',
@@ -49,6 +55,7 @@ type RelationshipConstantKeys =
   | 'ACCOUNT_HAS_USER'
   | 'SITE_HOSTS_USER'
   | 'GROUP_HAS_USER'
+  | 'GROUP_HAS_SETTINGS'
   | 'GROUP_HAS_GROUP'
   | 'ACCOUNT_HAS_GROUP'
   | 'USER_ASSIGNED_TOKEN'
@@ -70,6 +77,12 @@ export const relationships: Record<
     _class: RelationshipClass.HAS,
     sourceType: entities.SITE._type,
     targetType: entities.USER._type,
+  },
+  GROUP_HAS_SETTINGS: {
+    _type: 'google_group_has_settings',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.GROUP._type,
+    targetType: entities.GROUP_SETTINGS._type,
   },
   GROUP_HAS_USER: {
     _type: 'google_group_has_user',

@@ -1,9 +1,19 @@
-import GSuiteClient from './GSuiteClient';
-
 import { admin_directory_v1 } from 'googleapis';
+import GSuiteAdminClient from './GSuiteAdminClient';
+import { CreateGSuiteClientParams } from './GSuiteClient';
 
-export class GSuiteUserClient extends GSuiteClient {
-  async iterateUsers(
+export class GSuiteUserClient extends GSuiteAdminClient {
+  constructor(params: CreateGSuiteClientParams) {
+    super({
+      ...params,
+      requiredScopes: [
+        'https://www.googleapis.com/auth/admin.directory.user.readonly',
+        ...(params.requiredScopes || []),
+      ],
+    });
+  }
+
+  public async iterateUsers(
     callback: (data: admin_directory_v1.Schema$User) => Promise<void>,
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();

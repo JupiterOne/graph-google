@@ -1,13 +1,15 @@
-import { JWTOptions } from 'google-auth-library';
-import { admin_directory_v1, google } from 'googleapis';
 import { GaxiosResponse } from 'gaxios';
-import { IntegrationConfig } from '../../types';
+import { JWTOptions } from 'google-auth-library';
+import { Auth, google } from 'googleapis';
+
 import {
   IntegrationError,
   IntegrationLogger,
   IntegrationProviderAPIError,
   IntegrationProviderAuthorizationError,
 } from '@jupiterone/integration-sdk-core';
+
+import { IntegrationConfig } from '../../types';
 import { createErrorProps } from './utils/createErrorProps';
 
 export interface PageableResponse {
@@ -26,20 +28,13 @@ export interface CreateGSuiteClientParams {
   requiredScopes?: string[];
 }
 
-const DEFAULT_GSUITE_OAUTH_SCOPES: string[] = [
-  // These scopes have been set since the beginning of this integration, so
-  // all integration instances should have these scopes.
-  'https://www.googleapis.com/auth/admin.directory.user.readonly',
-  'https://www.googleapis.com/auth/admin.directory.group.readonly',
-  'https://www.googleapis.com/auth/admin.directory.domain.readonly',
-];
-
-export default class GSuiteClient {
+export default abstract class GSuiteClient<T> {
   readonly accountId: string;
   readonly logger: IntegrationLogger;
   readonly requiredScopes: string[];
 
-  private client: admin_directory_v1.Admin;
+  protected _client: T;
+
   private credentials: JWTOptions;
 
   constructor({
@@ -50,9 +45,7 @@ export default class GSuiteClient {
     this.logger = logger;
     this.accountId = config.googleAccountId;
 
-    this.requiredScopes = Array.from(
-      new Set([...DEFAULT_GSUITE_OAUTH_SCOPES, ...requiredScopes]),
-    );
+    this.requiredScopes = Array.from(new Set(requiredScopes));
 
     this.credentials = {
       email: config.serviceAccountKeyConfig.client_email,
@@ -61,7 +54,7 @@ export default class GSuiteClient {
     };
   }
 
-  private async getClient(): Promise<admin_directory_v1.Admin> {
+  protected async getAuth(): Promise<Auth.JWT> {
     const auth = new google.auth.JWT({
       ...this.credentials,
       scopes: this.requiredScopes,
@@ -86,22 +79,12 @@ export default class GSuiteClient {
       });
     }
 
-    return google.admin({
-      version: 'directory_v1',
-      auth,
-    });
+    return auth;
   }
 
-  async getAuthenticatedServiceClient(): Promise<admin_directory_v1.Admin> {
-    if (this.client) {
-      return this.client;
-    }
+  protected abstract getClient(): Promise<T>;
 
-    this.client = await this.getClient();
-    return this.client;
-  }
-
-  async iterateApi<T>(
+  protected async iterateApi<T>(
     fn: (nextPageToken?: string) => Promise<PageableGaxiosResponse<T>>,
     callback: (data: T) => Promise<void>,
   ) {
@@ -112,6 +95,15 @@ export default class GSuiteClient {
       nextPageToken = result.data.nextPageToken || undefined;
       await callback(result.data);
     } while (nextPageToken);
+  }
+
+  public async getAuthenticatedServiceClient(): Promise<T> {
+    if (this._client) {
+      return this._client;
+    }
+
+    this._client = await this.getClient();
+    return this._client;
   }
 }
 

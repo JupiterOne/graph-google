@@ -1,13 +1,23 @@
+import { IntegrationError } from '@jupiterone/integration-sdk-core';
+
 /**
  * Generates a valid `_key` value for entities.
  *
- * `_key` values must be unique within a JupiterOne account. It is important to
- * scope the value by type to ensure this uniqueness. `id` must not be
- * `undefined` to avoid duplicate values, such as `provider_user_undefined`.
+ * `_key` values must be unique within a JupiterOne account. A key prefix helps
+ * ensure uniqueness when the `id` is not certain to be unique across resources
+ * types.
  *
- * @param type entity _type
+ * @param prefix key prefix
  * @param id an identifier known to the provider
+ * @throws IntegrationError when id is falsy
  */
-export default function generateEntityKey(type: string, id: string | number) {
-  return `${type}_${id}`;
+export default function generateEntityKey(prefix: string, id: string | number) {
+  if (!id) {
+    throw new IntegrationError({
+      code: 'UNDEFINED_KEY_ERROR',
+      message: `Cannot generate a valid _key with ${JSON.stringify(id)}`,
+    });
+  }
+
+  return `${prefix}_${id}`;
 }

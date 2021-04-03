@@ -8,6 +8,19 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Support for ingesting the following **new** resources
+
+  - Groups
+    - `google_group_settings`
+    - `google_group` **HAS** `google_group_settings`
+
+  A Google Workspace administrator must authorize domain wide delegation to the
+  JupiterOne Service Account for the scope
+  `https://www.googleapis.com/auth/apps.groups.settings`. Please see the updated
+  [integration setup guide](docs/jupiterone.md) for details.
+
 ## 3.5.0 - 2021-02-01
 
 - Update the following properties on `google_user` entities:

@@ -1,17 +1,32 @@
-import GSuiteClient, { withErrorHandling } from './GSuiteClient';
-import { google } from 'googleapis';
 import { Credentials } from 'google-auth-library';
-import { admin_directory_v1 } from 'googleapis';
-import { createMockIntegrationLogger } from '@jupiterone/integration-sdk-testing';
+import { admin_directory_v1, google } from 'googleapis';
 
-import { getMockIntegrationConfig } from '../../../test/config';
 import {
   IntegrationProviderAPIError,
   IntegrationProviderAuthorizationError,
 } from '@jupiterone/integration-sdk-core';
+import { createMockIntegrationLogger } from '@jupiterone/integration-sdk-testing';
+
+import { getMockIntegrationConfig } from '../../../test/config';
+import GSuiteAdminClient from './GSuiteAdminClient';
+import { CreateGSuiteClientParams, withErrorHandling } from './GSuiteClient';
 
 function getMockCredentials(): Credentials {
   return {};
+}
+
+class TestGSuiteAdminClient extends GSuiteAdminClient {
+  constructor(params: CreateGSuiteClientParams) {
+    super({
+      ...params,
+      requiredScopes: [
+        'https://www.googleapis.com/auth/admin.directory.user.readonly',
+        'https://www.googleapis.com/auth/admin.directory.group.readonly',
+        'https://www.googleapis.com/auth/admin.directory.domain.readonly',
+        ...(params.requiredScopes || []),
+      ],
+    });
+  }
 }
 
 describe('GSuiteClient.getAuthenticatedServiceClient', () => {
@@ -26,7 +41,7 @@ describe('GSuiteClient.getAuthenticatedServiceClient', () => {
       authorize: () => Promise.resolve(getMockCredentials()),
     } as any);
 
-    const gsuiteClient = new GSuiteClient({
+    const gsuiteClient = new TestGSuiteAdminClient({
       config: instanceConfig,
       logger: createMockIntegrationLogger(),
     });
@@ -48,7 +63,7 @@ describe('GSuiteClient.getAuthenticatedServiceClient', () => {
       authorize: () => Promise.resolve(getMockCredentials()),
     } as any);
 
-    const gsuiteClient = new GSuiteClient({
+    const gsuiteClient = new TestGSuiteAdminClient({
       config: instanceConfig,
       logger: createMockIntegrationLogger(),
       requiredScopes: [
@@ -87,7 +102,7 @@ describe('GSuiteClient.getAuthenticatedServiceClient', () => {
       authorize: () => Promise.reject(mockResponseError),
     } as any);
 
-    const gsuiteClient = new GSuiteClient({
+    const gsuiteClient = new TestGSuiteAdminClient({
       config: instanceConfig,
       logger: createMockIntegrationLogger(),
     });
@@ -111,7 +126,7 @@ describe('GSuiteClient.getAuthenticatedServiceClient', () => {
       authorize: authorizeMockFn,
     } as any);
 
-    const gsuiteClient = new GSuiteClient({
+    const gsuiteClient = new TestGSuiteAdminClient({
       config: instanceConfig,
       logger: createMockIntegrationLogger(),
     });

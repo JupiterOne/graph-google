@@ -1,11 +1,11 @@
 import {
-  IntegrationExecutionContext,
   IntegrationConfigLoadError,
+  IntegrationExecutionContext,
 } from '@jupiterone/integration-sdk-core';
 
+import GSuiteAdminClient from './gsuite/clients/GSuiteAdminClient';
 import { IntegrationConfig } from './types';
 import { deserializeIntegrationConfig } from './utils/integrationConfig';
-import GSuiteClient from './gsuite/clients/GSuiteClient';
 
 export default async function validateInvocation(
   context: IntegrationExecutionContext<IntegrationConfig>,
@@ -31,6 +31,6 @@ export default async function validateInvocation(
     serializedIntegrationConfig,
   ));
 
-  const client = new GSuiteClient({ config, logger });
+  const client = new GSuiteAdminClient({ config, logger });
   await client.getAuthenticatedServiceClient();
 }

@@ -1,8 +1,9 @@
-import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
-
 import { admin_directory_v1 } from 'googleapis';
 
-export class GSuiteTokenClient extends GSuiteClient {
+import GSuiteAdminClient from './GSuiteAdminClient';
+import { CreateGSuiteClientParams } from './GSuiteClient';
+
+export class GSuiteTokenClient extends GSuiteAdminClient {
   constructor(params: CreateGSuiteClientParams) {
     super({
       ...params,
@@ -12,7 +13,7 @@ export class GSuiteTokenClient extends GSuiteClient {
     });
   }
 
-  async iterateTokens(
+  public async iterateTokens(
     userKey: string,
     callback: (data: admin_directory_v1.Schema$Token) => Promise<void>,
   ): Promise<void> {

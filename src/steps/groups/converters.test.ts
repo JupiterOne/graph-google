@@ -1,13 +1,15 @@
+import { admin_directory_v1, groupssettings_v1 } from 'googleapis';
+
+import { getMockUser } from '../../../test/mocks';
+import { createUserEntity } from '../users/converters';
 import {
   createGroupEntity,
   createGroupHasGroupMappedRelationship,
-  createGroupHasUserMappedRelationship,
   createGroupHasGroupRelationship,
+  createGroupHasUserMappedRelationship,
   createGroupHasUserRelationship,
+  createGroupSettingsEntity,
 } from './converters';
-import { admin_directory_v1 } from 'googleapis';
-import { createUserEntity } from '../users/converters';
-import { getMockUser } from '../../../test/mocks';
 
 function getMockGroup(
   partial?: admin_directory_v1.Schema$Group,
@@ -23,6 +25,74 @@ function getMockGroup(
     adminCreated: true,
     aliases: ['randomdistro@jupiterone.com'],
     nonEditableAliases: ['randomdistro@jupiterone.io.test-google-a.com'],
+    ...partial,
+  };
+}
+
+function getMockGroupSettings(
+  partial?: groupssettings_v1.Schema$Groups,
+): groupssettings_v1.Schema$Groups {
+  return {
+    kind: 'groupsSettings#groups',
+    email: 'homeschool@thewilliams.ws',
+    name: 'homeschool',
+    description: '',
+    whoCanJoin: 'CAN_REQUEST_TO_JOIN',
+    whoCanViewMembership: 'ALL_MANAGERS_CAN_VIEW',
+    whoCanViewGroup: 'ALL_MEMBERS_CAN_VIEW',
+    whoCanInvite: 'ALL_MANAGERS_CAN_INVITE',
+    whoCanAdd: 'ALL_MANAGERS_CAN_ADD',
+    allowExternalMembers: 'false',
+    whoCanPostMessage: 'ANYONE_CAN_POST',
+    allowWebPosting: 'true',
+    maxMessageBytes: 26214400,
+    isArchived: 'false',
+    archiveOnly: 'false',
+    messageModerationLevel: 'MODERATE_NONE',
+    spamModerationLevel: 'MODERATE',
+    replyTo: 'REPLY_TO_IGNORE',
+    customReplyTo: '',
+    includeCustomFooter: 'false',
+    customFooterText: '',
+    sendMessageDenyNotification: 'false',
+    defaultMessageDenyNotificationText: '',
+    showInGroupDirectory: 'false',
+    allowGoogleCommunication: 'false',
+    membersCanPostAsTheGroup: 'false',
+    messageDisplayFont: 'DEFAULT_FONT',
+    includeInGlobalAddressList: 'true',
+    whoCanLeaveGroup: 'ALL_MEMBERS_CAN_LEAVE',
+    whoCanContactOwner: 'ANYONE_CAN_CONTACT',
+    whoCanAddReferences: 'NONE',
+    whoCanAssignTopics: 'NONE',
+    whoCanUnassignTopic: 'NONE',
+    whoCanTakeTopics: 'NONE',
+    whoCanMarkDuplicate: 'NONE',
+    whoCanMarkNoResponseNeeded: 'NONE',
+    whoCanMarkFavoriteReplyOnAnyTopic: 'NONE',
+    whoCanMarkFavoriteReplyOnOwnTopic: 'NONE',
+    whoCanUnmarkFavoriteReplyOnAnyTopic: 'NONE',
+    whoCanEnterFreeFormTags: 'NONE',
+    whoCanModifyTagsAndCategories: 'NONE',
+    favoriteRepliesOnTop: 'true',
+    whoCanApproveMembers: 'ALL_MANAGERS_CAN_APPROVE',
+    whoCanBanUsers: 'OWNERS_AND_MANAGERS',
+    whoCanModifyMembers: 'OWNERS_AND_MANAGERS',
+    whoCanApproveMessages: 'OWNERS_AND_MANAGERS',
+    whoCanDeleteAnyPost: 'OWNERS_AND_MANAGERS',
+    whoCanDeleteTopics: 'OWNERS_AND_MANAGERS',
+    whoCanLockTopics: 'OWNERS_AND_MANAGERS',
+    whoCanMoveTopicsIn: 'OWNERS_AND_MANAGERS',
+    whoCanMoveTopicsOut: 'OWNERS_AND_MANAGERS',
+    whoCanPostAnnouncements: 'OWNERS_AND_MANAGERS',
+    whoCanHideAbuse: 'NONE',
+    whoCanMakeTopicsSticky: 'NONE',
+    whoCanModerateMembers: 'OWNERS_AND_MANAGERS',
+    whoCanModerateContent: 'OWNERS_AND_MANAGERS',
+    whoCanAssistContent: 'NONE',
+    customRolesEnabledForSettingsToBeMerged: 'false',
+    enableCollaborativeInbox: 'false',
+    whoCanDiscoverGroup: 'ALL_MEMBERS_CAN_DISCOVER',
     ...partial,
   };
 }
@@ -105,6 +175,14 @@ describe('#createGroupHasUserRelationship', () => {
         targetUserEntity: createUserEntity(getMockUser()),
         groupMember: getMockGroupMemberTypeGroup(),
       }),
+    ).toMatchSnapshot();
+  });
+});
+
+describe('#createGroupSettingsEntity', () => {
+  test('should convert to entity', () => {
+    expect(
+      createGroupSettingsEntity(getMockGroup(), getMockGroupSettings()),
     ).toMatchSnapshot();
   });
 });

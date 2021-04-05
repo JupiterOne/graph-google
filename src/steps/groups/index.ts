@@ -1,7 +1,9 @@
 import { admin_directory_v1 } from 'googleapis';
 
 import {
+  createDirectRelationship,
   Entity,
+  getRawData,
   IntegrationStep,
   JobState,
   Relationship,
@@ -9,6 +11,7 @@ import {
 
 import { entities, relationships } from '../../constants';
 import { GSuiteGroupClient } from '../../gsuite/clients/GSuiteGroupClient';
+import { GSuiteGroupSettingsClient } from '../../gsuite/clients/GSuiteGroupSettingsClient';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import getAccountEntity from '../../utils/getAccountEntity';
 import { getUserEntityKey } from '../users/converters';
@@ -19,6 +22,7 @@ import {
   createGroupHasGroupRelationship,
   createGroupHasUserMappedRelationship,
   createGroupHasUserRelationship,
+  createGroupSettingsEntity,
   MemberType,
 } from './converters';
 
@@ -142,7 +146,7 @@ export async function fetchGroups(
 
   // Create all of the group entities up front and later iterate the group
   // members. There may be mapped relationships we have to create, so we need
-  // of the group information up front.
+  // all of the group information up front.
   //
   // See: https://github.com/JupiterOne/graph-google/issues/27
   const groupEntities = await createGroupEntities(context, client);
@@ -236,6 +240,35 @@ export async function fetchGroups(
   );
 }
 
+export async function fetchGroupSettings(
+  context: IntegrationStepContext,
+): Promise<void> {
+  const { jobState, instance, logger } = context;
+
+  const client = new GSuiteGroupSettingsClient({
+    config: instance.config,
+    logger,
+  });
+
+  await jobState.iterateEntities(
+    { _type: entities.GROUP._type },
+    async (groupEntity) => {
+      const group = getRawData(groupEntity) as admin_directory_v1.Schema$Group;
+
+      const groupSettings = await client.getGroupSettings(group.email!);
+      await context.jobState.addRelationship(
+        createDirectRelationship({
+          _class: relationships.GROUP_HAS_SETTINGS._class,
+          from: groupEntity,
+          to: await context.jobState.addEntity(
+            createGroupSettingsEntity(group, groupSettings),
+          ),
+        }),
+      );
+    },
+  );
+}
+
 export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: 'step-fetch-groups',
@@ -248,5 +281,14 @@ export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
     ],
     dependsOn: ['step-create-account'],
     executionHandler: fetchGroups,
+  },
+
+  {
+    id: 'step-fetch-group-settings',
+    name: 'Group Settings',
+    entities: [entities.GROUP_SETTINGS],
+    relationships: [relationships.GROUP_HAS_SETTINGS],
+    dependsOn: ['step-fetch-groups'],
+    executionHandler: fetchGroupSettings,
   },
 ];

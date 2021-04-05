@@ -125,10 +125,10 @@ function handleError(error: any): never {
   if (error instanceof IntegrationError) {
     throw error;
   }
-  let ErrorConstructor = IntegrationProviderAPIError;
+
   if ([401, 403].includes(error.code)) {
-    ErrorConstructor = IntegrationProviderAuthorizationError;
+    throw new IntegrationProviderAuthorizationError(createErrorProps(error));
   }
-  const err = new ErrorConstructor(createErrorProps(error));
-  throw err;
+
+  throw new IntegrationProviderAPIError(createErrorProps(error));
 }

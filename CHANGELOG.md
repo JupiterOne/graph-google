@@ -10,6 +10,7 @@ and this project adheres to
 
 ### Added
 
+- Added `Steps.USERS` to dependsOn for `Steps.GROUPS`
 - Added use of `Steps.<<STEP_ID>>` constants
 
 ## 3.6.0 - 2021-04-05

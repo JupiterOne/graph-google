@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.7.0 - 2021-07-13
+
 ### Added
 
 - Added `Steps.USERS` to dependsOn for `Steps.GROUPS`

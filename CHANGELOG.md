@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Added use of `Steps.<<STEP_ID>>` constants
+
 ## 3.6.0 - 2021-04-05
 
 ### Added

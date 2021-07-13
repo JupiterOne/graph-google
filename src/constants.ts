@@ -1,19 +1,15 @@
-import {
-  RelationshipClass,
-  StepEntityMetadata,
-  StepRelationshipMetadata,
-} from '@jupiterone/integration-sdk-core';
+import { RelationshipClass } from '@jupiterone/integration-sdk-core';
 
-type EntityConstantKeys =
-  | 'DOMAIN'
-  | 'USER'
-  | 'GROUP'
-  | 'GROUP_SETTINGS'
-  | 'ACCOUNT'
-  | 'SITE'
-  | 'TOKEN';
+export const Steps = {
+  DOMAINS: 'step-fetch-domains',
+  ACCOUNT: 'step-create-account',
+  USERS: 'step-fetch-users',
+  TOKENS: 'step-fetch-tokens',
+  GROUPS: 'step-fetch-groups',
+  GROUP_SETTINGS: 'step-fetch-group-settings',
+};
 
-export const entities: Record<EntityConstantKeys, StepEntityMetadata> = {
+export const entities = {
   DOMAIN: {
     resourceName: 'Domain',
     _type: 'google_domain',
@@ -51,20 +47,7 @@ export const entities: Record<EntityConstantKeys, StepEntityMetadata> = {
   },
 };
 
-type RelationshipConstantKeys =
-  | 'ACCOUNT_HAS_USER'
-  | 'SITE_HOSTS_USER'
-  | 'GROUP_HAS_USER'
-  | 'GROUP_HAS_SETTINGS'
-  | 'GROUP_HAS_GROUP'
-  | 'ACCOUNT_HAS_GROUP'
-  | 'USER_ASSIGNED_TOKEN'
-  | 'TOKEN_ALLOWS_VENDOR';
-
-export const relationships: Record<
-  RelationshipConstantKeys,
-  StepRelationshipMetadata
-> = {
+export const relationships = {
   ACCOUNT_HAS_USER: {
     _type: 'google_account_has_user',
     _class: RelationshipClass.HAS,

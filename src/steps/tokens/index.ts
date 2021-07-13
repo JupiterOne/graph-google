@@ -6,7 +6,7 @@ import {
   RelationshipDirection,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships } from '../../constants';
+import { entities, relationships, Steps } from '../../constants';
 import { GSuiteTokenClient } from '../../gsuite/clients/GSuiteTokenClient';
 import {
   createTokenEntity,
@@ -79,14 +79,14 @@ export async function fetchTokens(
 
 export const tokenSteps: IntegrationStep<IntegrationConfig>[] = [
   {
-    id: 'step-fetch-tokens',
+    id: Steps.TOKENS,
     name: 'Tokens',
     entities: [entities.TOKEN],
     relationships: [
       relationships.USER_ASSIGNED_TOKEN,
       relationships.TOKEN_ALLOWS_VENDOR,
     ],
-    dependsOn: ['step-fetch-users'],
+    dependsOn: [Steps.USERS],
     executionHandler: fetchTokens,
   },
 ];

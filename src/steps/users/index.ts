@@ -1,6 +1,6 @@
 import { IntegrationStep } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships } from '../../constants';
+import { entities, relationships, Steps } from '../../constants';
 import { GSuiteUserClient } from '../../gsuite/clients/GSuiteUserClient';
 import {
   createUserEntity,
@@ -62,14 +62,14 @@ export async function fetchUsers(
 
 export const userSteps: IntegrationStep<IntegrationConfig>[] = [
   {
-    id: 'step-fetch-users',
+    id: Steps.USERS,
     name: 'Users',
     entities: [entities.USER, entities.SITE],
     relationships: [
       relationships.ACCOUNT_HAS_USER,
       relationships.SITE_HOSTS_USER,
     ],
-    dependsOn: ['step-create-account'],
+    dependsOn: [Steps.ACCOUNT],
     executionHandler: fetchUsers,
   },
 ];

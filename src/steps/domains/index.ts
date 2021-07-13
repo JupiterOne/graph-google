@@ -1,6 +1,6 @@
 import { IntegrationStep } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities } from '../../constants';
+import { entities, Steps } from '../../constants';
 import { createDomainEntity } from './converters';
 import { GSuiteDomainClient } from '../../gsuite/clients/GSuiteDomainClient';
 
@@ -19,7 +19,7 @@ export async function fetchDomains(
 
 export const domainSteps: IntegrationStep<IntegrationConfig>[] = [
   {
-    id: 'step-fetch-domains',
+    id: Steps.DOMAINS,
     name: 'Domains',
     entities: [entities.DOMAIN],
     relationships: [],

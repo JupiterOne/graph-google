@@ -1,6 +1,6 @@
 import { IntegrationStep } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities } from '../../constants';
+import { entities, Steps } from '../../constants';
 import { createAccountEntity } from './converters';
 
 interface CollectDomainEntityDataResult {
@@ -56,11 +56,11 @@ export async function createAccount(
 
 export const accountSteps: IntegrationStep<IntegrationConfig>[] = [
   {
-    id: 'step-create-account',
+    id: Steps.ACCOUNT,
     name: 'Account',
     entities: [entities.ACCOUNT],
     relationships: [],
-    dependsOn: ['step-fetch-domains'],
+    dependsOn: [Steps.DOMAINS],
     executionHandler: createAccount,
   },
 ];

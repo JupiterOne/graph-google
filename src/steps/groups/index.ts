@@ -279,7 +279,7 @@ export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
       relationships.GROUP_HAS_GROUP,
       relationships.ACCOUNT_HAS_GROUP,
     ],
-    dependsOn: [Steps.ACCOUNT],
+    dependsOn: [Steps.ACCOUNT, Steps.USERS],
     executionHandler: fetchGroups,
   },
   {

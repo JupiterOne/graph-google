@@ -8,8 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.7.0 - 2021-07-13
+
 ### Added
 
+- Added `Steps.USERS` to dependsOn for `Steps.GROUPS`
 - Added use of `Steps.<<STEP_ID>>` constants
 
 ## 3.6.0 - 2021-04-05

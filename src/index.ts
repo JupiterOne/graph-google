@@ -6,6 +6,7 @@ import { accountSteps } from './steps/account';
 import { userSteps } from './steps/users';
 import { groupSteps } from './steps/groups';
 import { tokenSteps } from './steps/tokens';
+import { chromeOSDeviceSteps } from './steps/chrome-os-devices';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields: {
@@ -27,5 +28,6 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
     ...userSteps,
     ...groupSteps,
     ...tokenSteps,
+    ...chromeOSDeviceSteps,
   ],
 };

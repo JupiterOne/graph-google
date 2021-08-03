@@ -45,6 +45,11 @@ export const entities = {
     _type: 'google_token',
     _class: 'AccessKey',
   },
+  CHROME_OS_DEVICE: {
+    resourceName: 'Chrome OS Device',
+    _type: 'google_chrome_os_device',
+    _class: 'Device',
+  },
 };
 
 export const relationships = {

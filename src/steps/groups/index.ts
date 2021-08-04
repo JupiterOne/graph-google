@@ -254,17 +254,19 @@ export async function fetchGroupSettings(
     { _type: entities.GROUP._type },
     async (groupEntity) => {
       const group = getRawData(groupEntity) as admin_directory_v1.Schema$Group;
-
       const groupSettings = await client.getGroupSettings(group.email!);
-      await context.jobState.addRelationship(
-        createDirectRelationship({
-          _class: relationships.GROUP_HAS_SETTINGS._class,
-          from: groupEntity,
-          to: await context.jobState.addEntity(
-            createGroupSettingsEntity(group, groupSettings),
-          ),
-        }),
-      );
+
+      if (groupSettings) {
+        await context.jobState.addRelationship(
+          createDirectRelationship({
+            _class: relationships.GROUP_HAS_SETTINGS._class,
+            from: groupEntity,
+            to: await context.jobState.addEntity(
+              createGroupSettingsEntity(group, groupSettings),
+            ),
+          }),
+        );
+      }
     },
   );
 }

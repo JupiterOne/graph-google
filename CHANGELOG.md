@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- If a `400` is recieved from `GroupSettings` endpoint in `getGroupSettings`, it
+  is because of an invalid email. This was throwing an error and causing step
+  failure. `getGroupSettings` now catches the error and logs if there is a
+  `400`, but skips over it to continue ingestion.
+
 ## 3.7.0 - 2021-07-13
 
 ### Added

@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.7.1 - 2021-08-04
+
 ### Fixed
 
 - If a `400` is recieved from `GroupSettings` endpoint in `getGroupSettings`, it

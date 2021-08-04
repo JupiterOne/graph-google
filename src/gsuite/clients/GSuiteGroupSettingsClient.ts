@@ -38,7 +38,7 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
         // for troubleshooting.
         this.logger.warn(
           { groupEmailAddress },
-          'Failed to fetch Group Settings for Email (Skipping over it)',
+          '[SKIP] Failed to fetch Group Settings for email address',
         );
       } else {
         // Other Auth errors are already being thrown by `GSuiteClient` so we should

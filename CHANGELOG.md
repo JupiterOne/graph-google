@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.8.0 - 2021-08-25
+
 ### Added
 
 - New properties added to resources:
@@ -15,6 +17,10 @@ and this project adheres to
   | Entity        | Properties      |
   | ------------- | --------------- |
   | `google_user` | `customSchemas` |
+
+### Changed
+
+- Updated JupiterOne SDK packages
 
 ## 3.7.1 - 2021-08-04
 

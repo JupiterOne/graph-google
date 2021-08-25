@@ -8,6 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New properties added to resources:
+
+  | Entity        | Properties      |
+  | ------------- | --------------- |
+  | `google_user` | `customSchemas` |
+
 ## 3.7.1 - 2021-08-04
 
 ### Fixed

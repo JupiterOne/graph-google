@@ -60,6 +60,17 @@ export function getMockUser(
     includeInGlobalAddressList: true,
     recoveryEmail: 'john.doe.recovery@jupiterone.io',
     recoveryPhone: '+19999999999',
+    customSchemas: {
+      SSO: {
+        role: [
+          {
+            type: 'work',
+            value:
+              'arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite',
+          },
+        ],
+      },
+    },
     ...partial,
   };
 }

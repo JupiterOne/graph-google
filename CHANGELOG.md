@@ -8,6 +8,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.8.1 - 2012-09-08
+
+### Added
+
+- New properties added to resources:
+
+  | Entity        | Properties   |
+  | ------------- | ------------ |
+  | `google_user` | `domainName` |
+
 ## 3.8.0 - 2021-08-25
 
 ### Added

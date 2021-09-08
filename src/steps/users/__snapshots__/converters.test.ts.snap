@@ -97,6 +97,7 @@ Object {
   "department": "Marketing",
   "description": "Full-time",
   "displayName": "John Doe",
+  "domainName": "jupiterone.io",
   "email": "john.doe@jupiterone.io",
   "employeeType": "Full-time",
   "firstName": "John",

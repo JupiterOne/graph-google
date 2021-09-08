@@ -9,6 +9,7 @@ import {
 } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
+import { last } from 'lodash';
 
 interface GSuiteDataCollection {
   type: string;
@@ -55,6 +56,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         _class: entities.USER._class,
         id: userId,
         email: data.primaryEmail,
+        domainName: getDomain(data),
         name,
         displayName: name,
         username: getUsername(data),
@@ -162,6 +164,10 @@ export function createAccountHasUserRelationship(params: {
 function getUsername(data: admin_directory_v1.Schema$User): string | null {
   const usernameMatch = /(.*?)@.*/.exec(data.primaryEmail as string);
   return usernameMatch && usernameMatch[1];
+}
+
+function getDomain(data: admin_directory_v1.Schema$User): string | null {
+  return last(data.primaryEmail?.split('@'));
 }
 
 function getAddresses(data: admin_directory_v1.Schema$User) {

@@ -10,7 +10,19 @@ export const Steps = {
   GROUP_SETTINGS: 'step-fetch-group-settings',
 };
 
-export const entities = {
+export type EntityNames =
+  | 'DOMAIN'
+  | 'USER'
+  | 'GROUP'
+  | 'GROUP_SETTINGS'
+  | 'ACCOUNT'
+  | 'ROLE'
+  | 'SITE'
+  | 'TOKEN';
+export type Entities = {
+  [key in EntityNames]: { resourceName: string; _type: string; _class: string };
+};
+export const entities: Entities = {
   DOMAIN: {
     resourceName: 'Domain',
     _type: 'google_domain',

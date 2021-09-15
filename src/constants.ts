@@ -1,6 +1,7 @@
 import { RelationshipClass } from '@jupiterone/integration-sdk-core';
 
 export const Steps = {
+  ROLE: 'step-fetch-roles',
   DOMAINS: 'step-fetch-domains',
   ACCOUNT: 'step-create-account',
   USERS: 'step-fetch-users',
@@ -30,6 +31,11 @@ export const entities = {
     _type: 'google_group_settings',
     _class: 'Configuration',
   },
+  ROLE: {
+    resourceName: 'Role',
+    _type: 'google_role',
+    _class: 'AccessRole',
+  },
   ACCOUNT: {
     resourceName: 'Account',
     _type: 'google_account',
@@ -53,6 +59,12 @@ export const relationships = {
     _class: RelationshipClass.HAS,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.USER._type,
+  },
+  ACCOUNT_HAS_ROLE: {
+    _type: 'google_account_has_role',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.ACCOUNT._type,
+    targetType: entities.ROLE._type,
   },
   SITE_HOSTS_USER: {
     _type: 'google_site_has_user',

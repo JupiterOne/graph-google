@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createRoleEntity should convert to entity 1`] = `
+Object {
+  "_class": Array [
+    "AccessRole",
+  ],
+  "_key": "google_role_abc123",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "account": Object {
+          "googleAccountId": "abc123",
+          "name": "mygoogleyo",
+        },
+        "domainNames": Array [
+          "jupiterone.com",
+          "jupiterone.io",
+        ],
+        "primaryDomain": "jupiterone.com",
+      },
+    },
+  ],
+  "_type": "google_role",
+  "accountId": "jupiterone.com",
+  "createdOn": undefined,
+  "displayName": "mygoogleyo",
+  "domains": Array [
+    "jupiterone.com",
+    "jupiterone.io",
+  ],
+  "id": "abc123",
+  "name": "mygoogleyo",
+  "primaryDomain": "jupiterone.com",
+  "vendor": "Google",
+}
+`;

@@ -205,10 +205,10 @@ The following entities are created:
 
 | Resources      | Entity `_type`          | Entity `_class` |
 | -------------- | ----------------------- | --------------- |
+| Account        | `google_account`        | `Account`       |
 | Domain         | `google_domain`         | `Domain`        |
 | Group          | `google_group`          | `UserGroup`     |
 | Group Settings | `google_group_settings` | `Configuration` |
-| Role           | `google_role`           | `AccessRole`    |
 | Site           | `google_site`           | `Site`          |
 | Token          | `google_token`          | `AccessKey`     |
 | User           | `google_user`           | `User`          |

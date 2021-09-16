@@ -55,6 +55,7 @@ export default abstract class GSuiteClient<T> {
   }
 
   protected async getAuth(): Promise<Auth.JWT> {
+    console.log('Required scopes', this.requiredScopes);
     const auth = new google.auth.JWT({
       ...this.credentials,
       scopes: this.requiredScopes,

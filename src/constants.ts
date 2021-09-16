@@ -1,9 +1,9 @@
 import { RelationshipClass } from '@jupiterone/integration-sdk-core';
 
 export const Steps = {
-  ROLE: 'step-fetch-roles',
   DOMAINS: 'step-fetch-domains',
   ACCOUNT: 'step-create-account',
+  ROLES: 'step-fetch-roles',
   USERS: 'step-fetch-users',
   TOKENS: 'step-fetch-tokens',
   GROUPS: 'step-fetch-groups',
@@ -76,6 +76,25 @@ export const relationships = {
     _type: 'google_account_has_role',
     _class: RelationshipClass.HAS,
     sourceType: entities.ACCOUNT._type,
+    targetType: entities.ROLE._type,
+  },
+  // TODO/Question: These seem above and beyond just getting the account roles but they are technically valid relationships
+  USER_HAS_ROLE: {
+    _type: 'google_account_has_role',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.USER._type,
+    targetType: entities.ROLE._type,
+  },
+  DOMAIN_HAS_ROLE: {
+    _type: 'google_account_has_role',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.DOMAIN._type,
+    targetType: entities.ROLE._type,
+  },
+  GROUP_HAS_ROLE: {
+    _type: 'google_group_has_role',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.GROUP._type,
     targetType: entities.ROLE._type,
   },
   SITE_HOSTS_USER: {

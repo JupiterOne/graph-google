@@ -6,10 +6,8 @@ describe.skip('#createRoleEntity', () => {
       createRoleEntity({
         account: {
           googleAccountId: 'abc123',
-          name: 'mygoogleyo',
         },
-        domainNames: ['jupiterone.com', 'jupiterone.io'],
-        primaryDomain: 'jupiterone.com',
+        role: {} as any, // TODO/Rick
       }),
     ).toMatchSnapshot();
   });

@@ -203,21 +203,33 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type`  | Entity `_class` |
-| --------- | --------------- | --------------- |
-| Domain    | `google_domain` | `Domain`        |
-| Group     | `google_group`  | `UserGroup`     |
-| Role      | `google_role`   | `AccessRole`    |
-| User      | `google_user`   | `User`          |
+| Resources      | Entity `_type`          | Entity `_class` |
+| -------------- | ----------------------- | --------------- |
+| Account        | `google_account`        | `Account`       |
+| Domain         | `google_domain`         | `Domain`        |
+| Group          | `google_group`          | `UserGroup`     |
+| Group Settings | `google_group_settings` | `Configuration` |
+| Role           | `google_role`           | `AccessRole`    |
+| Site           | `google_site`           | `Site`          |
+| Token          | `google_token`          | `AccessKey`     |
+| User           | `google_user`           | `User`          |
 
 ### Relationships
 
 The following relationships are created/mapped:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
-| --------------------- | --------------------- | --------------------- |
-| `google_account`      | **HAS**               | `google_role`         |
-| `google_group`        | **HAS**               | `google_role`         |
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type`          |
+| --------------------- | --------------------- | ------------------------------ |
+| `google_account`      | **HAS**               | `google_group`                 |
+| `google_account`      | **HAS**               | `google_role`                  |
+| `google_account`      | **HAS**               | `google_user`                  |
+| `google_group`        | **HAS**               | `google_group`                 |
+| `google_group`        | **HAS**               | `google_role`                  |
+| `google_group`        | **HAS**               | `google_group_settings`        |
+| `google_group`        | **HAS**               | `google_user`                  |
+| `google_site`         | **HAS**               | `google_user`                  |
+| `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
+| `google_user`         | **ASSIGNED**          | `google_token`                 |
 
 <!--
 ********************************************************************************

@@ -1,12 +1,12 @@
 import { IntegrationInvocationConfig } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig } from './types';
 import validateInvocation from './validateInvocation';
-// import { domainSteps } from './steps/domains';
-// import { accountSteps } from './steps/account';
-// import { userSteps } from './steps/users';
+import { domainSteps } from './steps/domains';
+import { accountSteps } from './steps/account';
+import { userSteps } from './steps/users';
 import { roleSteps } from './steps/roles';
-// import { groupSteps } from './steps/groups';
-// import { tokenSteps } from './steps/tokens';
+import { groupSteps } from './steps/groups';
+import { tokenSteps } from './steps/tokens';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields: {
@@ -23,11 +23,11 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
   },
   validateInvocation,
   integrationSteps: [
-    // ...domainSteps,
-    // ...accountSteps,
-    // ...userSteps,
+    ...domainSteps,
+    ...accountSteps,
+    ...userSteps,
     ...roleSteps,
-    // ...groupSteps,
-    // ...tokenSteps,
+    ...groupSteps,
+    ...tokenSteps,
   ],
 };

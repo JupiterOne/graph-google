@@ -28,6 +28,7 @@ export const roleSteps: IntegrationStep<IntegrationConfig>[] = [
       relationships.USER_HAS_ROLE,
       relationships.DOMAIN_HAS_ROLE,
     ],
+    dependsOn: [Steps.ACCOUNT],
     executionHandler: fetchRoles,
   },
 ];

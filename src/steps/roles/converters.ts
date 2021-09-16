@@ -15,13 +15,10 @@ export function createRoleEntity(data: CreateRoleEntityParams) {
       source: data,
       assign: {
         _class: entities.ROLE._class,
-        _key: generateEntityKey(
-          entities.ROLE._type,
-          data.role.roleId as string,
-        ),
+        _key: generateEntityKey(entities.ROLE._type, data.role.roleId!),
         _type: entities.ROLE._type,
-        // TODO/Rick: Verify Shape
-        displayName: data.role.roleName as any,
+        // TODO/Rick: Is this the shape we want?
+        displayName: data.role.roleName as string,
         name: data.role.roleName,
         id: data.account.googleAccountId,
         vendor: 'Google',

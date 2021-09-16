@@ -78,7 +78,7 @@ export const relationships = {
     sourceType: entities.ACCOUNT._type,
     targetType: entities.ROLE._type,
   },
-  // TODO/Question: These seem above and beyond just getting the account roles but they are technically valid relationships
+  // TODO/Rick:  Are these additional entries overkill for what this work is trying to achieve? I am still acclimating to the data model
   USER_HAS_ROLE: {
     _type: 'google_account_has_role',
     _class: RelationshipClass.HAS,
@@ -86,7 +86,7 @@ export const relationships = {
     targetType: entities.ROLE._type,
   },
   DOMAIN_HAS_ROLE: {
-    _type: 'google_account_has_role',
+    _type: 'google_domain_has_role',
     _class: RelationshipClass.HAS,
     sourceType: entities.DOMAIN._type,
     targetType: entities.ROLE._type,

@@ -223,6 +223,7 @@ The following relationships are created/mapped:
 | `google_account`      | **HAS**               | `google_group`                 |
 | `google_account`      | **HAS**               | `google_role`                  |
 | `google_account`      | **HAS**               | `google_user`                  |
+| `google_domain`       | **HAS**               | `google_role`                  |
 | `google_group`        | **HAS**               | `google_group`                 |
 | `google_group`        | **HAS**               | `google_role`                  |
 | `google_group`        | **HAS**               | `google_group_settings`        |

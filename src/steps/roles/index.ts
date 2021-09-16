@@ -24,8 +24,8 @@ export const roleSteps: IntegrationStep<IntegrationConfig>[] = [
     entities: [entities.ROLE, entities.USER, entities.GROUP, entities.DOMAIN],
     relationships: [
       relationships.ACCOUNT_HAS_ROLE,
-      relationships.GROUP_HAS_ROLE,
       relationships.USER_HAS_ROLE,
+      relationships.GROUP_HAS_ROLE,
       relationships.DOMAIN_HAS_ROLE,
     ],
     dependsOn: [Steps.ACCOUNT],

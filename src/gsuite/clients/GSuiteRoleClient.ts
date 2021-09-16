@@ -1,6 +1,7 @@
 import { admin_directory_v1 } from 'googleapis';
 import GSuiteAdminClient from './GSuiteAdminClient';
 import { CreateGSuiteClientParams } from './GSuiteClient';
+import { CreateRoleEntityParams } from '../../steps/roles/converters';
 
 export class GSuiteRoleClient extends GSuiteAdminClient {
   constructor(params: CreateGSuiteClientParams) {
@@ -14,20 +15,23 @@ export class GSuiteRoleClient extends GSuiteAdminClient {
   }
 
   public async iterateRoles(
-    callback: ({ account, role: Schema$Role }) => Promise<void>,
+    callback: (data: CreateRoleEntityParams) => Promise<void>,
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();
 
     await this.iterateApi(
       async (nextPageToken) => {
-        return client.groups.list({
+        return client.roles.list({
           customer: this.accountId,
           pageToken: nextPageToken,
         });
       },
       async (data: admin_directory_v1.Schema$Roles) => {
         for (const role of data.items || []) {
-          await callback({ account: { accountId: this.accountId }, role });
+          await callback({
+            account: { googleAccountId: this.accountId },
+            role,
+          });
         }
       },
     );

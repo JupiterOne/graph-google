@@ -1,13 +1,13 @@
 import { createRoleEntity } from './converters';
 
-describe.skip('#createRoleEntity', () => {
+describe('#createRoleEntity', () => {
   test('should convert to entity', () => {
     expect(
       createRoleEntity({
         account: {
           googleAccountId: 'abc123',
         },
-        role: {} as any, // TODO/Rick
+        role: { roleId: '123', roleName: 'some role' },
       }),
     ).toMatchSnapshot();
   });

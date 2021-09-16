@@ -5,34 +5,26 @@ Object {
   "_class": Array [
     "AccessRole",
   ],
-  "_key": "google_role_abc123",
+  "_key": "google_role_123",
   "_rawData": Array [
     Object {
       "name": "default",
       "rawData": Object {
         "account": Object {
           "googleAccountId": "abc123",
-          "name": "mygoogleyo",
         },
-        "domainNames": Array [
-          "jupiterone.com",
-          "jupiterone.io",
-        ],
-        "primaryDomain": "jupiterone.com",
+        "role": Object {
+          "roleId": "123",
+          "roleName": "some role",
+        },
       },
     },
   ],
   "_type": "google_role",
-  "accountId": "jupiterone.com",
   "createdOn": undefined,
-  "displayName": "mygoogleyo",
-  "domains": Array [
-    "jupiterone.com",
-    "jupiterone.io",
-  ],
+  "displayName": "some role",
   "id": "abc123",
-  "name": "mygoogleyo",
-  "primaryDomain": "jupiterone.com",
+  "name": "some role",
   "vendor": "Google",
 }
 `;

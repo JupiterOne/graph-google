@@ -4,13 +4,12 @@ import { createIntegrationEntity } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import Schema$Role = admin_directory_v1.Schema$Role;
 
-interface CreateRoleEntityParams {
+export interface CreateRoleEntityParams {
   account: { googleAccountId: string };
   role: Schema$Role;
 }
 
 export function createRoleEntity(data: CreateRoleEntityParams) {
-  console.log('createRoleEntity > data', data);
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -18,7 +17,7 @@ export function createRoleEntity(data: CreateRoleEntityParams) {
         _class: entities.ROLE._class,
         _key: generateEntityKey(
           entities.ROLE._type,
-          data.account.googleAccountId,
+          data.role.roleId as string,
         ),
         _type: entities.ROLE._type,
         // TODO/Rick: Verify Shape

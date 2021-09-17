@@ -10,21 +10,25 @@ Object {
     Object {
       "name": "default",
       "rawData": Object {
-        "account": Object {
-          "googleAccountId": "abc123",
-        },
-        "role": Object {
-          "roleId": "123",
-          "roleName": "some role",
-        },
+        "isSuperAdminRole": false,
+        "isSystemRole": false,
+        "kind": "kind",
+        "roleDescription": "some role description",
+        "roleId": "123",
+        "roleName": "some role name",
       },
     },
   ],
   "_type": "google_role",
   "createdOn": undefined,
-  "displayName": "some role",
-  "id": "abc123",
-  "name": "some role",
+  "displayName": "some role name",
+  "id": "123",
+  "isSuperAdminRole": false,
+  "isSystemRole": false,
+  "kind": "kind",
+  "name": "some role name",
+  "roleDescription": "some role description",
+  "roleName": "some role name",
   "vendor": "Google",
 }
 `;

@@ -21,10 +21,10 @@ export class GSuiteRoleClient extends GSuiteAdminClient {
     const client = await this.getAuthenticatedServiceClient();
 
     await this.iterateApi<Schema$Roles>(
-      async (nextPageToken) =>
+      async (pageToken) =>
         client.roles.list({
           customer: this.accountId,
-          pageToken: nextPageToken,
+          pageToken,
         }),
       async (data) => {
         for (const role of data.items || []) {

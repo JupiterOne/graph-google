@@ -24,8 +24,8 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
   validateInvocation,
   integrationSteps: [
     ...domainSteps,
-    ...accountSteps,
     ...roleSteps,
+    ...accountSteps,
     ...userSteps,
     ...groupSteps,
     ...tokenSteps,

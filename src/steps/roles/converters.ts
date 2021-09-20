@@ -12,7 +12,6 @@ export function createRoleEntity(role: Schema$Role) {
         _class: entities.ROLE._class,
         _type: entities.ROLE._type,
         _key: generateEntityKey(entities.ROLE._type, role.roleId as string),
-        // TODO/Rick: Is this the shape we want? I am including more properties for discussion but can whittle this down
         id: role.roleId as string,
         name: role.roleName,
         displayName: role.roleName as string,

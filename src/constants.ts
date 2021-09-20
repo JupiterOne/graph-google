@@ -10,19 +10,7 @@ export const Steps = {
   GROUP_SETTINGS: 'step-fetch-group-settings',
 };
 
-export type EntityNames =
-  | 'DOMAIN'
-  | 'USER'
-  | 'GROUP'
-  | 'GROUP_SETTINGS'
-  | 'ACCOUNT'
-  | 'ROLE'
-  | 'SITE'
-  | 'TOKEN';
-export type Entities = {
-  [key in EntityNames]: { resourceName: string; _type: string; _class: string };
-};
-export const entities: Entities = {
+export const entities = {
   DOMAIN: {
     resourceName: 'Domain',
     _type: 'google_domain',
@@ -72,29 +60,11 @@ export const relationships = {
     sourceType: entities.ACCOUNT._type,
     targetType: entities.USER._type,
   },
-  ACCOUNT_HAS_ROLE: {
-    _type: 'google_account_has_role',
-    _class: RelationshipClass.HAS,
-    sourceType: entities.ACCOUNT._type,
-    targetType: entities.ROLE._type,
-  },
-  // TODO/Rick:  Are these additional entries overkill for what this work is trying to achieve? I am still acclimating to the data model
-  USER_HAS_ROLE: {
-    _type: 'google_user_has_role',
-    _class: RelationshipClass.HAS,
-    sourceType: entities.USER._type,
-    targetType: entities.ROLE._type,
-  },
+  // Individual roles are scoped starting at the domain-level (https://developers.google.com/admin-sdk/directory/v1/guides/manage-roles)
   DOMAIN_HAS_ROLE: {
     _type: 'google_domain_has_role',
     _class: RelationshipClass.HAS,
     sourceType: entities.DOMAIN._type,
-    targetType: entities.ROLE._type,
-  },
-  GROUP_HAS_ROLE: {
-    _type: 'google_group_has_role',
-    _class: RelationshipClass.HAS,
-    sourceType: entities.GROUP._type,
     targetType: entities.ROLE._type,
   },
   SITE_HOSTS_USER: {

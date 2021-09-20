@@ -1,6 +1,6 @@
 import { IntegrationStep } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships, Steps } from '../../constants';
+import { entities, Steps } from '../../constants';
 import { createRoleEntity } from './converters';
 import { GSuiteRoleClient } from '../../gsuite/clients/GSuiteRoleClient';
 
@@ -22,13 +22,8 @@ export const roleSteps: IntegrationStep<IntegrationConfig>[] = [
     id: Steps.ROLES,
     name: 'Role',
     entities: [entities.ROLE],
-    relationships: [
-      relationships.ACCOUNT_HAS_ROLE,
-      relationships.USER_HAS_ROLE,
-      relationships.GROUP_HAS_ROLE,
-      relationships.DOMAIN_HAS_ROLE,
-    ],
-    dependsOn: [Steps.ACCOUNT],
+    relationships: [],
+    dependsOn: [],
     executionHandler: fetchRoles,
   },
 ];

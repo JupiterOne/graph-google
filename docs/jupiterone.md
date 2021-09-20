@@ -231,6 +231,7 @@ The following relationships are created/mapped:
 | `google_site`         | **HAS**               | `google_user`                  |
 | `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
 | `google_user`         | **ASSIGNED**          | `google_token`                 |
+| `google_user`         | **HAS**               | `google_role`                  |
 
 <!--
 ********************************************************************************

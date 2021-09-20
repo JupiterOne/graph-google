@@ -80,7 +80,7 @@ export const relationships = {
   },
   // TODO/Rick:  Are these additional entries overkill for what this work is trying to achieve? I am still acclimating to the data model
   USER_HAS_ROLE: {
-    _type: 'google_account_has_role',
+    _type: 'google_user_has_role',
     _class: RelationshipClass.HAS,
     sourceType: entities.USER._type,
     targetType: entities.ROLE._type,

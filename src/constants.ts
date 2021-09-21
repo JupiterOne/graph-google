@@ -60,6 +60,12 @@ export const relationships = {
     sourceType: entities.ACCOUNT._type,
     targetType: entities.USER._type,
   },
+  ACCOUNT_HAS_ROLE: {
+    _type: 'google_account_has_user',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.ACCOUNT._type,
+    targetType: entities.ROLE._type,
+  },
   SITE_HOSTS_USER: {
     _type: 'google_site_has_user',
     // TODO: Change to HOSTS

@@ -38,15 +38,13 @@ Object {
   "isSystem": false,
   "kind": "kind",
   "name": "some role name",
-  "privileges": Array [
-    Object {
-      "id": "abc",
-      "name": "privilege1",
-    },
-    Object {
-      "id": "def",
-      "name": "privilege2",
-    },
+  "privilegeIds": Array [
+    "abc",
+    "def",
+  ],
+  "privilegeNames": Array [
+    "privilege1",
+    "privilege2",
   ],
   "vendor": "Google",
 }

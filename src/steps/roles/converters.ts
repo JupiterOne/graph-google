@@ -4,9 +4,26 @@ import { createIntegrationEntity } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import Schema$Role = admin_directory_v1.Schema$Role;
 
+function getRolePrivilegeStrings(role: Schema$Role) {
+  return (role.rolePrivileges || []).reduce(
+    (privileges, role) => {
+      if (role.serviceId) privileges.privilegeIds.push(role.serviceId);
+      if (role.privilegeName)
+        privileges.privilegeNames.push(role.privilegeName);
+      return privileges;
+    },
+    { privilegeIds: [], privilegeNames: [] } as {
+      privilegeNames: string[];
+      privilegeIds: string[];
+    },
+  );
+}
+
 export function createRoleEntity(role: Schema$Role) {
   const roleId = role.roleId as string;
   const roleName = role.roleName as string;
+
+  const { privilegeIds, privilegeNames } = getRolePrivilegeStrings(role);
 
   return createIntegrationEntity({
     entityData: {
@@ -19,12 +36,10 @@ export function createRoleEntity(role: Schema$Role) {
         name: roleName,
         displayName: roleName,
         description: role.roleDescription,
-        privileges: ((role.rolePrivileges as any) || []).map((privilege) => ({
-          id: privilege.serviceId,
-          name: privilege.privilegeName,
-        })),
         isSystem: role.isSystemRole,
         isAdmin: role.isSuperAdminRole,
+        privilegeIds,
+        privilegeNames,
         kind: role.kind,
         vendor: 'Google',
       },

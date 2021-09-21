@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createRoleEntity should convert to entity 1`] = `
+Object {
+  "_class": Array [
+    "AccessRole",
+  ],
+  "_key": "google_role_123",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "isSuperAdminRole": false,
+        "isSystemRole": false,
+        "kind": "kind",
+        "roleDescription": "some role description",
+        "roleId": "123",
+        "roleName": "some role name",
+        "rolePrivileges": Array [
+          Object {
+            "privilegeName": "privilege1",
+            "serviceId": "abc",
+          },
+          Object {
+            "privilegeName": "privilege2",
+            "serviceId": "def",
+          },
+        ],
+      },
+    },
+  ],
+  "_type": "google_role",
+  "createdOn": undefined,
+  "description": "some role description",
+  "displayName": "some role name",
+  "id": "123",
+  "isAdmin": false,
+  "isSystem": false,
+  "kind": "kind",
+  "name": "some role name",
+  "privilegeIds": Array [
+    "abc",
+    "def",
+  ],
+  "privilegeNames": Array [
+    "privilege1",
+    "privilege2",
+  ],
+  "vendor": "Google",
+}
+`;

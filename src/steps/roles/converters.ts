@@ -4,7 +4,14 @@ import { createIntegrationEntity } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import Schema$Role = admin_directory_v1.Schema$Role;
 
-function getRolePrivilegeStrings(role: Schema$Role) {
+export type RolePrivilegeStrings = {
+  privilegeIds: string[];
+  privilegeNames: string[];
+};
+
+export function getRolePrivilegeStrings(
+  role: Schema$Role,
+): RolePrivilegeStrings {
   return (role.rolePrivileges || []).reduce(
     (privileges, role) => {
       if (role.serviceId) privileges.privilegeIds.push(role.serviceId);
@@ -12,10 +19,7 @@ function getRolePrivilegeStrings(role: Schema$Role) {
         privileges.privilegeNames.push(role.privilegeName);
       return privileges;
     },
-    { privilegeIds: [], privilegeNames: [] } as {
-      privilegeNames: string[];
-      privilegeIds: string[];
-    },
+    { privilegeIds: [], privilegeNames: [] } as RolePrivilegeStrings,
   );
 }
 

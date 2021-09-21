@@ -17,20 +17,20 @@ export async function fetchRoles(
     logger: context.logger,
   });
 
-  const accountEntity = await context.jobState.findEntity(
-    getAccountKey(context.instance.config.googleAccountId),
-  );
-  if (!accountEntity) throw new Error("Couldn't find the accountEntity");
+  const accountKey = getAccountKey(context.instance.config.googleAccountId);
+  const accountEntity = await context.jobState.findEntity(accountKey);
+  if (!accountEntity)
+    throw new Error("fetchRoles: Couldn't find an account entity");
 
   await client.iterateRoles(async (role) => {
     const roleEntity = createRoleEntity(role);
     await context.jobState.addEntity(roleEntity);
+
     const relationship = createDirectRelationship({
       from: accountEntity,
       _class: RelationshipClass.HAS,
       to: roleEntity,
     });
-
     await context.jobState.addRelationship(relationship);
   });
 }

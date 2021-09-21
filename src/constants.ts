@@ -61,7 +61,7 @@ export const relationships = {
     targetType: entities.USER._type,
   },
   ACCOUNT_HAS_ROLE: {
-    _type: 'google_account_has_user',
+    _type: 'google_account_has_role',
     _class: RelationshipClass.HAS,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.ROLE._type,

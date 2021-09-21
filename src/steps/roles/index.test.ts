@@ -60,7 +60,7 @@ describe('#fetchRoles', () => {
           },
         },
       },
-      required: ['privilegeIds'],
+      required: [],
     };
 
     expect(roleEntities.length).toBeGreaterThan(0);
@@ -72,8 +72,5 @@ describe('#fetchRoles', () => {
     expect(context.jobState.collectedRelationships).toHaveLength(
       roleEntities.length,
     );
-    expect(
-      context.jobState.collectedRelationships,
-    ).toMatchDirectRelationshipSchema({});
   });
 });

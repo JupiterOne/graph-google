@@ -17,6 +17,7 @@ export function getRolePrivilegeStrings(
       if (role.serviceId) privileges.privilegeIds.push(role.serviceId);
       if (role.privilegeName)
         privileges.privilegeNames.push(role.privilegeName);
+
       return privileges;
     },
     { privilegeIds: [], privilegeNames: [] } as RolePrivilegeStrings,

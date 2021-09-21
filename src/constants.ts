@@ -31,15 +31,15 @@ export const entities = {
     _type: 'google_group_settings',
     _class: 'Configuration',
   },
-  ROLE: {
-    resourceName: 'Role',
-    _type: 'google_role',
-    _class: 'AccessRole',
-  },
   ACCOUNT: {
     resourceName: 'Account',
     _type: 'google_account',
     _class: 'Account',
+  },
+  ROLE: {
+    resourceName: 'Role',
+    _type: 'google_role',
+    _class: 'AccessRole',
   },
   SITE: {
     resourceName: 'Site',

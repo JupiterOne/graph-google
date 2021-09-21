@@ -28,12 +28,35 @@ describe('#fetchRoles', () => {
     return { accountEntity };
   }
 
-  test('success', async () => {
+  const schema = {
+    properties: {
+      isAdmin: {
+        description: 'Is the role an administrator role?',
+        type: 'boolean',
+      },
+      isSystem: {
+        description: 'Is this a system role?',
+        type: 'boolean',
+      },
+      privilegeIds: {
+        description: "The role's privileges",
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+    },
+    required: [],
+  };
+
+  beforeEach(() => {
     recording = setupIntegrationRecording({
       directory: __dirname,
       name: 'fetchRoles',
     });
+  });
 
+  test('should collect data', async () => {
     const { accountEntity } = getSetupEntities();
     const context = createMockStepExecutionContext({
       instanceConfig: integrationConfig,
@@ -42,26 +65,6 @@ describe('#fetchRoles', () => {
 
     await fetchRoles(context);
     const roleEntities = context.jobState.collectedEntities;
-    const schema = {
-      properties: {
-        isAdmin: {
-          description: 'Is the role an administrator role?',
-          type: 'boolean',
-        },
-        isSystem: {
-          description: 'Is this a system role?',
-          type: 'boolean',
-        },
-        privilegeIds: {
-          description: "The role's privileges",
-          type: 'array',
-          items: {
-            type: 'string',
-          },
-        },
-      },
-      required: [],
-    };
 
     expect(roleEntities.length).toBeGreaterThan(0);
     expect(roleEntities).toMatchGraphObjectSchema({

@@ -5,20 +5,26 @@ import { admin_directory_v1 } from 'googleapis';
 import Schema$Role = admin_directory_v1.Schema$Role;
 
 export function createRoleEntity(role: Schema$Role) {
+  const roleId = role.roleId as string;
+  const roleName = role.roleName as string;
+
   return createIntegrationEntity({
     entityData: {
       source: role,
       assign: {
         _class: entities.ROLE._class,
         _type: entities.ROLE._type,
-        _key: generateEntityKey(entities.ROLE._type, role.roleId as string),
-        id: role.roleId as string,
-        name: role.roleName,
-        displayName: role.roleName as string,
-        roleName: role.roleName,
-        roleDescription: role.roleDescription,
-        isSystemRole: role.isSystemRole,
-        isSuperAdminRole: role.isSuperAdminRole,
+        _key: generateEntityKey(entities.ROLE._type, roleId),
+        id: roleId,
+        name: roleName,
+        displayName: roleName,
+        description: role.roleDescription,
+        privileges: ((role.rolePrivileges as any) || []).map((privilege) => ({
+          id: privilege.serviceId,
+          name: privilege.privilegeName,
+        })),
+        isSystem: role.isSystemRole,
+        isAdmin: role.isSuperAdminRole,
         kind: role.kind,
         vendor: 'Google',
       },

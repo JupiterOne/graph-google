@@ -14,6 +14,10 @@ describe('#createRoleEntity', () => {
         isSystemRole: false,
         kind: 'kind',
         roleDescription: description,
+        rolePrivileges: [
+          { serviceId: 'abc', privilegeName: 'privilege1' },
+          { serviceId: 'def', privilegeName: 'privilege2' },
+        ],
       }),
     ).toMatchSnapshot();
   });

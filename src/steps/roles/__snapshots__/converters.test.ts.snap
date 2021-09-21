@@ -16,19 +16,38 @@ Object {
         "roleDescription": "some role description",
         "roleId": "123",
         "roleName": "some role name",
+        "rolePrivileges": Array [
+          Object {
+            "privilegeName": "privilege1",
+            "serviceId": "abc",
+          },
+          Object {
+            "privilegeName": "privilege2",
+            "serviceId": "def",
+          },
+        ],
       },
     },
   ],
   "_type": "google_role",
   "createdOn": undefined,
+  "description": "some role description",
   "displayName": "some role name",
   "id": "123",
-  "isSuperAdminRole": false,
-  "isSystemRole": false,
+  "isAdmin": false,
+  "isSystem": false,
   "kind": "kind",
   "name": "some role name",
-  "roleDescription": "some role description",
-  "roleName": "some role name",
+  "privileges": Array [
+    Object {
+      "id": "abc",
+      "name": "privilege1",
+    },
+    Object {
+      "id": "def",
+      "name": "privilege2",
+    },
+  ],
   "vendor": "Google",
 }
 `;

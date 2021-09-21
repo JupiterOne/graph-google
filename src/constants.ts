@@ -60,13 +60,6 @@ export const relationships = {
     sourceType: entities.ACCOUNT._type,
     targetType: entities.USER._type,
   },
-  // Individual roles are scoped starting at the domain-level (https://developers.google.com/admin-sdk/directory/v1/guides/manage-roles)
-  DOMAIN_HAS_ROLE: {
-    _type: 'google_domain_has_role',
-    _class: RelationshipClass.HAS,
-    sourceType: entities.DOMAIN._type,
-    targetType: entities.ROLE._type,
-  },
   SITE_HOSTS_USER: {
     _type: 'google_site_has_user',
     // TODO: Change to HOSTS

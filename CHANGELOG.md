@@ -8,6 +8,24 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New entity added (_**ACTION REQUIRED**_):
+
+  | Resources | Entity `_type` | Entity `_class` |
+  | --------- | -------------- | --------------- |
+  | Role      | `google_role`  | `AccessRole`    |
+
+  Log into the Google Workspace **Admin Console** as a super administrator to
+  perform the following actions.
+
+  1. Click **Security** > **API controls**.
+  2. In the **Domain wide delegation** pane, select **Manage Domain Wide
+     Delegation**.
+  3. Click **Edit** near the JupiterOne Service Account and add a new entry
+     under **API scopes** for
+     `https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly`
+
 ## 3.8.0 - 2021-08-25
 
 ### Added

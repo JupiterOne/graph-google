@@ -34,17 +34,17 @@ Object {
   "description": "some role description",
   "displayName": "some role name",
   "id": "123",
-  "isAdmin": false,
+  "isSuperAdmin": false,
   "isSystem": false,
   "kind": "kind",
   "name": "some role name",
-  "privilegeIds": Array [
-    "abc",
-    "def",
-  ],
   "privilegeNames": Array [
     "privilege1",
     "privilege2",
+  ],
+  "privilegeServiceIds": Array [
+    "abc",
+    "def",
   ],
   "vendor": "Google",
 }

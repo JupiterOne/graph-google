@@ -5,7 +5,7 @@ import { admin_directory_v1 } from 'googleapis';
 import Schema$Role = admin_directory_v1.Schema$Role;
 
 export type RolePrivilegeStrings = {
-  privilegeIds: string[];
+  privilegeServiceIds: string[];
   privilegeNames: string[];
 };
 
@@ -14,13 +14,13 @@ export function getRolePrivilegeStrings(
 ): RolePrivilegeStrings {
   return (role.rolePrivileges || []).reduce(
     (privileges, role) => {
-      if (role.serviceId) privileges.privilegeIds.push(role.serviceId);
+      if (role.serviceId) privileges.privilegeServiceIds.push(role.serviceId);
       if (role.privilegeName)
         privileges.privilegeNames.push(role.privilegeName);
 
       return privileges;
     },
-    { privilegeIds: [], privilegeNames: [] } as RolePrivilegeStrings,
+    { privilegeServiceIds: [], privilegeNames: [] } as RolePrivilegeStrings,
   );
 }
 
@@ -28,7 +28,7 @@ export function createRoleEntity(role: Schema$Role) {
   const roleId = role.roleId as string;
   const roleName = role.roleName as string;
 
-  const { privilegeIds, privilegeNames } = getRolePrivilegeStrings(role);
+  const { privilegeServiceIds, privilegeNames } = getRolePrivilegeStrings(role);
 
   return createIntegrationEntity({
     entityData: {
@@ -42,8 +42,8 @@ export function createRoleEntity(role: Schema$Role) {
         displayName: roleName,
         description: role.roleDescription,
         isSystem: role.isSystemRole,
-        isAdmin: role.isSuperAdminRole,
-        privilegeIds,
+        isSuperAdmin: role.isSuperAdminRole,
+        privilegeServiceIds,
         privilegeNames,
         kind: role.kind,
         vendor: 'Google',

@@ -30,7 +30,7 @@ describe('#fetchRoles', () => {
 
   const schema = {
     properties: {
-      isAdmin: {
+      isSuperAdmin: {
         description: 'Is the role an administrator role?',
         type: 'boolean',
       },

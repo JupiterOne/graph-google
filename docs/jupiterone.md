@@ -209,6 +209,7 @@ The following entities are created:
 | Domain         | `google_domain`         | `Domain`        |
 | Group          | `google_group`          | `UserGroup`     |
 | Group Settings | `google_group_settings` | `Configuration` |
+| Role           | `google_role`           | `AccessRole`    |
 | Site           | `google_site`           | `Site`          |
 | Token          | `google_token`          | `AccessKey`     |
 | User           | `google_user`           | `User`          |

@@ -1,10 +1,11 @@
 import {
   createDirectRelationship,
+  IntegrationMissingKeyError,
   IntegrationStep,
   RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, Steps } from '../../constants';
+import { entities, relationships, Steps } from '../../constants';
 import { createRoleEntity } from './converters';
 import { GSuiteRoleClient } from '../../gsuite/clients/GSuiteRoleClient';
 import { getAccountKey } from '../account/converters';
@@ -20,12 +21,12 @@ export async function fetchRoles(
   const accountKey = getAccountKey(context.instance.config.googleAccountId);
   const accountEntity = await context.jobState.findEntity(accountKey);
   if (!accountEntity)
-    throw new Error("fetchRoles: Couldn't find an account entity");
+    throw new IntegrationMissingKeyError(
+      `Could not find account entity (googleAccountId=${context.instance.config.googleAccountId})`,
+    );
 
   await client.iterateRoles(async (role) => {
-    const roleEntity = createRoleEntity(role);
-    await context.jobState.addEntity(roleEntity);
-
+    const roleEntity = await context.jobState.addEntity(createRoleEntity(role));
     const relationship = createDirectRelationship({
       from: accountEntity,
       _class: RelationshipClass.HAS,
@@ -40,7 +41,7 @@ export const roleSteps: IntegrationStep<IntegrationConfig>[] = [
     id: Steps.ROLES,
     name: 'Role',
     entities: [entities.ROLE],
-    relationships: [],
+    relationships: [relationships.ACCOUNT_HAS_ROLE],
     dependsOn: [Steps.ACCOUNT],
     executionHandler: fetchRoles,
   },

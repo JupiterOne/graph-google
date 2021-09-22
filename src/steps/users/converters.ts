@@ -38,13 +38,12 @@ export function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
 }
 
 export function getUserEntityKey(userId: UnsafeIdKey) {
-  console.log('what I got for userId', userId);
   return generateEntityKey(entities.USER._type, userId);
 }
 
 export function createUserEntity(data: admin_directory_v1.Schema$User) {
   const userId = data.id as string;
-  const username = getUsername(data) as string;
+  const username = getUsername(data);
   const name = data.name?.fullName || username;
 
   return createIntegrationEntity({

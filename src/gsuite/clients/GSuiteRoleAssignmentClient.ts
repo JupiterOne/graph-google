@@ -1,8 +1,8 @@
 import { admin_directory_v1 } from 'googleapis';
 import GSuiteAdminClient from './GSuiteAdminClient';
 import { CreateGSuiteClientParams } from './GSuiteClient';
-import Schema$RoleAssignment = admin_directory_v1.Schema$RoleAssignment;
 import Schema$RoleAssignments = admin_directory_v1.Schema$RoleAssignments;
+import Schema$RoleAssignment = admin_directory_v1.Schema$RoleAssignment;
 
 export class GSuiteRoleAssignmentClient extends GSuiteAdminClient {
   constructor(params: CreateGSuiteClientParams) {

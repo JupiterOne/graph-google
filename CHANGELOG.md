@@ -8,6 +8,17 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New relationship added:
+
+  | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+  | --------------------- | --------------------- | --------------------- |
+  | `google_user`         | **ASSIGNED**          | `google_role`         |
+
+  Please ensure the `admin.directory.rolemanagement.readonly` API scope is added
+  as described in the previous changelog notes.
+
 ## 3.9.0 - 2021-09-22
 
 ### Added

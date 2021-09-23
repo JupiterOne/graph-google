@@ -12,10 +12,10 @@ import { getRoleEntityKey } from '../roles/converters';
 export async function fetchRoleAssignments(
   context: IntegrationStepContext,
 ): Promise<void> {
-  const { jobState, instance } = context;
+  const { jobState, instance, logger } = context;
   const client = new GSuiteRoleAssignmentClient({
     config: instance.config,
-    logger: context.logger,
+    logger,
   });
 
   await client.iterateRoleAssignments(async (roleAssignment) => {

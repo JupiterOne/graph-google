@@ -1,69 +1,60 @@
-import { integrationConfig } from '../../../test/config';
-import { setupIntegrationRecording } from '../../../test/recording';
 import {
-  createMockStepExecutionContext,
   Recording,
+  createMockStepExecutionContext,
 } from '@jupiterone/integration-sdk-testing';
-import { fetchRoleAssignments } from './index';
-import { fetchRoles } from '../roles';
-import { createAccountEntity } from '../account/converters';
+import { setupIntegrationRecording } from '../../../test/recording';
+import { IntegrationConfig } from '../../types';
+import { fetchRoleAssignments } from '.';
 import { fetchUsers } from '../users';
+import { createAccount } from '../account';
+import { integrationConfig } from '../../../test/config';
+import { fetchRoles } from '../roles';
+import { relationships } from '../../constants';
+import { RelationshipClass } from '@jupiterone/integration-sdk-core';
 
-let recording: Recording;
+describe('#fetchRoleAssignments', () => {
+  let recording: Recording;
 
-afterEach(async () => {
-  if (recording) await recording.stop();
-});
+  beforeEach(() => {
+    recording = setupIntegrationRecording({
+      directory: __dirname,
+      name: 'fetchRoleAssignments',
+    });
+  });
 
-describe.skip('#fetchRoleAssignments', () => {
-  describe('#fetchRoleAssignments', () => {
-    function getSetupEntities() {
-      const accountEntity = createAccountEntity({
-        account: {
-          googleAccountId: integrationConfig.googleAccountId,
-          name: 'mygoogle',
-        },
-        domainNames: ['jupiterone.com', 'jupiterone.io'],
-        primaryDomain: 'jupiterone.com',
-      });
+  afterEach(async () => {
+    await recording.stop();
+  });
 
-      return { accountEntity };
-    }
-
-    beforeEach(() => {
-      recording = setupIntegrationRecording({
-        directory: __dirname,
-        name: 'fetchRoles',
-      });
+  test('should collect data and set relationships', async () => {
+    const context = createMockStepExecutionContext<IntegrationConfig>({
+      instanceConfig: integrationConfig,
     });
 
-    test('should collect data', async () => {
-      const { accountEntity } = getSetupEntities();
+    await createAccount(context);
+    await fetchUsers(context);
+    await fetchRoles(context);
+    await fetchRoleAssignments(context);
 
-      const context = createMockStepExecutionContext({
-        instanceConfig: integrationConfig,
-        entities: [accountEntity],
-      });
+    const roleAssignmentRelationships = context.jobState.collectedRelationships.filter(
+      (r) => r._type === relationships.USER_ASSIGNED_ROLE._type,
+    );
 
-      await fetchUsers(context);
-      recording.server.any().intercept((req, res) => {
-        res.status(400);
-      });
-      await fetchRoles(context);
-      await fetchRoleAssignments(context);
-
-      const entities = context.jobState.collectedEntities;
-      const relationships = context.jobState.collectedRelationships;
-      console.log(
-        'context.jobState.collectedRelationships',
-        context.jobState.collectedRelationships,
-      );
-
-      expect(entities.length).toBeGreaterThan(0);
-      expect(relationships.length).toBeGreaterThan(0);
-      expect(relationships).toMatchDirectRelationshipSchema({});
-
-      // expect(context.jobState.collectedRelationships).toHaveLength(roleEntities.length);
+    expect(roleAssignmentRelationships.length).toBeGreaterThan(0);
+    expect(roleAssignmentRelationships).toMatchDirectRelationshipSchema({
+      schema: {
+        additionalProperties: true,
+        properties: {
+          _type: { const: relationships.USER_ASSIGNED_ROLE._type },
+          _class: { const: RelationshipClass.ASSIGNED },
+          roleAssignmentId: { type: 'string' },
+          roleId: { type: 'string' },
+          assignedTo: { type: 'string' },
+          scopeType: { type: 'string' },
+          kind: { const: 'admin#directory#roleAssignment' },
+          etag: { type: 'string' },
+        },
+      },
     });
   });
 });

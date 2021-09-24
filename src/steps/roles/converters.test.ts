@@ -27,7 +27,7 @@ describe('#getRolePrivilegeStrings', () => {
       ]);
     });
 
-    test('it does not add falsy ids or names', () => {
+    test('it does not add either falsy ids or names', () => {
       role.rolePrivileges = [
         { serviceId: undefined, privilegeName: 'privilege1' },
         { serviceId: 'def', privilegeName: 'privilege2' },

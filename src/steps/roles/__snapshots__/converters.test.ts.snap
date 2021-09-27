@@ -45,7 +45,7 @@ Object {
     "def",
   ],
   "superAdmin": false,
-  "system": false,
+  "systemRole": false,
   "vendor": "Google",
 }
 `;

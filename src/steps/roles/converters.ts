@@ -41,7 +41,7 @@ export function createRoleEntity(role: Schema$Role) {
         name: roleName,
         displayName: roleName,
         description: role.roleDescription,
-        system: role.isSystemRole,
+        systemRole: role.isSystemRole,
         superAdmin: role.isSuperAdminRole,
         privilegeServiceIds,
         privilegeNames,

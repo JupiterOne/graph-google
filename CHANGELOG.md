@@ -8,7 +8,7 @@ and this project adheres to
 
 ## [Unreleased]
 
-## 3.9.0 - 2021-09-22
+## 3.9.1 - 2021-09-27
 
 ### Added
 

@@ -27,9 +27,8 @@ describe('#fetchRoles', () => {
 
   beforeEach(() => {
     properties = {
-      additionalProperties: false,
-      isSuperAdmin: { type: 'boolean' },
-      isSystem: { type: 'boolean' },
+      systemRole: { type: 'boolean' },
+      superAdmin: { type: 'boolean' },
       privilegeServiceIds: { type: 'array', items: { type: 'string' } },
       privilegeNames: { type: 'array', items: { type: 'string' } },
     };

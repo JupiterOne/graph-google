@@ -8,13 +8,10 @@ import {
 import { fetchRoles } from './index';
 import { entities } from '../../constants';
 
-let recording: Recording;
-
-afterEach(async () => {
-  if (recording) await recording.stop();
-});
-
 describe('#fetchRoles', () => {
+  let properties = {};
+  let recording: Recording;
+
   function getSetupEntities() {
     const accountEntity = createAccountEntity({
       account: {
@@ -28,35 +25,24 @@ describe('#fetchRoles', () => {
     return { accountEntity };
   }
 
-  const schema = {
-    properties: {
-      isSuperAdmin: {
-        description: 'Is the role an administrator role?',
-        type: 'boolean',
-      },
-      isSystem: {
-        description: 'Is this a system role?',
-        type: 'boolean',
-      },
-      privilegeIds: {
-        description: "The role's privileges",
-        type: 'array',
-        items: {
-          type: 'string',
-        },
-      },
-    },
-    required: [],
-  };
-
   beforeEach(() => {
+    properties = {
+      systemRole: { type: 'boolean' },
+      superAdmin: { type: 'boolean' },
+      privilegeServiceIds: { type: 'array', items: { type: 'string' } },
+      privilegeNames: { type: 'array', items: { type: 'string' } },
+    };
     recording = setupIntegrationRecording({
       directory: __dirname,
       name: 'fetchRoles',
     });
   });
 
-  test('should collect data', async () => {
+  afterEach(async () => {
+    if (recording) await recording.stop();
+  });
+
+  test('should collect all data using a valid schema', async () => {
     const { accountEntity } = getSetupEntities();
     const context = createMockStepExecutionContext({
       instanceConfig: integrationConfig,
@@ -69,7 +55,7 @@ describe('#fetchRoles', () => {
     expect(roleEntities.length).toBeGreaterThan(0);
     expect(roleEntities).toMatchGraphObjectSchema({
       _class: entities.ROLE._class,
-      schema,
+      schema: { properties },
     });
 
     expect(context.jobState.collectedRelationships).toHaveLength(

@@ -39,7 +39,7 @@ export async function fetchRoles(
 export const roleSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.ROLES,
-    name: 'Role',
+    name: 'Roles',
     entities: [entities.ROLE],
     relationships: [relationships.ACCOUNT_HAS_ROLE],
     dependsOn: [Steps.ACCOUNT],

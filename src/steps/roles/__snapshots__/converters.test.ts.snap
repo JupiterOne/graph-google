@@ -34,8 +34,6 @@ Object {
   "description": "some role description",
   "displayName": "some role name",
   "id": "123",
-  "isSuperAdmin": false,
-  "isSystem": false,
   "kind": "kind",
   "name": "some role name",
   "privilegeNames": Array [
@@ -46,6 +44,8 @@ Object {
     "abc",
     "def",
   ],
+  "superAdmin": false,
+  "systemRole": false,
   "vendor": "Google",
 }
 `;

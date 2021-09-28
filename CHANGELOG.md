@@ -19,7 +19,7 @@ and this project adheres to
   Please ensure the `admin.directory.rolemanagement.readonly` API scope is added
   as described in the previous changelog notes.
 
-## 3.9.0 - 2021-09-22
+## 3.9.1 - 2021-09-27
 
 ### Added
 

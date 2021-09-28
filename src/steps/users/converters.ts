@@ -1,4 +1,4 @@
-import generateEntityKey from '../../utils/generateEntityKey';
+import generateEntityKey, { UnsafeIdKey } from '../../utils/generateEntityKey';
 import {
   parseTimePropertyValue,
   createIntegrationEntity,
@@ -37,13 +37,13 @@ export function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
   return flattendRecordFields;
 }
 
-export function getUserEntityKey(userId: string) {
+export function getUserEntityKey(userId: UnsafeIdKey) {
   return generateEntityKey(entities.USER._type, userId);
 }
 
 export function createUserEntity(data: admin_directory_v1.Schema$User) {
   const userId = data.id as string;
-  const username = getUsername(data) as string;
+  const username = getUsername(data);
   const name = data.name?.fullName || username;
 
   return createIntegrationEntity({

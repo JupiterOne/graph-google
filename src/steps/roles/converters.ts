@@ -9,6 +9,10 @@ export type RolePrivilegeStrings = {
   privilegeNames: string[];
 };
 
+export function getRoleEntityKey(roleId: string | null | undefined) {
+  return generateEntityKey(entities.ROLE._type, roleId);
+}
+
 export function getRolePrivilegeStrings(
   role: Schema$Role,
 ): RolePrivilegeStrings {
@@ -36,7 +40,7 @@ export function createRoleEntity(role: Schema$Role) {
       assign: {
         _class: entities.ROLE._class,
         _type: entities.ROLE._type,
-        _key: generateEntityKey(entities.ROLE._type, roleId),
+        _key: getRoleEntityKey(roleId),
         id: roleId,
         name: roleName,
         displayName: roleName,

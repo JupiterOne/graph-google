@@ -20,7 +20,7 @@ export function createDomainEntity(data: admin_directory_v1.Schema$Domains) {
         id: domainName,
         displayName: domainName,
         name: domainName,
-        emailDomain: domainName,
+        domainName,
         primary: data.isPrimary === true,
         verified: data.verified === true,
       },

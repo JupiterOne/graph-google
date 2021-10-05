@@ -56,7 +56,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         _class: entities.USER._class,
         id: userId,
         email: data.primaryEmail,
-        domainName: getDomain(data),
+        emailDomain: getDomain(data),
         name,
         displayName: name,
         username: getUsername(data),

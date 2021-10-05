@@ -35,6 +35,7 @@ Object {
       "createdOn": 1622061210453,
       "displayName": "jupiterone.dev",
       "domainName": "jupiterone.dev",
+      "emailDomain": "jupiterone.dev",
       "id": "jupiterone.dev",
       "name": "jupiterone.dev",
       "primary": true,

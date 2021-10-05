@@ -14,9 +14,9 @@ and this project adheres to
 
 - New properties added to resources:
 
-  | Entity        | Properties   |
-  | ------------- | ------------ |
-  | `google_user` | `domainName` |
+  | Entity        | Properties    |
+  | ------------- | ------------- |
+  | `google_user` | `emailDomain` |
 
 ## 3.8.0 - 2021-08-25
 

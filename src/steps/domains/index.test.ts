@@ -47,7 +47,7 @@ describe('#fetchDomains', () => {
             type: 'array',
             items: { type: 'object' },
           },
-          domainName: { type: 'string' },
+          emailDomain: { type: 'string' },
           primary: { type: 'boolean' },
           verified: { type: 'boolean' },
         },

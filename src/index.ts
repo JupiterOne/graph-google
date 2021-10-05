@@ -4,6 +4,8 @@ import validateInvocation from './validateInvocation';
 import { domainSteps } from './steps/domains';
 import { accountSteps } from './steps/account';
 import { userSteps } from './steps/users';
+import { roleSteps } from './steps/roles';
+import { roleAssignmentSteps } from './steps/role_assignments';
 import { groupSteps } from './steps/groups';
 import { tokenSteps } from './steps/tokens';
 
@@ -24,6 +26,8 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
   integrationSteps: [
     ...domainSteps,
     ...accountSteps,
+    ...roleSteps,
+    ...roleAssignmentSteps,
     ...userSteps,
     ...groupSteps,
     ...tokenSteps,

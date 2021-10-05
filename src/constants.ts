@@ -3,6 +3,8 @@ import { RelationshipClass } from '@jupiterone/integration-sdk-core';
 export const Steps = {
   DOMAINS: 'step-fetch-domains',
   ACCOUNT: 'step-create-account',
+  ROLES: 'step-fetch-roles',
+  ROLE_ASSIGNMENTS: 'step-fetch-role-assignments',
   USERS: 'step-fetch-users',
   TOKENS: 'step-fetch-tokens',
   GROUPS: 'step-fetch-groups',
@@ -35,6 +37,11 @@ export const entities = {
     _type: 'google_account',
     _class: 'Account',
   },
+  ROLE: {
+    resourceName: 'Role',
+    _type: 'google_role',
+    _class: 'AccessRole',
+  },
   SITE: {
     resourceName: 'Site',
     _type: 'google_site',
@@ -53,6 +60,12 @@ export const relationships = {
     _class: RelationshipClass.HAS,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.USER._type,
+  },
+  ACCOUNT_HAS_ROLE: {
+    _type: 'google_account_has_role',
+    _class: RelationshipClass.HAS,
+    sourceType: entities.ACCOUNT._type,
+    targetType: entities.ROLE._type,
   },
   SITE_HOSTS_USER: {
     _type: 'google_site_has_user',
@@ -90,6 +103,12 @@ export const relationships = {
     _class: RelationshipClass.ASSIGNED,
     sourceType: entities.USER._type,
     targetType: entities.TOKEN._type,
+  },
+  USER_ASSIGNED_ROLE: {
+    _type: 'google_user_assigned_role',
+    _class: RelationshipClass.ASSIGNED,
+    sourceType: entities.USER._type,
+    targetType: entities.ROLE._type,
   },
   TOKEN_ALLOWS_VENDOR: {
     _type: 'google_token_allows_mapped_vendor',

@@ -8,8 +8,6 @@ and this project adheres to
 
 ## [Unreleased]
 
-## 3.8.1 - 2012-09-08
-
 ### Added
 
 - New properties added to resources:
@@ -17,6 +15,39 @@ and this project adheres to
   | Entity        | Properties    |
   | ------------- | ------------- |
   | `google_user` | `emailDomain` |
+
+## 3.10.0 - 2021-09-28
+
+### Added
+
+- New relationship added:
+
+  | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+  | --------------------- | --------------------- | --------------------- |
+  | `google_user`         | **ASSIGNED**          | `google_role`         |
+
+  Please ensure the `admin.directory.rolemanagement.readonly` API scope is added
+  as described in the previous changelog notes.
+
+## 3.9.1 - 2021-09-27
+
+### Added
+
+- New entity added (_**ACTION REQUIRED**_):
+
+  | Resources | Entity `_type` | Entity `_class` |
+  | --------- | -------------- | --------------- |
+  | Role      | `google_role`  | `AccessRole`    |
+
+  Log into the Google Workspace **Admin Console** as a super administrator to
+  perform the following actions.
+
+  1. Click **Security** > **API controls**.
+  2. In the **Domain wide delegation** pane, select **Manage Domain Wide
+     Delegation**.
+  3. Click **Edit** near the JupiterOne Service Account and add a new entry
+     under **API scopes** for
+     `https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly`
 
 ## 3.8.0 - 2021-08-25
 

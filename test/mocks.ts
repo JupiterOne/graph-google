@@ -74,3 +74,21 @@ export function getMockUser(
     ...partial,
   };
 }
+
+export function getMockRole(
+  partial?: Partial<admin_directory_v1.Schema$Role>,
+): admin_directory_v1.Schema$Role {
+  return {
+    kind: 'admin#directory#role',
+    roleId: '123456',
+    etag: 'abcdef',
+    roleName: 'some mocked role',
+    isSystemRole: false,
+    isSuperAdminRole: false,
+    rolePrivileges: [
+      { serviceId: 'abc', privilegeName: 'privilege1' },
+      { serviceId: 'def', privilegeName: 'privilege2' },
+    ],
+    ...partial,
+  };
+}

@@ -98,6 +98,7 @@ Object {
   "description": "Full-time",
   "displayName": "John Doe",
   "email": "john.doe@jupiterone.io",
+  "emailDomain": "jupiterone.io",
   "employeeType": "Full-time",
   "firstName": "John",
   "hashFunction": undefined,

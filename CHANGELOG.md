@@ -8,6 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New properties added to resources:
+
+  | Entity        | Properties    |
+  | ------------- | ------------- |
+  | `google_user` | `emailDomain` |
+
 ## 3.10.0 - 2021-09-28
 
 ### Added

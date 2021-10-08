@@ -55,6 +55,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         _class: entities.USER._class,
         id: userId,
         email: data.primaryEmail,
+        emailDomain: getDomain(data),
         name,
         displayName: name,
         username: getUsername(data),
@@ -162,6 +163,15 @@ export function createAccountHasUserRelationship(params: {
 function getUsername(data: admin_directory_v1.Schema$User): string | null {
   const usernameMatch = /(.*?)@.*/.exec(data.primaryEmail as string);
   return usernameMatch && usernameMatch[1];
+}
+
+function last<T>(arr: T[] | undefined): T | undefined {
+  if (!arr || !arr.length) return undefined;
+  return arr[arr.length - 1];
+}
+
+function getDomain(data: admin_directory_v1.Schema$User): string | undefined {
+  return last(data.primaryEmail?.split('@'));
 }
 
 function getAddresses(data: admin_directory_v1.Schema$User) {

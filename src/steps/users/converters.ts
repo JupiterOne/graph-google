@@ -9,7 +9,6 @@ import {
 } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
-import { last } from 'lodash';
 
 interface GSuiteDataCollection {
   type: string;
@@ -166,7 +165,12 @@ function getUsername(data: admin_directory_v1.Schema$User): string | null {
   return usernameMatch && usernameMatch[1];
 }
 
-function getDomain(data: admin_directory_v1.Schema$User): string | null {
+function last<T>(arr: T[] | undefined): T | undefined {
+  if (!arr || !arr.length) return undefined;
+  return arr[arr.length - 1];
+}
+
+function getDomain(data: admin_directory_v1.Schema$User): string | undefined {
   return last(data.primaryEmail?.split('@'));
 }
 

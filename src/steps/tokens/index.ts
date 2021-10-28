@@ -40,6 +40,7 @@ export async function fetchTokens(
               tokenEntity,
             }),
           );
+          const vendorName = token.displayText || 'Unknown Vendor';
           await jobState.addRelationship(
             createMappedRelationship({
               _class: RelationshipClass.ALLOWS,
@@ -50,8 +51,9 @@ export async function fetchTokens(
                 targetFilterKeys: [['_class', 'name']],
                 targetEntity: {
                   _class: 'Vendor',
-                  displayName: token.displayText || 'Unknown Vendor',
-                  name: token.displayText || 'Unknown Vendor',
+                  _type: vendorName.toLowerCase().replace(' ', '_'),
+                  displayName: vendorName,
+                  name: vendorName,
                   validated: false,
                   active: true,
                 },

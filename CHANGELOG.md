@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.11.0 - 2021-10-29
+
 ### Changed
 
 - Entities created for targets of mapped `google_token_allows_mapped_vendor`

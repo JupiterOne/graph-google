@@ -608,6 +608,11 @@
     deepmerge "^4.2.2"
     lodash "^4.17.15"
 
+"@jupiterone/vendor-stack@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@jupiterone/vendor-stack/-/vendor-stack-1.0.1.tgz#292c6cd8914e36a7cfb07ec5368b86afa43ed5c7"
+  integrity sha512-87bT0v1HqEGP3z4RiMOGvSHxMGV1TU+fwhBEMQZ2Zgh1nyq0I3E5LiCO96iWGRaU3lEesG6St3/JLOx/9CUnMw==
+
 "@lifeomic/alpha@^1.4.0":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@lifeomic/alpha/-/alpha-1.4.1.tgz#fc3b8046f82c2b1bfaa15984f8d23eddbf7cbecf"

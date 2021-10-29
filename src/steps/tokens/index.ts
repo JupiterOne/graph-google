@@ -12,6 +12,7 @@ import {
   createTokenEntity,
   createUserAssignedTokenRelationship,
 } from './converters';
+import { createVendorTypeFromName } from '@jupiterone/vendor-stack';
 
 export async function fetchTokens(
   context: IntegrationStepContext,
@@ -40,6 +41,7 @@ export async function fetchTokens(
               tokenEntity,
             }),
           );
+          const vendorName = token.displayText || 'Unknown Vendor';
           await jobState.addRelationship(
             createMappedRelationship({
               _class: RelationshipClass.ALLOWS,
@@ -50,8 +52,9 @@ export async function fetchTokens(
                 targetFilterKeys: [['_class', 'name']],
                 targetEntity: {
                   _class: 'Vendor',
-                  displayName: token.displayText || 'Unknown Vendor',
-                  name: token.displayText || 'Unknown Vendor',
+                  _type: createVendorTypeFromName(vendorName),
+                  displayName: vendorName,
+                  name: vendorName,
                   validated: false,
                   active: true,
                 },

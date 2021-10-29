@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Entities created for targets of mapped `google_token_allows_mapped_vendor`
+  relationships will have a `_type`.
+
 ### Added
 
 - New properties added to resources:

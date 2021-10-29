@@ -12,6 +12,7 @@ import {
   createTokenEntity,
   createUserAssignedTokenRelationship,
 } from './converters';
+import { createVendorTypeFromName } from '@jupiterone/vendor-stack';
 
 export async function fetchTokens(
   context: IntegrationStepContext,
@@ -51,7 +52,7 @@ export async function fetchTokens(
                 targetFilterKeys: [['_class', 'name']],
                 targetEntity: {
                   _class: 'Vendor',
-                  _type: vendorName.toLowerCase().replace(' ', '_'),
+                  _type: createVendorTypeFromName(vendorName),
                   displayName: vendorName,
                   name: vendorName,
                   validated: false,

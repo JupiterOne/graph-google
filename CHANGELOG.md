@@ -11,8 +11,7 @@ and this project adheres to
 ### Changed
 
 - Entities created for targets of mapped `google_token_allows_mapped_vendor`
-  relationships will have a `_type` property of their vendor name in lowercase
-  with spaces replaced with `_`.
+  relationships will have a `_type`.
 
 ### Added
 

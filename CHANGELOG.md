@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.11.1 - 2021-11-01
+
+### Changed
+
+- Upgraded `@jupiter/vendor-stack` package.
+
 ## 3.11.0 - 2021-10-29
 
 ### Changed

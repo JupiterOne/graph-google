@@ -35,7 +35,7 @@
     "ts-node": "^8.10.2"
   },
   "dependencies": {
-    "@jupiterone/vendor-stack": "^1.0.1",
+    "@jupiterone/vendor-stack": "^2.0.0",
     "gaxios": "^3.0.4",
     "googleapis": "^55.0.0"
   }

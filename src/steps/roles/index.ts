@@ -1,6 +1,7 @@
 import {
   createDirectRelationship,
   IntegrationMissingKeyError,
+  IntegrationProviderAuthorizationError,
   IntegrationStep,
   RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
@@ -24,16 +25,32 @@ export async function fetchRoles(
     throw new IntegrationMissingKeyError(
       `Could not find account entity (googleAccountId=${context.instance.config.googleAccountId})`,
     );
-
-  await client.iterateRoles(async (role) => {
-    const roleEntity = await context.jobState.addEntity(createRoleEntity(role));
-    const relationship = createDirectRelationship({
-      from: accountEntity,
-      _class: RelationshipClass.HAS,
-      to: roleEntity,
+  try {
+    await client.iterateRoles(async (role) => {
+      const roleEntity = await context.jobState.addEntity(
+        createRoleEntity(role),
+      );
+      const relationship = createDirectRelationship({
+        from: accountEntity,
+        _class: RelationshipClass.HAS,
+        to: roleEntity,
+      });
+      await context.jobState.addRelationship(relationship);
     });
-    await context.jobState.addRelationship(relationship);
-  });
+  } catch (err) {
+    if (err instanceof IntegrationProviderAuthorizationError) {
+      context.logger.warn({ err }, 'Could not ingest roles');
+      context.logger.publishEvent({
+        name: 'missing_scope',
+        description: `Could not ingest role data. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )})`,
+      });
+      return;
+    }
+
+    throw err;
+  }
 }
 
 export const roleSteps: IntegrationStep<IntegrationConfig>[] = [

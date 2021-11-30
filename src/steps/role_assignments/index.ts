@@ -68,7 +68,7 @@ export async function fetchRoleAssignments(
         name: 'missing_scope',
         description: `Could not ingest role assignment data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
-        )})`,
+        )}).  Additionally, Admin Email provided in configuration must be a Super Admin.`,
       });
       return;
     }

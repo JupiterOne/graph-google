@@ -8,6 +8,15 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.11.2 - 2021-11-30
+
+### Fixed
+
+- Roles and role assignments steps now properly handle auth errors due to
+  missing scopes or permissions.
+- Updated documentation to list an additional permissions requirement for
+  querying roles and role assignments.
+
 ## 3.11.1 - 2021-11-01
 
 ### Changed

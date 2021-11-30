@@ -63,7 +63,7 @@ export async function fetchRoleAssignments(
     });
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.warn({ err }, 'Could not ingest role assignments');
+      context.logger.info({ err }, 'Could not ingest role assignments');
       context.logger.publishEvent({
         name: 'missing_scope',
         description: `Could not ingest role assignment data. Missing required scope(s) (scopes=${client.requiredScopes.join(

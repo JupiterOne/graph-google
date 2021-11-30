@@ -66,7 +66,7 @@ export async function fetchTokens(
     );
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.warn({ err }, 'Could not ingest token entities');
+      context.logger.info({ err }, 'Could not ingest token entities');
       context.logger.publishEvent({
         name: 'missing_scope',
         description: `Could not ingest token entities. Missing required scope(s) (scopes=${client.requiredScopes.join(

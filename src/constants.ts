@@ -52,6 +52,11 @@ export const entities = {
     _type: 'google_token',
     _class: 'AccessKey',
   },
+  MOBILE_DEVICE: {
+    resourceName: 'Mobile Device',
+    _type: 'google_mobile_device',
+    _class: 'Device',
+  },
 };
 
 export const relationships = {

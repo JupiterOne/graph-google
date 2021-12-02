@@ -8,6 +8,28 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New entity added (_**ACTION REQUIRED**_):
+
+  | Resources     | Entity `_type`         | Entity `_class` |
+  | ------------- | ---------------------- | --------------- |
+  | Mobile Device | `google_mobile_device` | `Device`        |
+
+  Log into the Google Workspace **Admin Console** as a super administrator to
+  perform the following actions.
+
+  1. Click **Security** > **API controls**.
+  2. In the **Domain wide delegation** pane, select **Manage Domain Wide
+     Delegation**.
+  3. Click **Edit** near the JupiterOne Service Account and add a new entry
+     under **API scopes** for
+     `https://www.googleapis.com/auth/admin.directory.device.mobile.readonly`
+  4. Click **Account** > **Admin roles**.
+  5. Click the JupiterOne System role, and click Privileges
+  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
+     Devices and Settings**
+
 ## 3.11.2 - 2021-11-30
 
 ### Fixed

@@ -8,6 +8,7 @@ import { roleSteps } from './steps/roles';
 import { roleAssignmentSteps } from './steps/role_assignments';
 import { groupSteps } from './steps/groups';
 import { tokenSteps } from './steps/tokens';
+import { mobileDeviceSteps } from './steps/mobile_devices';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields: {
@@ -31,5 +32,6 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
     ...userSteps,
     ...groupSteps,
     ...tokenSteps,
+    ...mobileDeviceSteps,
   ],
 };

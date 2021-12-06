@@ -52,6 +52,11 @@ export const entities = {
     _type: 'google_token',
     _class: 'AccessKey',
   },
+  MOBILE_DEVICE: {
+    resourceName: 'Mobile Device',
+    _type: 'google_mobile_device',
+    _class: 'Device',
+  },
 };
 
 export const relationships = {
@@ -66,6 +71,12 @@ export const relationships = {
     _class: RelationshipClass.HAS,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.ROLE._type,
+  },
+  ACCOUNT_MANAGES_MOBILE_DEVICE: {
+    _type: 'google_account_manages_mobile_device',
+    _class: RelationshipClass.MANAGES,
+    sourceType: entities.ACCOUNT._type,
+    targetType: entities.MOBILE_DEVICE._type,
   },
   SITE_HOSTS_USER: {
     _type: 'google_site_has_user',

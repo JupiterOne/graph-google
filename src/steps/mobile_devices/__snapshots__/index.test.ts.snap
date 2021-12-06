@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#fetchMobileDevices should collect data 1`] = `
+Object {
+  "collectedEntities": Array [],
+  "collectedRelationships": Array [],
+  "encounteredTypes": Array [],
+  "numCollectedEntities": 0,
+  "numCollectedRelationships": 0,
+}
+`;

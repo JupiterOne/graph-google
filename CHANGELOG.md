@@ -36,6 +36,11 @@ and this project adheres to
   | --------------------- | --------------------- | ---------------------- |
   | `google_account`      | **MANAGES**           | `google_mobile_device` |
 
+### Changed
+
+- Package updates
+- Property `emailDomain` on `google_user` is now an array
+
 ## 3.11.2 - 2021-11-30
 
 ### Fixed

@@ -1,6 +1,6 @@
 import { IntegrationStep } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities } from '../../constants';
+import { entities, relationships } from '../../constants';
 import {
   createMobileDeviceEntity,
   createAccountManagesMobileDeviceRelationship,
@@ -35,7 +35,7 @@ export const mobileDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
     id: 'step-fetch-mobile-devices',
     name: 'Mobile Device',
     entities: [entities.MOBILE_DEVICE],
-    relationships: [],
+    relationships: [relationships.ACCOUNT_MANAGES_MOBILE_DEVICE],
     executionHandler: fetchMobileDevices,
   },
 ];

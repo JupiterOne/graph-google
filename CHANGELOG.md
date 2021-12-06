@@ -30,6 +30,12 @@ and this project adheres to
   6. Under **Services**, **Mobile Devicement Management**, enable **Manage
      Devices and Settings**
 
+- New relationship added:
+
+  | Source Entity `_type` | Relationship `_class` | Target Entity `_type`  |
+  | --------------------- | --------------------- | ---------------------- |
+  | `google_account`      | **MANAGES**           | `google_mobile_device` |
+
 ## 3.11.2 - 2021-11-30
 
 ### Fixed

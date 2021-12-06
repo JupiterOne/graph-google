@@ -13,6 +13,8 @@ export function createMobileDeviceEntity(
   data: admin_directory_v1.Schema$MobileDevice,
 ) {
   const deviceName = data.deviceId as string;
+  const email = Array.isArray(data.email) ? data.email[0] : undefined;
+  const name = Array.isArray(data.name) ? data.name[0] : undefined;
 
   return createIntegrationEntity({
     entityData: {
@@ -31,7 +33,7 @@ export function createMobileDeviceEntity(
         brand: data.brand,
         deviceCompromisedStatus: data.deviceCompromisedStatus,
         deviceId: data.deviceId,
-        email: data.email,
+        email: email,
         encryptionStatus: data.encryptionStatus,
         firstSyncOn: parseTimePropertyValue(data.firstSync),
         hardware: data.hardware,
@@ -39,12 +41,13 @@ export function createMobileDeviceEntity(
         imei: data.imei,
         lastSyncOn: parseTimePropertyValue(data.lastSync),
         manufacturer: data.manufacturer,
-        ownerName: data.name,
+        ownerName: name,
         os: data.os,
         status: data.status,
         type: data.type,
         wifiMacAddress: data.wifiMacAddress,
         macAddress: data.wifiMacAddress,
+        userAgent: data.userAgent,
       },
     },
   });

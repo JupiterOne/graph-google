@@ -170,8 +170,12 @@ function last<T>(arr: T[] | undefined): T | undefined {
   return arr[arr.length - 1];
 }
 
-function getDomain(data: admin_directory_v1.Schema$User): string | undefined {
-  return last(data.primaryEmail?.split('@'));
+function getDomain(data: admin_directory_v1.Schema$User): string[] {
+  const emailDomain = last(data.primaryEmail?.split('@'));
+  if (emailDomain) {
+    return [emailDomain];
+  }
+  return [];
 }
 
 function getAddresses(data: admin_directory_v1.Schema$User) {

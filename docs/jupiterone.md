@@ -223,7 +223,7 @@ The following entities are created:
 
 ### Relationships
 
-The following relationships are created:
+The following relationships are created/mapped:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type`          |
 | --------------------- | --------------------- | ------------------------------ |

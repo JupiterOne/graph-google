@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.0 - 2021-12-08
+
 ### Added
 
 - New entity added (_**ACTION REQUIRED**_):

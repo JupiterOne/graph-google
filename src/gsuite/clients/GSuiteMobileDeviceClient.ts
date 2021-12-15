@@ -19,12 +19,18 @@ export class GSuiteMobileDeviceClient extends GSuiteAdminClient {
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();
 
-    const response = await client.mobiledevices.list({
-      customerId: this.accountId,
-    });
-
-    for (const device of response.data.mobiledevices || []) {
-      await callback(device);
-    }
+    await this.iterateApi(
+      async (nextPageToken) => {
+        return client.mobiledevices.list({
+          customerId: this.accountId,
+          pageToken: nextPageToken,
+        });
+      },
+      async (data: admin_directory_v1.Schema$MobileDevices) => {
+        for (const device of data.mobiledevices || []) {
+          await callback(device);
+        }
+      },
+    );
   }
 }

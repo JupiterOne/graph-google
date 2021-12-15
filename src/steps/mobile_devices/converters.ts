@@ -18,7 +18,8 @@ export function createMobileDeviceEntity(
 
   return createIntegrationEntity({
     entityData: {
-      source: data,
+      // The raw data on mobile devices can be very large, so we've removed it.
+      source: {},
       assign: {
         _key: generateEntityKey(entities.MOBILE_DEVICE._type, deviceName),
         _type: entities.MOBILE_DEVICE._type,
@@ -29,7 +30,6 @@ export function createMobileDeviceEntity(
         model: data.model,
         serial: data.serialNumber,
         adbStatus: data.adbStatus,
-        applications: JSON.stringify(data.applications),
         brand: data.brand,
         deviceCompromisedStatus: data.deviceCompromisedStatus,
         deviceId: data.deviceId,

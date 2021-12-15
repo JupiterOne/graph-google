@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.1 - 2021-12-15
+
 ### Fixed
 
 - Remove raw data from `google_mobile_device` entities because the value can be

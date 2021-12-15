@@ -9,12 +9,15 @@ import {
   createDirectRelationship,
 } from '@jupiterone/integration-sdk-core';
 
+function firstOrUndefined(v: any | any[]) {
+  return Array.isArray(v) ? v[0] : undefined;
+}
+
 export function createMobileDeviceEntity(
   data: admin_directory_v1.Schema$MobileDevice,
 ) {
   const deviceName = data.deviceId as string;
-  const email = Array.isArray(data.email) ? data.email[0] : undefined;
-  const name = Array.isArray(data.name) ? data.name[0] : undefined;
+  const name = firstOrUndefined(data.name);
 
   return createIntegrationEntity({
     entityData: {
@@ -25,6 +28,8 @@ export function createMobileDeviceEntity(
         _type: entities.MOBILE_DEVICE._type,
         _class: entities.MOBILE_DEVICE._class,
         id: deviceName,
+        name,
+        displayName: name,
         category: 'mobile',
         make: data.model,
         model: data.model,
@@ -33,7 +38,7 @@ export function createMobileDeviceEntity(
         brand: data.brand,
         deviceCompromisedStatus: data.deviceCompromisedStatus,
         deviceId: data.deviceId,
-        email: email,
+        email: firstOrUndefined(data.email),
         encryptionStatus: data.encryptionStatus,
         firstSyncOn: parseTimePropertyValue(data.firstSync),
         hardware: data.hardware,

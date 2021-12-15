@@ -8,6 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Fixed
+
+- Remove raw data from `google_mobile_device` entities because the value can be
+  very large
+- Remove the `application` property from `google_mobile_device` entities because
+  the value can be very large and does not conform to our data model
+- Paginate the list mobile devices API
+
 ## 3.12.0 - 2021-12-08
 
 ### Added

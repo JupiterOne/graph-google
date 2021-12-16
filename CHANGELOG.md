@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.2 - 2021-12-16
+
+### Fixed
+
+- Fixed duplicate `_key` issue with `google_mobile_device`
+
 ## 3.12.1 - 2021-12-15
 
 ### Fixed

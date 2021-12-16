@@ -1,6 +1,6 @@
 import { IntegrationStep } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships } from '../../constants';
+import { entities, relationships, Steps } from '../../constants';
 import {
   createMobileDeviceEntity,
   createAccountManagesMobileDeviceRelationship,
@@ -11,16 +11,27 @@ import getAccountEntity from '../../utils/getAccountEntity';
 export async function fetchMobileDevices(
   context: IntegrationStepContext,
 ): Promise<void> {
+  const { instance, jobState, logger } = context;
+
   const client = new GSuiteMobileDeviceClient({
-    config: context.instance.config,
-    logger: context.logger,
+    config: instance.config,
+    logger,
   });
 
+  const accountEntity = await getAccountEntity(context);
+
   await client.iterateMobileDevices(async (device) => {
-    const deviceEntity = await context.jobState.addEntity(
-      createMobileDeviceEntity(device),
-    );
-    const accountEntity = await getAccountEntity(context);
+    const deviceEntity = createMobileDeviceEntity(device);
+
+    if (await jobState.hasKey(deviceEntity._key)) {
+      logger.info(
+        { _key: deviceEntity._key },
+        'Duplicate device entity _key found',
+      );
+      return;
+    }
+
+    await context.jobState.addEntity(deviceEntity);
     await context.jobState.addRelationship(
       createAccountManagesMobileDeviceRelationship({
         accountEntity,
@@ -37,5 +48,6 @@ export const mobileDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
     entities: [entities.MOBILE_DEVICE],
     relationships: [relationships.ACCOUNT_MANAGES_MOBILE_DEVICE],
     executionHandler: fetchMobileDevices,
+    dependsOn: [Steps.ACCOUNT],
   },
 ];

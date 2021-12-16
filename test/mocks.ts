@@ -1,4 +1,9 @@
+import { Entity } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
+import {
+  createAccountEntity,
+  CreateAccountEntityParams,
+} from '../src/steps/account/converters';
 
 export function getMockUser(
   partial?: Partial<admin_directory_v1.Schema$User>,
@@ -91,4 +96,18 @@ export function getMockRole(
     ],
     ...partial,
   };
+}
+
+export function getMockAccountEntity(
+  partial?: Partial<CreateAccountEntityParams>,
+): Entity {
+  return createAccountEntity({
+    account: {
+      googleAccountId: 'abc',
+      name: 'mygoogle',
+    },
+    domainNames: ['jupiterone.com', 'jupiterone.io'],
+    primaryDomain: 'jupiterone.com',
+    ...partial,
+  });
 }

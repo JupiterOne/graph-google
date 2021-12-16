@@ -2,7 +2,7 @@ import generateEntityKey from '../../utils/generateEntityKey';
 import { entities } from '../../constants';
 import { createIntegrationEntity } from '@jupiterone/integration-sdk-core';
 
-interface CreateAccountEntityParams {
+export interface CreateAccountEntityParams {
   account: {
     googleAccountId: string;
     name: string;

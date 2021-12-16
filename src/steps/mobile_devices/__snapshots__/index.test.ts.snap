@@ -2,10 +2,47 @@
 
 exports[`#fetchMobileDevices should collect data 1`] = `
 Object {
-  "collectedEntities": Array [],
+  "collectedEntities": Array [
+    Object {
+      "_class": Array [
+        "Account",
+      ],
+      "_key": "google_account_C048tgq5f",
+      "_rawData": Array [
+        Object {
+          "name": "default",
+          "rawData": Object {
+            "account": Object {
+              "googleAccountId": "C048tgq5f",
+              "name": "mygoogle",
+            },
+            "domainNames": Array [
+              "jupiterone.com",
+              "jupiterone.io",
+            ],
+            "primaryDomain": "jupiterone.com",
+          },
+        },
+      ],
+      "_type": "google_account",
+      "accountId": "jupiterone.com",
+      "createdOn": undefined,
+      "displayName": "mygoogle",
+      "domains": Array [
+        "jupiterone.com",
+        "jupiterone.io",
+      ],
+      "id": "C048tgq5f",
+      "name": "mygoogle",
+      "primaryDomain": "jupiterone.com",
+      "vendor": "Google",
+    },
+  ],
   "collectedRelationships": Array [],
-  "encounteredTypes": Array [],
-  "numCollectedEntities": 0,
+  "encounteredTypes": Array [
+    "google_account",
+  ],
+  "numCollectedEntities": 1,
   "numCollectedRelationships": 0,
 }
 `;

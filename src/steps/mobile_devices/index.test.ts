@@ -7,6 +7,7 @@ import { IntegrationConfig } from '../../types';
 import { fetchMobileDevices } from '.';
 import { integrationConfig } from '../../../test/config';
 import { entities } from '../../constants';
+import { getMockAccountEntity } from '../../../test/mocks';
 
 describe('#fetchMobileDevices', () => {
   let recording: Recording;
@@ -27,6 +28,15 @@ describe('#fetchMobileDevices', () => {
       instanceConfig: integrationConfig,
     });
 
+    await context.jobState.addEntity(
+      getMockAccountEntity({
+        account: {
+          googleAccountId: context.instance.config.googleAccountId,
+          name: 'mygoogle',
+        },
+      }),
+    );
+
     await fetchMobileDevices(context);
 
     expect({
@@ -37,7 +47,11 @@ describe('#fetchMobileDevices', () => {
       encounteredTypes: context.jobState.encounteredTypes,
     }).toMatchSnapshot();
 
-    expect(context.jobState.collectedEntities).toMatchGraphObjectSchema({
+    expect(
+      context.jobState.collectedEntities.filter(
+        (e) => e._type === entities.MOBILE_DEVICE._type,
+      ),
+    ).toMatchGraphObjectSchema({
       _class: entities.MOBILE_DEVICE._class,
       schema: {
         additionalProperties: true,

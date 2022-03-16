@@ -24,6 +24,7 @@ export async function fetchTokens(
   });
 
   try {
+    let tokenFailCounter = 0;
     await jobState.iterateEntities(
       {
         _type: entities.USER._type,
@@ -31,7 +32,7 @@ export async function fetchTokens(
       async (userEntity) => {
         const email = userEntity.email as string;
 
-        await client.iterateTokens(email, async (token) => {
+        tokenFailCounter += await client.iterateTokens(email, async (token) => {
           const tokenEntity = await jobState.addEntity(
             createTokenEntity(token),
           );
@@ -64,6 +65,11 @@ export async function fetchTokens(
         });
       },
     );
+    if (tokenFailCounter > 0) {
+      logger.info(
+        `Permission denied reading tokens for ${tokenFailCounter} users. This happens when the credentials provided to JupiterOne are insufficient for reading tokens of users with greater permissions, such as those with the Super Admin role assignment.`,
+      );
+    }
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
       context.logger.info({ err }, 'Could not ingest token entities');

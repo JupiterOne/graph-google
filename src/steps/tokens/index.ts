@@ -66,9 +66,12 @@ export async function fetchTokens(
       },
     );
     if (tokenFailCounter > 0) {
-      logger.info(
-        `Permission denied reading tokens for ${tokenFailCounter} users. This happens when the credentials provided to JupiterOne are insufficient for reading tokens of users with greater permissions, such as those with the Super Admin role assignment.`,
-      );
+      const tokenFailString = `Permission denied reading tokens for ${tokenFailCounter} users. This happens when the credentials provided to JupiterOne are insufficient for reading tokens of users with greater permissions, such as those with the Super Admin role assignment.`;
+      logger.info(tokenFailString);
+      logger.publishInfoEvent({
+        name: 'list_token_info',
+        description: tokenFailString,
+      });
     }
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {

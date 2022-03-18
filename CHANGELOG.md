@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.3 - 2022-03-18
+
+### Fixed
+
+- Errors listing tokens are now combined into a single informational message.
+
 ## 3.12.2 - 2021-12-16
 
 ### Fixed

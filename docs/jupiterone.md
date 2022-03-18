@@ -112,9 +112,9 @@ permissions required by JupiterOne, and which will include only the
 3. Click **Create custom role** > **Create a new role**.
 
 4. **Name** "JupiterOne System", **Description** "Role for JupiterOne user to
-   enable read-only access to Google Workspaces Admin APIs."
-    Note: If you have email controls that filter for employee impersonation attacks, you may want to 
-    change the name to something such as "j1-system”.
+   enable read-only access to Google Workspaces Admin APIs." Note: If you have
+   email controls that filter for employee impersonation attacks, you may want
+   to change the name to something such as "j1-system”.
 
 5. In the **Privileges**, **Admin API Privileges** section, check these
    permissions:
@@ -176,10 +176,11 @@ To grant additional Admin API Privileges, return to the **Admin console**.
 
 ### Integration Jobs Events
 
-A common log when running the integration job is `list_token_error`. Although it
-appears to be an error, this is actually just a warning returned from Google
-APIs because the **"JupiterOne SystemUser"** configured for integration purposes
-does not have the right permissions to list the tokens for users with higher
+A common log when running the integration job is
+`Permission denied reading tokens for N users. This happens when the credentials provided to JupiterOne are insufficient for reading tokens of users with greater permissions, such as those with the Super Admin role assignment.`
+This is not an error, but is only listed as informational. As noted, this is due
+to the **"JupiterOne SystemUser"** that is configured for integration purposes
+not having sufficient permissions to list the tokens for users with higher
 privileges, such as the "Super Admin" Role. These tokens are not necessary for
 the job to complete and all other data will still be retrieved.
 

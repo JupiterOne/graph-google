@@ -16,23 +16,35 @@ export class GSuiteTokenClient extends GSuiteAdminClient {
   public async iterateTokens(
     userKey: string,
     callback: (data: admin_directory_v1.Schema$Token) => Promise<void>,
-  ): Promise<void> {
+  ): Promise<number> {
     const client = await this.getAuthenticatedServiceClient();
     let tokenResponse: admin_directory_v1.Schema$Tokens;
+    const tokenAuthFailResp = 1;
+    const tokenDefaultResp = 0;
 
     try {
       ({ data: tokenResponse } = await client.tokens.list({ userKey }));
     } catch (err) {
-      this.logger.warn({ err }, 'Could not list tokens for user');
-      this.logger.publishEvent({
-        name: 'list_token_error',
-        description: `Could not list tokens for user. NOTE: The tokens of users who have higher permissions than the domain admin used by this integration cannot be listed.`,
-      });
-      return;
+      if (
+        err.response.data.error.code == 401 ||
+        err.response.data.error.code == 403
+      ) {
+        return tokenAuthFailResp;
+      } else {
+        // For non-permissions issues, continue to log all instances of it
+        this.logger.warn({ err }, 'Could not list tokens for user.');
+        this.logger.publishEvent({
+          name: 'list_token_error',
+          description: `Could not list tokens for user.`,
+        });
+        return tokenDefaultResp;
+      }
     }
 
     for (const token of tokenResponse.items || []) {
       await callback(token);
     }
+
+    return tokenDefaultResp;
   }
 }

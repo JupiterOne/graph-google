@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-google",
-  "version": "3.12.2",
+  "version": "3.12.3",
   "description": "A JupiterOne managed integration for Google",
   "license": "MPL-2.0",
   "main": "dist/index.js",

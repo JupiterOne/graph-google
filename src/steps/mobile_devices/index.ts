@@ -1,4 +1,7 @@
-import { IntegrationStep } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationStep,
+  IntegrationProviderAuthorizationError,
+} from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, Steps } from '../../constants';
 import {
@@ -20,25 +23,43 @@ export async function fetchMobileDevices(
 
   const accountEntity = await getAccountEntity(context);
 
-  await client.iterateMobileDevices(async (device) => {
-    const deviceEntity = createMobileDeviceEntity(device);
+  try {
+    await client.iterateMobileDevices(async (device) => {
+      const deviceEntity = createMobileDeviceEntity(device);
 
-    if (await jobState.hasKey(deviceEntity._key)) {
-      logger.info(
-        { _key: deviceEntity._key },
-        'Duplicate device entity _key found',
+      if (await jobState.hasKey(deviceEntity._key)) {
+        logger.info(
+          { _key: deviceEntity._key },
+          'Duplicate device entity _key found',
+        );
+        return;
+      }
+
+      await context.jobState.addEntity(deviceEntity);
+      await context.jobState.addRelationship(
+        createAccountManagesMobileDeviceRelationship({
+          accountEntity,
+          deviceEntity,
+        }),
       );
+    });
+  } catch (err) {
+    if (err instanceof IntegrationProviderAuthorizationError) {
+      context.logger.info(
+        { err },
+        'Could not ingest mobile device information.',
+      );
+      context.logger.publishEvent({
+        name: 'missing_scope',
+        description: `Could not ingest mobile device data. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )}).  Additionally, Admin Email provided in configuration must have the Admin API Privliege "Manage Devices and Settings" enabled.`,
+      });
       return;
     }
 
-    await context.jobState.addEntity(deviceEntity);
-    await context.jobState.addRelationship(
-      createAccountManagesMobileDeviceRelationship({
-        accountEntity,
-        deviceEntity,
-      }),
-    );
-  });
+    throw err;
+  }
 }
 
 export const mobileDeviceSteps: IntegrationStep<IntegrationConfig>[] = [

@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.4 - 2022-04-19
+
+### Fixed
+
+- Authentication issues retrieving MDM data are now reported as an informational
+  with which permissions may be missing instead of as an error on the step.
+
 ## 3.12.3 - 2022-03-18
 
 ### Fixed

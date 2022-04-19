@@ -53,7 +53,7 @@ export async function fetchMobileDevices(
         name: 'missing_scope',
         description: `Could not ingest mobile device data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
-        )}).  Additionally, Admin Email provided in configuration must have the Admin API Privliege "Manage Devices and Settings" enabled.`,
+        )}).  Additionally, the admin email provided in configuration must have the Admin API privilege "Manage Devices and Settings" enabled.`,
       });
       return;
     }

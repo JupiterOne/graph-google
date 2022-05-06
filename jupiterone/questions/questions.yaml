@@ -1,0 +1,65 @@
+---
+sourceId: managed:google
+integrationDefinitionId: "${integration_definition_id}"
+questions:
+- id: integration-question-google-user-issued-risky-oauth-token
+  title: Which GSuite users in my organization have issued an OAuth token with a risky scope to a 3rd party application?
+  description:
+    Returns a list of users and tokens that contain risky OAuth scopes
+  queries:
+  - query: |
+      find google_user as user THAT ASSIGNED google_token with
+        scopes^=(
+          "https://mail.google.com" OR
+          "https://www.googleapis.com/auth/gmail." OR
+          "https://www.googleapis.com/auth/drive" OR
+          "https://www.googleapis.com/auth/ediscovery" OR
+          "https://www.googleapis.com/auth/admin."
+        )
+        return
+          user.email,
+          user.name,
+          google_token.name,
+          google_token.scopes
+  tags:
+  - google
+  - gsuite
+  - user
+  - token
+  - SecOps
+- id: integration-question-google-do-all-google-workspace-users-employ-mfa
+  title: Do all Google Workspace users employ MFA?
+  description:
+    All employees utilizing SSO do so through Google Workspace and must have MFA enabled in order to do so
+  queries:
+  - name: Google Workspace users with MFA
+    resultsAre: Informative
+    query: |
+      FIND google_user WITH mfaEnabled=true
+        THAT IS employee
+  - name: New users without MFA
+    resultsAre: Informative
+    query: |
+      FIND google_user WITH createdOn >= date.now - 7days and mfaEnabled!=true
+        THAT IS employee
+  - name: No MFA for longer than a week
+    resultsAre: Bad
+    query: |
+      FIND google_user WITH createdOn < date.now - 7days and mfaEnabled!=true
+        THAT IS employee
+  tags:
+  - google
+  - gsuite
+  - user
+  - MFA
+- id: integration-question-google-do-all-google-workspace-users-not-logged-in-30-days
+  title: Which Google Workspace users have not logged in within the last 30 days?
+  description:
+    Returns Google Workspace users who have not logged into their accounts within the last 30 days.
+  queries:
+  - query: |
+      FIND google_user WITH lastLoginOn < date.now-30days
+  tags:
+  - google
+  - gsuite
+  - user

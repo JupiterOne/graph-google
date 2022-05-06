@@ -63,3 +63,16 @@ questions:
   - google
   - gsuite
   - user
+- id: integration-question-google-workspace-inactive-users-with-tokens
+  title: Do inactive Google Workspace users have any tokens assigned that allow them access to resources?
+  description:
+    Returns all tokens assigned to Google Workspace users that allow them access to resources.
+  queries:
+  - query: |
+      FIND google_user WITH active!=true OR archived!=false 
+        THAT ASSIGNED google_token 
+        THAT ALLOWS *
+  tags:
+  - google
+  - gsuite
+  - user 

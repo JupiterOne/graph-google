@@ -8,6 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.5 - 2022-05-06
+
+### Added
+
+- `code-ql` workflow
+- `questions` workflow
+- managed questions
+
 ## 3.12.4 - 2022-04-19
 
 ### Fixed

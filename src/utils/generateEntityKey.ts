@@ -1,5 +1,8 @@
 import { IntegrationError } from '@jupiterone/integration-sdk-core';
 
+// Unsafe meaning it may be falsy
+export type UnsafeIdKey = string | number | null | undefined;
+
 /**
  * Generates a valid `_key` value for entities.
  *
@@ -11,7 +14,7 @@ import { IntegrationError } from '@jupiterone/integration-sdk-core';
  * @param id an identifier known to the provider
  * @throws IntegrationError when id is falsy
  */
-export default function generateEntityKey(prefix: string, id: string | number) {
+export default function generateEntityKey(prefix: string, id: UnsafeIdKey) {
   if (!id) {
     throw new IntegrationError({
       code: 'UNDEFINED_KEY_ERROR',

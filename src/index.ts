@@ -4,9 +4,12 @@ import validateInvocation from './validateInvocation';
 import { domainSteps } from './steps/domains';
 import { accountSteps } from './steps/account';
 import { userSteps } from './steps/users';
+import { roleSteps } from './steps/roles';
+import { roleAssignmentSteps } from './steps/role_assignments';
 import { groupSteps } from './steps/groups';
 import { tokenSteps } from './steps/tokens';
 import { chromeOSDeviceSteps } from './steps/chrome-os-devices';
+import { mobileDeviceSteps } from './steps/mobile_devices';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields: {
@@ -25,9 +28,12 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
   integrationSteps: [
     ...domainSteps,
     ...accountSteps,
+    ...roleSteps,
+    ...roleAssignmentSteps,
     ...userSteps,
     ...groupSteps,
     ...tokenSteps,
     ...chromeOSDeviceSteps,
+    ...mobileDeviceSteps,
   ],
 };

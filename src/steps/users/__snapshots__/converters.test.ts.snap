@@ -14,6 +14,16 @@ Object {
         "archived": false,
         "changePasswordAtNextLogin": false,
         "creationTime": "2020-08-13T19:03:11.000Z",
+        "customSchemas": Object {
+          "SSO": Object {
+            "role": Array [
+              Object {
+                "type": "work",
+                "value": "arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite",
+              },
+            ],
+          },
+        },
         "customerId": "abc123",
         "emails": Array [
           Object {
@@ -79,6 +89,7 @@ Object {
   "costCenter": "01A",
   "createdOn": 1597345391000,
   "creationTime": 1597345391000,
+  "customSchemas": "{\\"SSO\\":{\\"role\\":[{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}]}}",
   "customType": "",
   "customerId": "abc123",
   "deletedOn": undefined,
@@ -87,6 +98,9 @@ Object {
   "description": "Full-time",
   "displayName": "John Doe",
   "email": "john.doe@jupiterone.io",
+  "emailDomain": Array [
+    "jupiterone.io",
+  ],
   "employeeType": "Full-time",
   "firstName": "John",
   "hashFunction": undefined,

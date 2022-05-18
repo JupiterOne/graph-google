@@ -12,6 +12,7 @@ import {
   createTokenEntity,
   createUserAssignedTokenRelationship,
 } from './converters';
+import { createVendorTypeFromName } from '@jupiterone/vendor-stack';
 
 export async function fetchTokens(
   context: IntegrationStepContext,
@@ -23,6 +24,7 @@ export async function fetchTokens(
   });
 
   try {
+    let tokenFailCounter = 0;
     await jobState.iterateEntities(
       {
         _type: entities.USER._type,
@@ -30,7 +32,7 @@ export async function fetchTokens(
       async (userEntity) => {
         const email = userEntity.email as string;
 
-        await client.iterateTokens(email, async (token) => {
+        tokenFailCounter += await client.iterateTokens(email, async (token) => {
           const tokenEntity = await jobState.addEntity(
             createTokenEntity(token),
           );
@@ -40,6 +42,7 @@ export async function fetchTokens(
               tokenEntity,
             }),
           );
+          const vendorName = token.displayText || 'Unknown Vendor';
           await jobState.addRelationship(
             createMappedRelationship({
               _class: RelationshipClass.ALLOWS,
@@ -50,8 +53,9 @@ export async function fetchTokens(
                 targetFilterKeys: [['_class', 'name']],
                 targetEntity: {
                   _class: 'Vendor',
-                  displayName: token.displayText || 'Unknown Vendor',
-                  name: token.displayText || 'Unknown Vendor',
+                  _type: createVendorTypeFromName(vendorName),
+                  displayName: vendorName,
+                  name: vendorName,
                   validated: false,
                   active: true,
                 },
@@ -61,9 +65,17 @@ export async function fetchTokens(
         });
       },
     );
+    if (tokenFailCounter > 0) {
+      const tokenFailString = `Permission denied reading tokens for ${tokenFailCounter} users. This happens when the credentials provided to JupiterOne are insufficient for reading tokens of users with greater permissions, such as those with the Super Admin role assignment.`;
+      logger.info(tokenFailString);
+      logger.publishEvent({
+        name: 'list_token_info',
+        description: tokenFailString,
+      });
+    }
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.warn({ err }, 'Could not ingest token entities');
+      context.logger.info({ err }, 'Could not ingest token entities');
       context.logger.publishEvent({
         name: 'missing_scope',
         description: `Could not ingest token entities. Missing required scope(s) (scopes=${client.requiredScopes.join(

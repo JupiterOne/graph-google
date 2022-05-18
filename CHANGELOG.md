@@ -8,6 +8,164 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.12.5 - 2022-05-06
+
+### Added
+
+- `code-ql` workflow
+- `questions` workflow
+- managed questions
+
+## 3.12.4 - 2022-04-19
+
+### Fixed
+
+- Authentication issues retrieving MDM data are now reported as an informational
+  with which permissions may be missing instead of as an error on the step.
+
+## 3.12.3 - 2022-03-18
+
+### Fixed
+
+- Errors listing tokens are now combined into a single informational message.
+
+## 3.12.2 - 2021-12-16
+
+### Fixed
+
+- Fixed duplicate `_key` issue with `google_mobile_device`
+
+## 3.12.1 - 2021-12-15
+
+### Fixed
+
+- Remove raw data from `google_mobile_device` entities because the value can be
+  very large
+- Remove the `application` property from `google_mobile_device` entities because
+  the value can be very large and does not conform to our data model
+- Paginate the list mobile devices API
+
+## 3.12.0 - 2021-12-08
+
+### Added
+
+- New entity added (_**ACTION REQUIRED**_):
+
+  | Resources     | Entity `_type`         | Entity `_class` |
+  | ------------- | ---------------------- | --------------- |
+  | Mobile Device | `google_mobile_device` | `Device`        |
+
+  Log into the Google Workspace **Admin Console** as a super administrator to
+  perform the following actions.
+
+  1. Click **Security** > **API controls**.
+  2. In the **Domain wide delegation** pane, select **Manage Domain Wide
+     Delegation**.
+  3. Click **Edit** near the JupiterOne Service Account and add a new entry
+     under **API scopes** for
+     `https://www.googleapis.com/auth/admin.directory.device.mobile.readonly`
+  4. Click **Account** > **Admin roles**.
+  5. Click the JupiterOne System role, and click Privileges
+  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
+     Devices and Settings**
+
+- New relationship added:
+
+  | Source Entity `_type` | Relationship `_class` | Target Entity `_type`  |
+  | --------------------- | --------------------- | ---------------------- |
+  | `google_account`      | **MANAGES**           | `google_mobile_device` |
+
+### Changed
+
+- Package updates
+- Property `emailDomain` on `google_user` is now an array
+
+## 3.11.2 - 2021-11-30
+
+### Fixed
+
+- Roles and role assignments steps now properly handle auth errors due to
+  missing scopes or permissions.
+- Updated documentation to list an additional permissions requirement for
+  querying roles and role assignments.
+
+## 3.11.1 - 2021-11-01
+
+### Changed
+
+- Upgraded `@jupiter/vendor-stack` package.
+
+## 3.11.0 - 2021-10-29
+
+### Changed
+
+- Entities created for targets of mapped `google_token_allows_mapped_vendor`
+  relationships will have a `_type`.
+
+### Added
+
+- New properties added to resources:
+
+  | Entity        | Properties    |
+  | ------------- | ------------- |
+  | `google_user` | `emailDomain` |
+
+## 3.10.0 - 2021-09-28
+
+### Added
+
+- New relationship added:
+
+  | Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+  | --------------------- | --------------------- | --------------------- |
+  | `google_user`         | **ASSIGNED**          | `google_role`         |
+
+  Please ensure the `admin.directory.rolemanagement.readonly` API scope is added
+  as described in the previous changelog notes.
+
+## 3.9.1 - 2021-09-27
+
+### Added
+
+- New entity added (_**ACTION REQUIRED**_):
+
+  | Resources | Entity `_type` | Entity `_class` |
+  | --------- | -------------- | --------------- |
+  | Role      | `google_role`  | `AccessRole`    |
+
+  Log into the Google Workspace **Admin Console** as a super administrator to
+  perform the following actions.
+
+  1. Click **Security** > **API controls**.
+  2. In the **Domain wide delegation** pane, select **Manage Domain Wide
+     Delegation**.
+  3. Click **Edit** near the JupiterOne Service Account and add a new entry
+     under **API scopes** for
+     `https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly`
+
+## 3.8.0 - 2021-08-25
+
+### Added
+
+- New properties added to resources:
+
+  | Entity        | Properties      |
+  | ------------- | --------------- |
+  | `google_user` | `customSchemas` |
+
+### Changed
+
+- Updated JupiterOne SDK packages
+
+## 3.7.1 - 2021-08-04
+
+### Fixed
+
+- If a `400` is recieved from `GroupSettings` endpoint in `getGroupSettings`, it
+  is because of an invalid email. This was throwing an error and causing step
+  failure. `getGroupSettings` now catches the error and logs if there is a
+  `400`, but skips over it to continue ingestion.
+
 ## 3.7.0 - 2021-07-13
 
 ### Added

@@ -23,12 +23,30 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
     groupEmailAddress: string,
   ): Promise<groupssettings_v1.Schema$Groups> {
     const client = await this.getAuthenticatedServiceClient();
+    let settings: groupssettings_v1.Schema$Groups;
 
-    const response = await client.groups.get({
-      groupUniqueId: groupEmailAddress,
-      alt: 'json',
-    });
+    try {
+      const response = await client.groups.get({
+        groupUniqueId: groupEmailAddress,
+        alt: 'json',
+      });
+      settings = response.data;
+    } catch (err) {
+      if (err.code == 400) {
+        // This error code gets thrown when it couldn't find Group Settings
+        // using the provided email address. Skipping past it but logging
+        // for troubleshooting.
+        this.logger.warn(
+          { groupEmailAddress },
+          '[SKIP] Failed to fetch Group Settings for email address',
+        );
+      } else {
+        // Other Auth errors are already being thrown by `GSuiteClient` so we should
+        // just throw this so that it isn't skipped over.
+        throw err;
+      }
+    }
 
-    return response.data;
+    return settings!;
   }
 }

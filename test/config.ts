@@ -12,7 +12,7 @@ if (process.env.LOAD_ENV) {
 }
 
 export const DEFAULT_INTEGRATION_CONFIG_PROJECT_ID = 'j1-gc-integration-dev';
-export const DEFAULT_GOOGLE_ACCOUNT_ID = 'C02etu699';
+export const DEFAULT_GOOGLE_ACCOUNT_ID = 'C048tgq5f';
 
 // NOTE: This is a bogus certificate for tests. The Google auth SDK asserts
 // that a certificate is valid.

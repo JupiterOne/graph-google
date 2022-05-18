@@ -1,4 +1,9 @@
+import { Entity } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
+import {
+  createAccountEntity,
+  CreateAccountEntityParams,
+} from '../src/steps/account/converters';
 
 export function getMockUser(
   partial?: Partial<admin_directory_v1.Schema$User>,
@@ -60,6 +65,49 @@ export function getMockUser(
     includeInGlobalAddressList: true,
     recoveryEmail: 'john.doe.recovery@jupiterone.io',
     recoveryPhone: '+19999999999',
+    customSchemas: {
+      SSO: {
+        role: [
+          {
+            type: 'work',
+            value:
+              'arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite',
+          },
+        ],
+      },
+    },
     ...partial,
   };
+}
+
+export function getMockRole(
+  partial?: Partial<admin_directory_v1.Schema$Role>,
+): admin_directory_v1.Schema$Role {
+  return {
+    kind: 'admin#directory#role',
+    roleId: '123456',
+    etag: 'abcdef',
+    roleName: 'some mocked role',
+    isSystemRole: false,
+    isSuperAdminRole: false,
+    rolePrivileges: [
+      { serviceId: 'abc', privilegeName: 'privilege1' },
+      { serviceId: 'def', privilegeName: 'privilege2' },
+    ],
+    ...partial,
+  };
+}
+
+export function getMockAccountEntity(
+  partial?: Partial<CreateAccountEntityParams>,
+): Entity {
+  return createAccountEntity({
+    account: {
+      googleAccountId: 'abc',
+      name: 'mygoogle',
+    },
+    domainNames: ['jupiterone.com', 'jupiterone.io'],
+    primaryDomain: 'jupiterone.com',
+    ...partial,
+  });
 }

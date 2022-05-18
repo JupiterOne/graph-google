@@ -4,17 +4,18 @@ import {
 } from '@jupiterone/integration-sdk-testing';
 import { setupIntegrationRecording } from '../../../test/recording';
 import { IntegrationConfig } from '../../types';
-import { fetchDomains } from '.';
+import { fetchMobileDevices } from '.';
 import { integrationConfig } from '../../../test/config';
 import { entities } from '../../constants';
+import { getMockAccountEntity } from '../../../test/mocks';
 
-describe('#fetchDomains', () => {
+describe('#fetchMobileDevices', () => {
   let recording: Recording;
 
   beforeEach(() => {
     recording = setupIntegrationRecording({
       directory: __dirname,
-      name: 'fetchDomains',
+      name: 'fetchMobileDevices',
     });
   });
 
@@ -27,7 +28,16 @@ describe('#fetchDomains', () => {
       instanceConfig: integrationConfig,
     });
 
-    await fetchDomains(context);
+    await context.jobState.addEntity(
+      getMockAccountEntity({
+        account: {
+          googleAccountId: context.instance.config.googleAccountId,
+          name: 'mygoogle',
+        },
+      }),
+    );
+
+    await fetchMobileDevices(context);
 
     expect({
       numCollectedEntities: context.jobState.collectedEntities.length,
@@ -37,19 +47,24 @@ describe('#fetchDomains', () => {
       encounteredTypes: context.jobState.encounteredTypes,
     }).toMatchSnapshot();
 
-    expect(context.jobState.collectedEntities).toMatchGraphObjectSchema({
-      _class: entities.DOMAIN._class,
+    expect(
+      context.jobState.collectedEntities.filter(
+        (e) => e._type === entities.MOBILE_DEVICE._type,
+      ),
+    ).toMatchGraphObjectSchema({
+      _class: entities.MOBILE_DEVICE._class,
       schema: {
-        additionalProperties: false,
+        additionalProperties: true,
         properties: {
-          _type: { const: entities.DOMAIN._type },
+          _type: { const: entities.MOBILE_DEVICE._type },
           _rawData: {
             type: 'array',
             items: { type: 'object' },
           },
-          emailDomain: { type: 'string' },
-          primary: { type: 'boolean' },
-          verified: { type: 'boolean' },
+          deviceName: { type: 'string' },
+          model: { type: 'string' },
+          email: { type: 'string' },
+          status: { type: 'string' },
         },
       },
     });

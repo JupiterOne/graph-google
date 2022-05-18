@@ -1,12 +1,13 @@
 {
   "name": "@jupiterone/graph-google",
-  "version": "3.7.0",
+  "version": "3.12.5",
   "description": "A JupiterOne managed integration for Google",
   "license": "MPL-2.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "files": [
-    "dist"
+    "src",
+    "jupiterone"
   ],
   "publishConfig": {
     "access": "public"
@@ -14,28 +15,32 @@
   "scripts": {
     "start": "j1-integration collect",
     "graph": "j1-integration visualize",
+    "graph:spec": "j1-integration visualize-types --project-path docs/spec --output-file ./.j1-integration/types-graph/index.spec.html",
+    "graph:types": "j1-integration visualize-types",
     "lint": "eslint . --cache --fix --ext .ts,.tsx",
     "format": "prettier --write '**/*.{ts,js,json,css,md,yml}'",
+    "format:check": "prettier --check '**/*.{ts,js,json,css,md,yml}'",
     "type-check": "tsc",
     "test:env": "LOAD_ENV=1 yarn test",
     "test": "jest",
-    "test:ci": "yarn lint && yarn type-check && yarn test",
-    "build": "tsc -p tsconfig.dist.json --declaration",
-    "prepush": "yarn lint && yarn type-check && jest --changedSince main",
-    "prepack": "yarn build"
+    "test:ci": "yarn format:check && yarn lint && yarn type-check && yarn test",
+    "build": "tsc -p tsconfig.dist.json --declaration && cp README.md dist/README.md && cp -r jupiterone/ dist/jupiterone/",
+    "prepush": "yarn format:check && yarn lint && yarn type-check && jest --changedSince main",
+    "validate:questions": "j1-integration validate-question-file -a $MANAGED_QUESTIONS_JUPITERONE_ACCOUNT_ID -k $MANAGED_QUESTIONS_JUPITERONE_API_KEY",
+    "validate:questions:dry": "j1-integration validate-question-file --dry-run"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^5.6.1"
+    "@jupiterone/integration-sdk-core": "^7.4.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^5.6.1",
-    "@jupiterone/integration-sdk-dev-tools": "^5.6.1",
-    "@jupiterone/integration-sdk-testing": "^5.6.1",
-    "dotenv": "^8.2.0",
-    "ts-node": "^8.10.2"
+    "@jupiterone/integration-sdk-core": "^7.4.0",
+    "@jupiterone/integration-sdk-dev-tools": "^7.4.0",
+    "@jupiterone/integration-sdk-testing": "^7.4.0",
+    "dotenv": "^10.0.0"
   },
   "dependencies": {
-    "gaxios": "^3.0.4",
-    "googleapis": "^55.0.0"
+    "@jupiterone/vendor-stack": "^2.0.0",
+    "gaxios": "^4.3.2",
+    "googleapis": "^92.0.0"
   }
 }

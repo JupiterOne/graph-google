@@ -1,4 +1,4 @@
-import generateEntityKey from '../../utils/generateEntityKey';
+import generateEntityKey, { UnsafeIdKey } from '../../utils/generateEntityKey';
 import {
   parseTimePropertyValue,
   createIntegrationEntity,
@@ -37,13 +37,13 @@ export function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
   return flattendRecordFields;
 }
 
-export function getUserEntityKey(userId: string) {
+export function getUserEntityKey(userId: UnsafeIdKey) {
   return generateEntityKey(entities.USER._type, userId);
 }
 
 export function createUserEntity(data: admin_directory_v1.Schema$User) {
   const userId = data.id as string;
-  const username = getUsername(data) as string;
+  const username = getUsername(data);
   const name = data.name?.fullName || username;
 
   return createIntegrationEntity({
@@ -55,6 +55,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         _class: entities.USER._class,
         id: userId,
         email: data.primaryEmail,
+        emailDomain: getDomain(data),
         name,
         displayName: name,
         username: getUsername(data),
@@ -90,6 +91,9 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         suspensionReason: data.suspensionReason,
         thumbnailPhotoUrl: data.thumbnailPhotoUrl,
         aliases: data.aliases,
+        // Copy the entire stringified value of `customSchemas` onto the entity,
+        // so that it can be queried using a `contains` filter.
+        customSchemas: data.customSchemas && JSON.stringify(data.customSchemas),
         ...getAddresses(data),
         ...getPhones(data),
         ...getRelations(data),
@@ -159,6 +163,19 @@ export function createAccountHasUserRelationship(params: {
 function getUsername(data: admin_directory_v1.Schema$User): string | null {
   const usernameMatch = /(.*?)@.*/.exec(data.primaryEmail as string);
   return usernameMatch && usernameMatch[1];
+}
+
+function last<T>(arr: T[] | undefined): T | undefined {
+  if (!arr || !arr.length) return undefined;
+  return arr[arr.length - 1];
+}
+
+function getDomain(data: admin_directory_v1.Schema$User): string[] {
+  const emailDomain = last(data.primaryEmail?.split('@'));
+  if (emailDomain) {
+    return [emailDomain];
+  }
+  return [];
 }
 
 function getAddresses(data: admin_directory_v1.Schema$User) {

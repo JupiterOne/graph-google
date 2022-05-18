@@ -37,7 +37,7 @@ If you need help with this integration, please contact
 
 ### In Google Workspace
 
-The integration will connect to Google Workspace Admin APIs with the following
+The integration connects to Google Workspace Admin APIs with the following
 details:
 
 - The Google Workspace **Customer ID** for the domain to ingest into JupiterOne
@@ -72,8 +72,8 @@ perform the following actions.
 5. Add the following **API scopes** (comma separated):
 
    ```text
-   https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security, https://www.googleapis.com/auth/apps.groups.settings,
-   https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly
+   https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security, https://www.googleapis.com/auth/apps.groups.settings, https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly,
+   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly, https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly
    ```
 
 6. Click **Authorize**.
@@ -112,7 +112,9 @@ permissions required by JupiterOne, and which will include only the
 3. Click **Create custom role** > **Create a new role**.
 
 4. **Name** "JupiterOne System", **Description** "Role for JupiterOne user to
-   enable read-only access to Google Workspaces Admin APIs."
+   enable read-only access to Google Workspaces Admin APIs." Note: If you have
+   email controls that filter for employee impersonation attacks, you may want
+   to change the name to something such as "j1-system”.
 
 5. In the **Privileges**, **Admin API Privileges** section, check these
    permissions:
@@ -121,6 +123,11 @@ permissions required by JupiterOne, and which will include only the
    - Groups -> Read
    - Domain Management
    - User Security Management
+   - Mobile Device Management
+
+NOTE: In order to ingest role and role assignment data you will need to grant
+this account Super Admin permissions in addition to the custom role listed
+above.
 
 #### Adding Scopes and Privileges
 
@@ -169,10 +176,11 @@ To grant additional Admin API Privileges, return to the **Admin console**.
 
 ### Integration Jobs Events
 
-A common log when running the integration job is `list_token_error`. Although it
-appears to be an error, this is actually just a warning returned from Google
-APIs because the **"JupiterOne SystemUser"** configured for integration purposes
-does not have the right permissions to list the tokens for users with higher
+A common log when running the integration job is
+`Permission denied reading tokens for N users. This happens when the credentials provided to JupiterOne are insufficient for reading tokens of users with greater permissions, such as those with the Super Admin role assignment.`
+This is not an error, but is only listed as informational. As noted, this is due
+to the **"JupiterOne SystemUser"** that is configured for integration purposes
+not having sufficient permissions to list the tokens for users with higher
 privileges, such as the "Super Admin" Role. These tokens are not necessary for
 the job to complete and all other data will still be retrieved.
 
@@ -194,7 +202,7 @@ NOTE: ALL OF THE FOLLOWING DOCUMENTATION IS GENERATED USING THE
 "j1-integration document" COMMAND. DO NOT EDIT BY HAND! PLEASE SEE THE DEVELOPER
 DOCUMENTATION FOR USAGE INFORMATION:
 
-https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
+https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 ********************************************************************************
 -->
 
@@ -211,23 +219,28 @@ The following entities are created:
 | Domain           | `google_domain`           | `Domain`        |
 | Group            | `google_group`            | `UserGroup`     |
 | Group Settings   | `google_group_settings`   | `Configuration` |
+| Mobile Device    | `google_mobile_device`    | `Device`        |
+| Role             | `google_role`             | `AccessRole`    |
 | Site             | `google_site`             | `Site`          |
 | Token            | `google_token`            | `AccessKey`     |
 | User             | `google_user`             | `User`          |
 
 ### Relationships
 
-The following relationships are created/mapped:
+The following relationships are created:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type`          |
 | --------------------- | --------------------- | ------------------------------ |
 | `google_account`      | **HAS**               | `google_group`                 |
+| `google_account`      | **HAS**               | `google_role`                  |
 | `google_account`      | **HAS**               | `google_user`                  |
+| `google_account`      | **MANAGES**           | `google_mobile_device`         |
 | `google_group`        | **HAS**               | `google_group`                 |
 | `google_group`        | **HAS**               | `google_group_settings`        |
 | `google_group`        | **HAS**               | `google_user`                  |
 | `google_site`         | **HAS**               | `google_user`                  |
 | `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
+| `google_user`         | **ASSIGNED**          | `google_role`                  |
 | `google_user`         | **ASSIGNED**          | `google_token`                 |
 
 <!--

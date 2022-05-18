@@ -7,51 +7,24 @@ Object {
       "_class": Array [
         "Domain",
       ],
-      "_key": "google_domain_jupiterone.io",
+      "_key": "google_domain_jupiterone.dev",
       "_rawData": Array [
         Object {
           "name": "default",
           "rawData": Object {
-            "creationTime": "1549555037874",
+            "creationTime": "1622061210453",
             "domainAliases": Array [
               Object {
-                "creationTime": "1549555037874",
-                "domainAliasName": "jupiterone.io.test-google-a.com",
-                "etag": "\\"o6ztWZ3lhe-tsV75FsFXpSEZSr0dIx_rEPuaEFoI634/zevudprFOEPK3lTezAE-d43Sy3o\\"",
+                "creationTime": "1622061210453",
+                "domainAliasName": "jupiterone.dev.test-google-a.com",
+                "etag": "\\"nqbsbhvoIENh0WbZEZYWTG7mnk2phHz4rrCEo-rHT2k/oW480BdgHayQKmnuoDeWTf6fPjs\\"",
                 "kind": "admin#directory#domainAlias",
-                "parentDomainName": "jupiterone.io",
+                "parentDomainName": "jupiterone.dev",
                 "verified": true,
               },
             ],
-            "domainName": "jupiterone.io",
-            "etag": "\\"o6ztWZ3lhe-tsV75FsFXpSEZSr0dIx_rEPuaEFoI634/6j1NZUK3BBPEtHB3FKBAuzFYmEk\\"",
-            "isPrimary": false,
-            "kind": "admin#directory#domain",
-            "verified": true,
-          },
-        },
-      ],
-      "_type": "google_domain",
-      "createdOn": 1549555037874,
-      "displayName": "jupiterone.io",
-      "domainName": "jupiterone.io",
-      "id": "jupiterone.io",
-      "name": "jupiterone.io",
-      "primary": false,
-      "verified": true,
-    },
-    Object {
-      "_class": Array [
-        "Domain",
-      ],
-      "_key": "google_domain_jupiterone.com",
-      "_rawData": Array [
-        Object {
-          "name": "default",
-          "rawData": Object {
-            "creationTime": "1594817987271",
-            "domainName": "jupiterone.com",
-            "etag": "\\"o6ztWZ3lhe-tsV75FsFXpSEZSr0dIx_rEPuaEFoI634/CdS83q1_xnaOGbB-PXkIZoldDVM\\"",
+            "domainName": "jupiterone.dev",
+            "etag": "\\"nqbsbhvoIENh0WbZEZYWTG7mnk2phHz4rrCEo-rHT2k/WA7ByZRkRpGgnXLwEPGUupV7k6s\\"",
             "isPrimary": true,
             "kind": "admin#directory#domain",
             "verified": true,
@@ -59,39 +32,12 @@ Object {
         },
       ],
       "_type": "google_domain",
-      "createdOn": 1594817987271,
-      "displayName": "jupiterone.com",
-      "domainName": "jupiterone.com",
-      "id": "jupiterone.com",
-      "name": "jupiterone.com",
+      "createdOn": 1622061210453,
+      "displayName": "jupiterone.dev",
+      "domainName": "jupiterone.dev",
+      "id": "jupiterone.dev",
+      "name": "jupiterone.dev",
       "primary": true,
-      "verified": true,
-    },
-    Object {
-      "_class": Array [
-        "Domain",
-      ],
-      "_key": "google_domain_jptr.one",
-      "_rawData": Array [
-        Object {
-          "name": "default",
-          "rawData": Object {
-            "creationTime": "1596544251506",
-            "domainName": "jptr.one",
-            "etag": "\\"o6ztWZ3lhe-tsV75FsFXpSEZSr0dIx_rEPuaEFoI634/2dHzznB4s2jx9W_p2IM6KWdb0rQ\\"",
-            "isPrimary": false,
-            "kind": "admin#directory#domain",
-            "verified": true,
-          },
-        },
-      ],
-      "_type": "google_domain",
-      "createdOn": 1596544251506,
-      "displayName": "jptr.one",
-      "domainName": "jptr.one",
-      "id": "jptr.one",
-      "name": "jptr.one",
-      "primary": false,
       "verified": true,
     },
   ],
@@ -99,7 +45,7 @@ Object {
   "encounteredTypes": Array [
     "google_domain",
   ],
-  "numCollectedEntities": 3,
+  "numCollectedEntities": 1,
   "numCollectedRelationships": 0,
 }
 `;

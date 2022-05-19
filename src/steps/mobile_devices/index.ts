@@ -1,6 +1,7 @@
 import {
   IntegrationStep,
   IntegrationProviderAuthorizationError,
+  IntegrationErrorEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, Steps } from '../../constants';
@@ -49,8 +50,8 @@ export async function fetchMobileDevices(
         { err },
         'Could not ingest mobile device information.',
       );
-      context.logger.publishEvent({
-        name: 'missing_scope',
+      context.logger.publishErrorEvent({
+        name: IntegrationErrorEventName.MissingPermission,
         description: `Could not ingest mobile device data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
         )}).  Additionally, the admin email provided in configuration must have the Admin API privilege "Manage Devices and Settings" enabled.`,
@@ -64,7 +65,7 @@ export async function fetchMobileDevices(
 
 export const mobileDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
   {
-    id: 'step-fetch-mobile-devices',
+    id: Steps.MOBILE_DEVICES,
     name: 'Mobile Device',
     entities: [entities.MOBILE_DEVICE],
     relationships: [relationships.ACCOUNT_MANAGES_MOBILE_DEVICE],

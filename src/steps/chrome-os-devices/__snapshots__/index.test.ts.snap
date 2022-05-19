@@ -655,12 +655,22 @@ Object {
       "version": "101.0.4951.59",
     },
   ],
-  "collectedRelationships": Array [],
+  "collectedRelationships": Array [
+    Object {
+      "_class": "MANAGES",
+      "_fromEntityKey": "google_account_C048tgq5f",
+      "_key": "google_account_C048tgq5f|manages|google_chrome_os_device_06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+      "_toEntityKey": "google_chrome_os_device_06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+      "_type": "google_account_manages_chrome_os_device",
+      "displayName": "MANAGES",
+    },
+  ],
   "encounteredTypes": Array [
     "google_account",
     "google_chrome_os_device",
+    "google_account_manages_chrome_os_device",
   ],
   "numCollectedEntities": 2,
-  "numCollectedRelationships": 0,
+  "numCollectedRelationships": 1,
 }
 `;

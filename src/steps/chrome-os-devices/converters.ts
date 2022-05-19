@@ -2,8 +2,11 @@ import generateEntityKey from '../../utils/generateEntityKey';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
 import {
+  createDirectRelationship,
   createIntegrationEntity,
+  Entity,
   parseTimePropertyValue,
+  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 export function createChromeOSDeviceEntity(
@@ -35,5 +38,16 @@ export function createChromeOSDeviceEntity(
         bootMode: data.bootMode,
       },
     },
+  });
+}
+
+export function createAccountManagesChromeOSDeviceRelationship(params: {
+  accountEntity: Entity;
+  deviceEntity: Entity;
+}) {
+  return createDirectRelationship({
+    _class: RelationshipClass.MANAGES,
+    from: params.accountEntity,
+    to: params.deviceEntity,
   });
 }

@@ -9,6 +9,8 @@ export const Steps = {
   TOKENS: 'step-fetch-tokens',
   GROUPS: 'step-fetch-groups',
   GROUP_SETTINGS: 'step-fetch-group-settings',
+  MOBILE_DEVICES: 'step-fetch-mobile-devices',
+  CHROME_OS_DEVICE: 'step-fetch-chrome-os-devices',
 };
 
 export const entities = {
@@ -82,6 +84,12 @@ export const relationships = {
     _class: RelationshipClass.MANAGES,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.MOBILE_DEVICE._type,
+  },
+  ACCOUNT_MANAGES_CHROME_OS_DEVICE: {
+    _type: 'google_account_manages_chrome_os_device',
+    _class: RelationshipClass.MANAGES,
+    sourceType: entities.ACCOUNT._type,
+    targetType: entities.CHROME_OS_DEVICE._type,
   },
   SITE_HOSTS_USER: {
     _type: 'google_site_has_user',

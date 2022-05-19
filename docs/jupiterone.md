@@ -234,6 +234,7 @@ The following relationships are created:
 | `google_account`      | **HAS**               | `google_group`                 |
 | `google_account`      | **HAS**               | `google_role`                  |
 | `google_account`      | **HAS**               | `google_user`                  |
+| `google_account`      | **MANAGES**           | `google_chrome_os_device`      |
 | `google_account`      | **MANAGES**           | `google_mobile_device`         |
 | `google_group`        | **HAS**               | `google_group`                 |
 | `google_group`        | **HAS**               | `google_group_settings`        |

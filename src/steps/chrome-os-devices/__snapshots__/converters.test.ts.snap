@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#createDeviceEntity should convert to device entity 1`] = `
+Object {
+  "_class": Array [
+    "Device",
+  ],
+  "_key": "google_chrome_os_device_deviceId",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "deviceId": "deviceId",
+        "kind": "directory#mobiledevice",
+        "lastSync": "2013-08-12T17:30:04.325Z",
+        "model": "Galaxy Nexus",
+        "osVersion": "Android 4.2.2",
+        "status": "APPROVED",
+      },
+    },
+  ],
+  "_type": "google_chrome_os_device",
+  "active": undefined,
+  "bootMode": undefined,
+  "category": "laptop",
+  "createdOn": undefined,
+  "displayName": "deviceId",
+  "firmwareVersion": undefined,
+  "id": "deviceId",
+  "lastEnrollementTime": undefined,
+  "lastSync": 1376328604325,
+  "macAddress": undefined,
+  "make": "Galaxy Nexus",
+  "model": "Galaxy Nexus",
+  "name": "deviceId",
+  "osVersion": "Android 4.2.2",
+  "platformVersion": undefined,
+  "serial": undefined,
+  "status": "APPROVED",
+  "supportEndDate": undefined,
+  "version": "Android 4.2.2",
+}
+`;
+
+exports[`#createExpandedDeviceEntity should convert to device entity with more props 1`] = `
+Object {
+  "_class": Array [
+    "Device",
+  ],
+  "_key": "google_chrome_os_device_06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+  "_rawData": Array [
+    Object {
+      "name": "default",
+      "rawData": Object {
+        "activeTimeRanges": Array [
+          Object {
+            "activeTime": 30000,
+            "date": "2022-05-19",
+          },
+        ],
+        "annotatedUser": "integration-development@jupiterone.dev",
+        "autoUpdateExpiration": "1843455600000",
+        "bootMode": "Verified",
+        "cpuInfo": Array [
+          Object {
+            "architecture": "x64",
+            "maxClockSpeedKhz": 4200000,
+            "model": "Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz",
+          },
+        ],
+        "cpuStatusReports": Array [
+          Object {
+            "reportTime": "2022-05-19T13:33:09.569Z",
+          },
+          Object {
+            "reportTime": "2022-05-19T13:34:09.558Z",
+          },
+        ],
+        "deviceId": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+        "diskVolumeReports": Array [
+          Object {},
+        ],
+        "etag": "\\"AX6M7SfKZ_nsxN3gDLY5FqkOIZdXe4fOIyur1mUmk1Y/z-lQehTt9Fjz_pphpwc1IT8eHBQ\\"",
+        "firmwareVersion": "Google_Kohaku.12672.199.0",
+        "kind": "admin#directory#chromeosdevice",
+        "lastEnrollmentTime": "2022-05-19T13:33:02.539Z",
+        "lastSync": "2022-05-19T13:33:05.700Z",
+        "macAddress": "2cdb07af9a83",
+        "manufactureDate": "2020-12-04",
+        "model": "Samsung Galaxy Chromebook",
+        "orgUnitPath": "/",
+        "osVersion": "89.0.4389.95",
+        "platformVersion": "13729.56.0 (Official Build) stable-channel hatch",
+        "serialNumber": "3WAZ9FGNC00030E",
+        "status": "ACTIVE",
+        "systemRamFreeReports": Array [
+          Object {
+            "reportTime": "2022-05-19T13:33:09.569Z",
+          },
+        ],
+        "systemRamTotal": "8218206208",
+        "tpmVersionInfo": Object {
+          "family": "322e3000",
+          "firmwareVersion": "9d5b602704bc089b",
+          "manufacturer": "43524f53",
+          "specLevel": "74",
+          "tpmModel": "1",
+          "vendorSpecific": "xCG fTPM",
+        },
+      },
+    },
+  ],
+  "_type": "google_chrome_os_device",
+  "active": true,
+  "bootMode": "Verified",
+  "category": "laptop",
+  "createdOn": undefined,
+  "displayName": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+  "firmwareVersion": "Google_Kohaku.12672.199.0",
+  "id": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+  "lastEnrollementTime": 1652967182539,
+  "lastSync": 1652967185700,
+  "macAddress": "2cdb07af9a83",
+  "make": "Samsung Galaxy Chromebook",
+  "model": "Samsung Galaxy Chromebook",
+  "name": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+  "osVersion": "89.0.4389.95",
+  "platformVersion": "13729.56.0 (Official Build) stable-channel hatch",
+  "serial": "3WAZ9FGNC00030E",
+  "status": "ACTIVE",
+  "supportEndDate": undefined,
+  "version": "89.0.4389.95",
+}
+`;

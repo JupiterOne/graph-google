@@ -1,0 +1,666 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#fetchChromeOSDevices should collect data 1`] = `
+Object {
+  "collectedEntities": Array [
+    Object {
+      "_class": Array [
+        "Account",
+      ],
+      "_key": "google_account_C048tgq5f",
+      "_rawData": Array [
+        Object {
+          "name": "default",
+          "rawData": Object {
+            "account": Object {
+              "googleAccountId": "C048tgq5f",
+              "name": "mygoogle",
+            },
+            "domainNames": Array [
+              "jupiterone.com",
+              "jupiterone.io",
+            ],
+            "primaryDomain": "jupiterone.com",
+          },
+        },
+      ],
+      "_type": "google_account",
+      "accountId": "jupiterone.com",
+      "createdOn": undefined,
+      "displayName": "mygoogle",
+      "domains": Array [
+        "jupiterone.com",
+        "jupiterone.io",
+      ],
+      "id": "C048tgq5f",
+      "name": "mygoogle",
+      "primaryDomain": "jupiterone.com",
+      "vendor": "Google",
+    },
+    Object {
+      "_class": Array [
+        "Device",
+      ],
+      "_key": "google_chrome_os_device_06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+      "_rawData": Array [
+        Object {
+          "name": "default",
+          "rawData": Object {
+            "activeTimeRanges": Array [
+              Object {
+                "activeTime": 840024,
+                "date": "2022-05-19",
+              },
+            ],
+            "annotatedUser": "integration-development@jupiterone.dev",
+            "autoUpdateExpiration": "1843455600000",
+            "bootMode": "Verified",
+            "cpuInfo": Array [
+              Object {
+                "architecture": "x64",
+                "logicalCpus": Array [
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.012074s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.300112s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.304366s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "58.455156s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "5.201451s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "5.821382s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.748027s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.574729s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "1.039921s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 887947,
+                    "idleDuration": "72s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.001092s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.241435s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.205430s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "63.969573s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "2.916627s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "3.221630s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.403501s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.566464s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.845658s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 889224,
+                    "idleDuration": "72s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.010559s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.311136s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.303459s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "59.786169s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "4.201012s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "4.662529s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.771406s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.595660s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.596215s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 887861,
+                    "idleDuration": "71s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.013031s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.235805s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.755466s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "58.822622s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "3.581926s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "2.772003s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.515377s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.621053s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.340984s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 909618,
+                    "idleDuration": "67s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.004804s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.419223s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.345607s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "58.378115s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "4.807022s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "6.234130s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "1.003590s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.618255s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.623138s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 874517,
+                    "idleDuration": "72s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.012425s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.240779s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "1.035389s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "62.900368s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "3.325270s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "3.529959s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.862708s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.606138s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.397835s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 899925,
+                    "idleDuration": "73s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.009301s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.339881s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.301033s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "59.498871s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "5.115185s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "5.505044s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.776398s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.567139s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.124393s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 862124,
+                    "idleDuration": "72s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                  Object {
+                    "cStates": Array [
+                      Object {
+                        "displayName": "C7s",
+                        "sessionDuration": "0.004143s",
+                      },
+                      Object {
+                        "displayName": "C3",
+                        "sessionDuration": "0.278739s",
+                      },
+                      Object {
+                        "displayName": "C1",
+                        "sessionDuration": "0.249963s",
+                      },
+                      Object {
+                        "displayName": "C10",
+                        "sessionDuration": "64.623793s",
+                      },
+                      Object {
+                        "displayName": "C8",
+                        "sessionDuration": "2.857472s",
+                      },
+                      Object {
+                        "displayName": "C6",
+                        "sessionDuration": "3.865774s",
+                      },
+                      Object {
+                        "displayName": "C1E",
+                        "sessionDuration": "0.486912s",
+                      },
+                      Object {
+                        "displayName": "POLL",
+                        "sessionDuration": "0.575661s",
+                      },
+                      Object {
+                        "displayName": "C9",
+                        "sessionDuration": "0.461379s",
+                      },
+                    ],
+                    "currentScalingFrequencyKhz": 825840,
+                    "idleDuration": "73s",
+                    "maxScalingFrequencyKhz": 4200000,
+                  },
+                ],
+                "maxClockSpeedKhz": 4200000,
+                "model": "Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz",
+              },
+            ],
+            "cpuStatusReports": Array [
+              Object {
+                "cpuTemperatureInfo": Array [
+                  Object {
+                    "label": "Core 0
+",
+                    "temperature": 33,
+                  },
+                  Object {
+                    "label": "Core 1
+",
+                    "temperature": 35,
+                  },
+                  Object {
+                    "label": "Core 2
+",
+                    "temperature": 33,
+                  },
+                  Object {
+                    "label": "Core 3
+",
+                    "temperature": 32,
+                  },
+                  Object {
+                    "label": "Package id 0
+",
+                    "temperature": 35,
+                  },
+                  Object {
+                    "label": "iwlwifi_1
+",
+                    "temperature": 30,
+                  },
+                ],
+                "cpuUtilizationPercentageInfo": Array [
+                  1,
+                ],
+                "reportTime": "2022-05-19T13:33:09.569Z",
+              },
+              Object {
+                "cpuTemperatureInfo": Array [
+                  Object {
+                    "label": "Core 0
+",
+                    "temperature": 29,
+                  },
+                  Object {
+                    "label": "Core 1
+",
+                    "temperature": 33,
+                  },
+                  Object {
+                    "label": "Core 2
+",
+                    "temperature": 33,
+                  },
+                  Object {
+                    "label": "Core 3
+",
+                    "temperature": 28,
+                  },
+                  Object {
+                    "label": "Package id 0
+",
+                    "temperature": 33,
+                  },
+                  Object {
+                    "label": "iwlwifi_1
+",
+                    "temperature": 30,
+                  },
+                ],
+                "reportTime": "2022-05-19T13:34:09.558Z",
+              },
+              Object {
+                "cpuUtilizationPercentageInfo": Array [
+                  39,
+                ],
+                "reportTime": "2022-05-19T14:03:13.172Z",
+              },
+              Object {
+                "cpuTemperatureInfo": Array [
+                  Object {
+                    "label": "Core 1
+",
+                    "temperature": 34,
+                  },
+                  Object {
+                    "label": "Core 2
+",
+                    "temperature": 32,
+                  },
+                  Object {
+                    "label": "Package id 0
+",
+                    "temperature": 34,
+                  },
+                  Object {
+                    "label": "Core 3
+",
+                    "temperature": 30,
+                  },
+                  Object {
+                    "label": "Core 0
+",
+                    "temperature": 31,
+                  },
+                  Object {
+                    "label": "iwlwifi_1
+",
+                    "temperature": 33,
+                  },
+                ],
+                "reportTime": "2022-05-19T14:04:13.166Z",
+              },
+              Object {
+                "cpuUtilizationPercentageInfo": Array [
+                  17,
+                ],
+                "reportTime": "2022-05-19T16:14:13.428Z",
+              },
+              Object {
+                "cpuTemperatureInfo": Array [
+                  Object {
+                    "label": "Core 1
+",
+                    "temperature": 31,
+                  },
+                  Object {
+                    "label": "Core 2
+",
+                    "temperature": 28,
+                  },
+                  Object {
+                    "label": "Package id 0
+",
+                    "temperature": 31,
+                  },
+                  Object {
+                    "label": "Core 3
+",
+                    "temperature": 26,
+                  },
+                  Object {
+                    "label": "Core 0
+",
+                    "temperature": 28,
+                  },
+                  Object {
+                    "label": "iwlwifi_1
+",
+                    "temperature": 29,
+                  },
+                ],
+                "reportTime": "2022-05-19T16:15:13.424Z",
+              },
+            ],
+            "deviceId": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+            "diskVolumeReports": Array [
+              Object {
+                "volumeInfo": Array [
+                  Object {
+                    "storageFree": "4109021184",
+                    "storageTotal": "4109021184",
+                    "volumeId": "/media/archive",
+                  },
+                  Object {
+                    "storageFree": "11681792",
+                    "storageTotal": "12042240",
+                    "volumeId": "/usr/share/oem",
+                  },
+                  Object {
+                    "storageFree": "4109021184",
+                    "storageTotal": "4109021184",
+                    "volumeId": "/media/removable",
+                  },
+                ],
+              },
+            ],
+            "etag": "\\"AX6M7SfKZ_nsxN3gDLY5FqkOIZdXe4fOIyur1mUmk1Y/_JUms9o7An2qTIl3Rci_r7xsAEo\\"",
+            "firmwareVersion": "Google_Kohaku.12672.463.0",
+            "kind": "admin#directory#chromeosdevice",
+            "lastEnrollmentTime": "2022-05-19T13:33:02.539Z",
+            "lastSync": "2022-05-19T16:14:15.759Z",
+            "macAddress": "2cdb07af9a83",
+            "manufactureDate": "2020-12-04",
+            "model": "Samsung Galaxy Chromebook",
+            "orgUnitId": "03ph8a2z2lubvlt",
+            "orgUnitPath": "/",
+            "osVersion": "101.0.4951.59",
+            "platformVersion": "14588.98.0 (Official Build) stable-channel hatch",
+            "serialNumber": "3WAZ9FGNC00030E",
+            "status": "ACTIVE",
+            "systemRamFreeReports": Array [
+              Object {
+                "reportTime": "2022-05-19T13:33:09.569Z",
+                "systemRamFreeInfo": Array [
+                  "5896839168",
+                ],
+              },
+              Object {
+                "reportTime": "2022-05-19T14:03:13.162Z",
+                "systemRamFreeInfo": Array [
+                  "6141267968",
+                ],
+              },
+              Object {
+                "reportTime": "2022-05-19T16:14:13.420Z",
+                "systemRamFreeInfo": Array [
+                  "6376738816",
+                ],
+              },
+            ],
+            "systemRamTotal": "8218046464",
+            "tpmVersionInfo": Object {
+              "family": "322e3000",
+              "firmwareVersion": "a2d932d70cb1415b",
+              "manufacturer": "43524f53",
+              "specLevel": "74",
+              "tpmModel": "1",
+              "vendorSpecific": "xCG fTPM",
+            },
+          },
+        },
+      ],
+      "_type": "google_chrome_os_device",
+      "active": true,
+      "bootMode": "Verified",
+      "category": "laptop",
+      "createdOn": undefined,
+      "displayName": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+      "firmwareVersion": "Google_Kohaku.12672.463.0",
+      "id": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+      "lastEnrollementTime": 1652967182539,
+      "lastSync": 1652976855759,
+      "macAddress": "2cdb07af9a83",
+      "make": "Samsung Galaxy Chromebook",
+      "model": "Samsung Galaxy Chromebook",
+      "name": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
+      "osVersion": "101.0.4951.59",
+      "platformVersion": "14588.98.0 (Official Build) stable-channel hatch",
+      "serial": "3WAZ9FGNC00030E",
+      "status": "ACTIVE",
+      "supportEndDate": undefined,
+      "version": "101.0.4951.59",
+    },
+  ],
+  "collectedRelationships": Array [],
+  "encounteredTypes": Array [
+    "google_account",
+    "google_chrome_os_device",
+  ],
+  "numCollectedEntities": 2,
+  "numCollectedRelationships": 0,
+}
+`;

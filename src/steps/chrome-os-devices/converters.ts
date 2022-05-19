@@ -1,7 +1,10 @@
 import generateEntityKey from '../../utils/generateEntityKey';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
-import { createIntegrationEntity } from '@jupiterone/integration-sdk-core';
+import {
+  createIntegrationEntity,
+  parseTimePropertyValue,
+} from '@jupiterone/integration-sdk-core';
 
 export function createChromeOSDeviceEntity(
   data: admin_directory_v1.Schema$ChromeOsDevice,
@@ -18,6 +21,8 @@ export function createChromeOSDeviceEntity(
         id: deviceName,
         category: 'laptop',
         make: data.model,
+        name: deviceName,
+        status: data.status,
         model: data.model,
         serial: data.serialNumber,
         version: data.osVersion,
@@ -25,6 +30,9 @@ export function createChromeOSDeviceEntity(
         platformVersion: data.platformVersion,
         firmwareVersion: data.firmwareVersion,
         macAddress: data.macAddress,
+        lastSync: parseTimePropertyValue(data.lastSync),
+        lastEnrollementTime: parseTimePropertyValue(data.lastEnrollmentTime),
+        bootMode: data.bootMode,
       },
     },
   });

@@ -55,7 +55,7 @@ export const entities = {
   CHROME_OS_DEVICE: {
     resourceName: 'Chrome OS Device',
     _type: 'google_chrome_os_device',
-   _class: 'Device',
+    _class: 'Device',
   },
   MOBILE_DEVICE: {
     resourceName: 'Mobile Device',

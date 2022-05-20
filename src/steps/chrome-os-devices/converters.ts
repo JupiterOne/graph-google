@@ -22,7 +22,7 @@ export function createChromeOSDeviceEntity(
         _type: entities.CHROME_OS_DEVICE._type,
         _class: entities.CHROME_OS_DEVICE._class,
         id: deviceName,
-        category: 'laptop',
+        category: 'chrome-os-device',
         make: data.model,
         name: deviceName,
         status: data.status,

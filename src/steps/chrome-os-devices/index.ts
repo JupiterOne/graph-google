@@ -70,5 +70,6 @@ export const chromeOSDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
     entities: [entities.CHROME_OS_DEVICE],
     relationships: [relationships.ACCOUNT_MANAGES_CHROME_OS_DEVICE],
     executionHandler: fetchChromeOSDevices,
+    dependsOn: [Steps.ACCOUNT],
   },
 ];

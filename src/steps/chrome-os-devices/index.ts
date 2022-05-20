@@ -1,32 +1,32 @@
 import {
-  IntegrationStep,
-  IntegrationProviderAuthorizationError,
   IntegrationErrorEventName,
+  IntegrationProviderAuthorizationError,
+  IntegrationStep,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, Steps } from '../../constants';
 import {
-  createMobileDeviceEntity,
-  createAccountManagesMobileDeviceRelationship,
+  createAccountManagesChromeOSDeviceRelationship,
+  createChromeOSDeviceEntity,
 } from './converters';
-import { GSuiteMobileDeviceClient } from '../../gsuite/clients/GSuiteMobileDeviceClient';
+import { GSuiteChromeOSDeviceClient } from '../../gsuite/clients/GSuiteChromeOSDeviceClient';
 import getAccountEntity from '../../utils/getAccountEntity';
 
-export async function fetchMobileDevices(
+export async function fetchChromeOSDevices(
   context: IntegrationStepContext,
 ): Promise<void> {
   const { instance, jobState, logger } = context;
 
-  const client = new GSuiteMobileDeviceClient({
+  const client = new GSuiteChromeOSDeviceClient({
     config: instance.config,
-    logger,
+    logger: logger,
   });
 
   const accountEntity = await getAccountEntity(context);
 
   try {
-    await client.iterateMobileDevices(async (device) => {
-      const deviceEntity = createMobileDeviceEntity(device);
+    await client.iterateChromeOSDevices(async (device) => {
+      const deviceEntity = createChromeOSDeviceEntity(device);
 
       if (await jobState.hasKey(deviceEntity._key)) {
         logger.info(
@@ -38,7 +38,7 @@ export async function fetchMobileDevices(
 
       await context.jobState.addEntity(deviceEntity);
       await context.jobState.addRelationship(
-        createAccountManagesMobileDeviceRelationship({
+        createAccountManagesChromeOSDeviceRelationship({
           accountEntity,
           deviceEntity,
         }),
@@ -48,11 +48,11 @@ export async function fetchMobileDevices(
     if (err instanceof IntegrationProviderAuthorizationError) {
       context.logger.info(
         { err },
-        'Could not ingest mobile device information.',
+        'Could not ingest chrome os device information.',
       );
       context.logger.publishErrorEvent({
         name: IntegrationErrorEventName.MissingPermission,
-        description: `Could not ingest mobile device data. Missing required scope(s) (scopes=${client.requiredScopes.join(
+        description: `Could not ingest chrome device data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
         )}).  Additionally, the admin email provided in configuration must have the Admin API privilege "Manage Devices and Settings" enabled.`,
       });
@@ -63,13 +63,13 @@ export async function fetchMobileDevices(
   }
 }
 
-export const mobileDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
+export const chromeOSDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
   {
-    id: Steps.MOBILE_DEVICES,
-    name: 'Mobile Device',
-    entities: [entities.MOBILE_DEVICE],
-    relationships: [relationships.ACCOUNT_MANAGES_MOBILE_DEVICE],
-    executionHandler: fetchMobileDevices,
+    id: Steps.CHROME_OS_DEVICE,
+    name: 'Chrome OS Device',
+    entities: [entities.CHROME_OS_DEVICE],
+    relationships: [relationships.ACCOUNT_MANAGES_CHROME_OS_DEVICE],
+    executionHandler: fetchChromeOSDevices,
     dependsOn: [Steps.ACCOUNT],
   },
 ];

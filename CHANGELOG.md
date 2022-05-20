@@ -8,6 +8,36 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.0 - 2022-05-20
+
+### Added
+
+- New entity added (_**ACTION REQUIRED**_):
+
+  | Resources        | Entity `_type`            | Entity `_class` |
+  | ---------------- | ------------------------- | --------------- |
+  | Chrome OS Device | `google_chrome_os_device` | `Device`        |
+
+  Log into the Google Workspace **Admin Console** as a super administrator to
+  perform the following actions.
+
+  1. Click **Security** > **API controls**.
+  2. In the **Domain wide delegation** pane, select **Manage Domain Wide
+     Delegation**.
+  3. Click **Edit** near the JupiterOne Service Account and add a new entry
+     under **API scopes** for
+     `https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly`
+  4. Click **Account** > **Admin roles**.
+  5. Click the JupiterOne System role, and click Privileges
+  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
+     Devices and Settings**
+
+- New relationship added:
+
+  | Source Entity `_type` | Relationship `_class` | Target Entity `_type`     |
+  | --------------------- | --------------------- | ------------------------- |
+  | `google_account`      | **MANAGES**           | `google_chrome_os_device` |
+
 ## 3.12.5 - 2022-05-06
 
 ### Added

@@ -73,7 +73,7 @@ perform the following actions.
 
    ```text
    https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security, https://www.googleapis.com/auth/apps.groups.settings, https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly,
-   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly
+   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly, https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly
    ```
 
 6. Click **Authorize**.
@@ -212,17 +212,18 @@ https://github.com/JupiterOne/sdk/blob/main/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources      | Entity `_type`          | Entity `_class` |
-| -------------- | ----------------------- | --------------- |
-| Account        | `google_account`        | `Account`       |
-| Domain         | `google_domain`         | `Domain`        |
-| Group          | `google_group`          | `UserGroup`     |
-| Group Settings | `google_group_settings` | `Configuration` |
-| Mobile Device  | `google_mobile_device`  | `Device`        |
-| Role           | `google_role`           | `AccessRole`    |
-| Site           | `google_site`           | `Site`          |
-| Token          | `google_token`          | `AccessKey`     |
-| User           | `google_user`           | `User`          |
+| Resources        | Entity `_type`            | Entity `_class` |
+| ---------------- | ------------------------- | --------------- |
+| Account          | `google_account`          | `Account`       |
+| Chrome OS Device | `google_chrome_os_device` | `Device`        |
+| Domain           | `google_domain`           | `Domain`        |
+| Group            | `google_group`            | `UserGroup`     |
+| Group Settings   | `google_group_settings`   | `Configuration` |
+| Mobile Device    | `google_mobile_device`    | `Device`        |
+| Role             | `google_role`             | `AccessRole`    |
+| Site             | `google_site`             | `Site`          |
+| Token            | `google_token`            | `AccessKey`     |
+| User             | `google_user`             | `User`          |
 
 ### Relationships
 
@@ -233,6 +234,7 @@ The following relationships are created:
 | `google_account`      | **HAS**               | `google_group`                 |
 | `google_account`      | **HAS**               | `google_role`                  |
 | `google_account`      | **HAS**               | `google_user`                  |
+| `google_account`      | **MANAGES**           | `google_chrome_os_device`      |
 | `google_account`      | **MANAGES**           | `google_mobile_device`         |
 | `google_group`        | **HAS**               | `google_group`                 |
 | `google_group`        | **HAS**               | `google_group_settings`        |

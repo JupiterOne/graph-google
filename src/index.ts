@@ -8,6 +8,7 @@ import { roleSteps } from './steps/roles';
 import { roleAssignmentSteps } from './steps/role_assignments';
 import { groupSteps } from './steps/groups';
 import { tokenSteps } from './steps/tokens';
+import { chromeOSDeviceSteps } from './steps/chrome-os-devices';
 import { mobileDeviceSteps } from './steps/mobile_devices';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
@@ -32,6 +33,7 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
     ...userSteps,
     ...groupSteps,
     ...tokenSteps,
+    ...chromeOSDeviceSteps,
     ...mobileDeviceSteps,
   ],
 };

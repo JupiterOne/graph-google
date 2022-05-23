@@ -30,12 +30,12 @@
     "validate:questions:dry": "j1-integration validate-question-file --dry-run"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^7.4.0"
+    "@jupiterone/integration-sdk-core": "^8.13.10"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^7.4.0",
-    "@jupiterone/integration-sdk-dev-tools": "^7.4.0",
-    "@jupiterone/integration-sdk-testing": "^7.4.0",
+    "@jupiterone/integration-sdk-core": "^8.12.10",
+    "@jupiterone/integration-sdk-dev-tools": "^8.13.10",
+    "@jupiterone/integration-sdk-testing": "^8.13.10",
     "dotenv": "^10.0.0"
   },
   "dependencies": {

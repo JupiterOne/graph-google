@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.1 - 2022-05-23
+
+### Changed
+
+- SDK package updates to version 8
+
 ## 3.13.0 - 2022-05-20
 
 ### Added

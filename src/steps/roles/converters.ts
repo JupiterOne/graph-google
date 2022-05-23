@@ -38,7 +38,7 @@ export function createRoleEntity(role: Schema$Role) {
     entityData: {
       source: role,
       assign: {
-        _class: entities.ROLE._class,
+        _class: [entities.ROLE._class],
         _type: entities.ROLE._type,
         _key: getRoleEntityKey(roleId),
         id: roleId,

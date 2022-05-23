@@ -52,7 +52,7 @@ describe('#fetchChromeOSDevices', () => {
         (e) => e._type === entities.MOBILE_DEVICE._type,
       ),
     ).toMatchGraphObjectSchema({
-      _class: entities.CHROME_OS_DEVICE._class,
+      _class: [entities.CHROME_OS_DEVICE._class],
       schema: {
         additionalProperties: false,
         properties: {

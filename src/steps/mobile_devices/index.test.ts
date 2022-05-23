@@ -52,7 +52,7 @@ describe('#fetchMobileDevices', () => {
         (e) => e._type === entities.MOBILE_DEVICE._type,
       ),
     ).toMatchGraphObjectSchema({
-      _class: entities.MOBILE_DEVICE._class,
+      _class: [entities.MOBILE_DEVICE._class],
       schema: {
         additionalProperties: true,
         properties: {

@@ -13,29 +13,29 @@ describe('#getRolePrivilegeStrings', () => {
 
   beforeEach(() => {
     role = getMockRole();
+  });
 
-    test('converts role.rolePrivileges to ids and names', () => {
-      expect(privileges).toEqual([
-        {
-          id: 'abc',
-          name: 'privilege1',
-        },
-        {
-          id: 'def',
-          privilegeName: 'privilege2',
-        },
-      ]);
-    });
+  test('converts role.rolePrivileges to ids and names', () => {
+    expect(privileges).toEqual([
+      {
+        id: 'abc',
+        name: 'privilege1',
+      },
+      {
+        id: 'def',
+        privilegeName: 'privilege2',
+      },
+    ]);
+  });
 
-    test('it does not add either falsy ids or names', () => {
-      role.rolePrivileges = [
-        { serviceId: undefined, privilegeName: 'privilege1' },
-        { serviceId: 'def', privilegeName: 'privilege2' },
-      ];
-      privileges = getRolePrivilegeStrings(role);
+  test('it does not add either falsy ids or names', () => {
+    role.rolePrivileges = [
+      { serviceId: undefined, privilegeName: 'privilege1' },
+      { serviceId: 'def', privilegeName: 'privilege2' },
+    ];
+    privileges = getRolePrivilegeStrings(role);
 
-      expect(privileges).toEqual([]);
-    });
+    expect(privileges).toEqual([]);
   });
 });
 

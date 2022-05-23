@@ -20,7 +20,7 @@ export function createAccountEntity(data: CreateAccountEntityParams) {
     entityData: {
       source: data,
       assign: {
-        _class: entities.ACCOUNT._class,
+        _class: [entities.ACCOUNT._class],
         _key: getAccountKey(data.account.googleAccountId),
         _type: entities.ACCOUNT._type,
         displayName: data.account.name,

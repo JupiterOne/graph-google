@@ -638,6 +638,7 @@ Object {
       "bootMode": "Verified",
       "category": "chrome-os-device",
       "createdOn": undefined,
+      "deviceId": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
       "displayName": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",
       "firmwareVersion": "Google_Kohaku.12672.463.0",
       "id": "06d4fd60-bed5-4fe2-8d82-1a7b7b76f9ac",

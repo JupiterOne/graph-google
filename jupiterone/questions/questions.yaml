@@ -7,20 +7,21 @@ questions:
   description:
     Returns a list of users and tokens that contain risky OAuth scopes
   queries:
-  - query: |
-      find google_user as user THAT ASSIGNED google_token with
-        scopes^=(
-          "https://mail.google.com" OR
-          "https://www.googleapis.com/auth/gmail." OR
-          "https://www.googleapis.com/auth/drive" OR
-          "https://www.googleapis.com/auth/ediscovery" OR
-          "https://www.googleapis.com/auth/admin."
-        )
-        return
-          user.email,
-          user.name,
-          google_token.name,
-          google_token.scopes
+    - resultsAre: BAD
+      query: |
+        find google_user as user THAT ASSIGNED google_token with
+          scopes^=(
+            "https://mail.google.com" OR
+            "https://www.googleapis.com/auth/gmail." OR
+            "https://www.googleapis.com/auth/drive" OR
+            "https://www.googleapis.com/auth/ediscovery" OR
+            "https://www.googleapis.com/auth/admin."
+          )
+          return
+            user.email,
+            user.name,
+            google_token.name,
+            google_token.scopes
   tags:
   - google
   - gsuite
@@ -33,17 +34,17 @@ questions:
     All employees utilizing SSO do so through Google Workspace and must have MFA enabled in order to do so
   queries:
   - name: Google Workspace users with MFA
-    resultsAre: Informative
+    resultsAre: INFORMATIVE
     query: |
       FIND google_user WITH mfaEnabled=true
         THAT IS employee
   - name: New users without MFA
-    resultsAre: Informative
+    resultsAre: INFORMATIVE
     query: |
       FIND google_user WITH createdOn >= date.now - 7days and mfaEnabled!=true
         THAT IS employee
   - name: No MFA for longer than a week
-    resultsAre: Bad
+    resultsAre: BAD
     query: |
       FIND google_user WITH createdOn < date.now - 7days and mfaEnabled!=true
         THAT IS employee
@@ -59,6 +60,7 @@ questions:
   queries:
   - query: |
       FIND google_user WITH lastLoginOn < date.now-30days
+    resultsAre: INFORMATIVE
   tags:
   - google
   - gsuite
@@ -72,6 +74,7 @@ questions:
       FIND google_user WITH active!=true OR archived!=false 
         THAT ASSIGNED google_token 
         THAT ALLOWS *
+    resultsAre: INFORMATIVE
   tags:
   - google
   - gsuite

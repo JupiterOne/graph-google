@@ -60,7 +60,6 @@ questions:
   queries:
   - query: |
       FIND google_user WITH lastLoginOn < date.now-30days
-    resultsAre: INFORMATIVE
   tags:
   - google
   - gsuite
@@ -74,7 +73,6 @@ questions:
       FIND google_user WITH active!=true OR archived!=false 
         THAT ASSIGNED google_token 
         THAT ALLOWS *
-    resultsAre: INFORMATIVE
   tags:
   - google
   - gsuite

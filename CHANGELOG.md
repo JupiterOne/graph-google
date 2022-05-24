@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.2 - 2022-05-24
+
+### Changed
+
+- Bumped sdk-core package to 8.13.10
+
 ## 3.13.1 - 2022-05-23
 
 ### Changed

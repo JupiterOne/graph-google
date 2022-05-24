@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-google",
-  "version": "3.13.1",
+  "version": "3.13.2",
   "description": "A JupiterOne managed integration for Google",
   "license": "MPL-2.0",
   "main": "src/index.js",
@@ -33,7 +33,7 @@
     "@jupiterone/integration-sdk-core": "^8.13.10"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.12.10",
+    "@jupiterone/integration-sdk-core": "^8.13.10",
     "@jupiterone/integration-sdk-dev-tools": "^8.13.10",
     "@jupiterone/integration-sdk-testing": "^8.13.10",
     "dotenv": "^10.0.0"

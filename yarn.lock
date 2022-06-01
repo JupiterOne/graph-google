@@ -760,7 +760,7 @@
     upath "^1.2.0"
     vis "^4.21.0-EOL"
 
-"@jupiterone/integration-sdk-core@^8.12.10", "@jupiterone/integration-sdk-core@^8.13.10":
+"@jupiterone/integration-sdk-core@^8.13.10":
   version "8.13.10"
   resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-core/-/integration-sdk-core-8.13.10.tgz#98e14cd2381ab3d2eff2913b0620428c964d4af0"
   integrity sha512-sPpTbAUx5IiMYR35ixEZ2V94YIzONUctqIUxtupJqrkj29WtNXnncJMl4cX+fHixc8cd4MPyXL8O4lQILvS63A==

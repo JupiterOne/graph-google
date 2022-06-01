@@ -19,12 +19,18 @@ export class GSuiteChromeOSDeviceClient extends GSuiteAdminClient {
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();
 
-    const response = await client.chromeosdevices.list({
-      customerId: this.accountId,
-    });
-
-    for (const device of response.data.chromeosdevices || []) {
-      await callback(device);
-    }
+    await this.iterateApi(
+      async (nextPageToken) => {
+        return client.chromeosdevices.list({
+          customerId: this.accountId,
+          pageToken: nextPageToken,
+        });
+      },
+      async (data: admin_directory_v1.Schema$ChromeOsDevices) => {
+        for (const device of data.chromeosdevices || []) {
+          await callback(device);
+        }
+      },
+    );
   }
 }

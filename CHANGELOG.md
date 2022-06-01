@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.4 - 2022-06-01
+
+### Fixed
+
+- Fixed issue with permissions issues generating Sentry errors.
+
 ## 3.13.3 - 2022-05-24
 
 ### Changed

@@ -19,12 +19,17 @@ export class GSuiteDomainClient extends GSuiteAdminClient {
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();
 
-    const response = await client.domains.list({
-      customer: this.accountId,
-    });
-
-    for (const domain of response.data.domains || []) {
-      await callback(domain);
-    }
+    await this.iterateApi(
+      async () => {
+        return client.domains.list({
+          customer: this.accountId,
+        });
+      },
+      async (data: admin_directory_v1.Schema$Domains2) => {
+        for (const device of data.domains || []) {
+          await callback(device);
+        }
+      },
+    );
   }
 }

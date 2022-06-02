@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.5 - 2022-06-02
+
+### Fixed
+
+- Fixed additional issue (fetch domains step) with permissions issues generating
+  Sentry errors.
+
 ## 3.13.4 - 2022-06-01
 
 ### Fixed

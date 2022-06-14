@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.6 - 2022-06-14
+
+### Fixed
+
+- Updated Google group setting query error handling for authorizatin errors.
+
 ## 3.13.5 - 2022-06-02
 
 ### Fixed

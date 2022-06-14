@@ -2,6 +2,9 @@ import { google, groupssettings_v1 } from 'googleapis';
 
 import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
 
+import { IntegrationProviderAuthorizationError } from '@jupiterone/integration-sdk-core';
+import { createErrorProps } from './utils/createErrorProps';
+
 export class GSuiteGroupSettingsClient extends GSuiteClient<
   groupssettings_v1.Groupssettings
 > {
@@ -40,21 +43,10 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
           { groupEmailAddress },
           '[SKIP] Failed to fetch Group Settings for email address',
         );
-        this.logger.publishEvent({
-          name: 'list_group_setting_error',
-          description: `Could not find group to retrieve settings for group with email address ${groupEmailAddress}`,
-        });
         // Next check if we have an auth error.  Handling separate so we
-        // can modify the warning.
+        // can throw IntegrationProviderAuthorizationError specifically.
       } else if ([401, 403].includes(err.code)) {
-        this.logger.warn(
-          { groupEmailAddress },
-          '[SKIP] Failed to fetch Group Settings due to insufficient permissions',
-        );
-        this.logger.publishEvent({
-          name: 'list_group_setting_error',
-          description: `Insufficient permissions to retrieve settings for group with email address ${groupEmailAddress}`,
-        });
+        throw new IntegrationProviderAuthorizationError(createErrorProps(err));
       } else {
         // Other errors may be being thrown by `GSuiteClient` so we should
         // just throw this so that it isn't skipped over.

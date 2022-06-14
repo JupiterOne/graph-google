@@ -12,7 +12,7 @@ and this project adheres to
 
 ### Fixed
 
-- Updated Google group setting query error handling for authorizatin errors.
+- Updated Google group setting query error handling for authorization errors.
 
 ## 3.13.5 - 2022-06-02
 

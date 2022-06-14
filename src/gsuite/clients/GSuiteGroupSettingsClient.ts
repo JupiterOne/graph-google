@@ -2,6 +2,9 @@ import { google, groupssettings_v1 } from 'googleapis';
 
 import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
 
+import { IntegrationProviderAuthorizationError } from '@jupiterone/integration-sdk-core';
+import { createErrorProps } from './utils/createErrorProps';
+
 export class GSuiteGroupSettingsClient extends GSuiteClient<
   groupssettings_v1.Groupssettings
 > {
@@ -40,8 +43,12 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
           { groupEmailAddress },
           '[SKIP] Failed to fetch Group Settings for email address',
         );
+        // Next check if we have an auth error.  Handling separate so we
+        // can throw IntegrationProviderAuthorizationError specifically.
+      } else if ([401, 403].includes(err.code)) {
+        throw new IntegrationProviderAuthorizationError(createErrorProps(err));
       } else {
-        // Other Auth errors are already being thrown by `GSuiteClient` so we should
+        // Other errors may be being thrown by `GSuiteClient` so we should
         // just throw this so that it isn't skipped over.
         throw err;
       }

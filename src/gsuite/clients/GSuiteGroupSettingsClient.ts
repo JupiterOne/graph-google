@@ -40,8 +40,23 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
           { groupEmailAddress },
           '[SKIP] Failed to fetch Group Settings for email address',
         );
+        this.logger.publishEvent({
+          name: 'list_group_setting_error',
+          description: `Could not find group to retrieve settings for group with email address ${groupEmailAddress}`,
+        });
+        // Next check if we have an auth error.  Handling separate so we
+        // can modify the warning.
+      } else if ([401, 403].includes(err.code)) {
+        this.logger.warn(
+          { groupEmailAddress },
+          '[SKIP] Failed to fetch Group Settings due to insufficient permissions',
+        );
+        this.logger.publishEvent({
+          name: 'list_group_setting_error',
+          description: `Insufficient permissions to retrieve settings for group with email address ${groupEmailAddress}`,
+        });
       } else {
-        // Other Auth errors are already being thrown by `GSuiteClient` so we should
+        // Other errors may be being thrown by `GSuiteClient` so we should
         // just throw this so that it isn't skipped over.
         throw err;
       }

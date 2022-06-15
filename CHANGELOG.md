@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.7 - 2022-06-18
+
+### Fixed
+
+- 404 errors for missing group settings are now caught and handled with a
+  warning message so it doesn't prevent ingestion of existing group settings.
+
 ## 3.13.6 - 2022-06-14
 
 ### Fixed

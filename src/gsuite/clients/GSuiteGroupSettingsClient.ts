@@ -35,10 +35,13 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
       });
       settings = response.data;
     } catch (err) {
-      if (err.code == 400) {
-        // This error code gets thrown when it couldn't find Group Settings
+      if ([400, 404].includes(err.code)) {
+        // These error codes get thrown when it couldn't find Group Settings
         // using the provided email address. Skipping past it but logging
         // for troubleshooting.
+        // We've seen both 400 and 404 errors thrown for this.  It may be
+        // the API was updated to start throwing 404 instead, but leaving
+        // both as possible errors when a group isn't found.
         this.logger.warn(
           { groupEmailAddress },
           '[SKIP] Failed to fetch Group Settings for email address',

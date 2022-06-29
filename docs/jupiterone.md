@@ -116,14 +116,19 @@ permissions required by JupiterOne, and which will include only the
    email controls that filter for employee impersonation attacks, you may want
    to change the name to something such as "j1-system”.
 
-5. In the **Privileges**, **Admin API Privileges** section, check these
+5. In the **Privileges**, **Admin console privileges** section check these
+   permissions:
+
+   - Manage Devices and Settings
+   - Manage Chrome OS Devices (read only)
+
+6. In the **Privileges**, **Admin API Privileges** section, check these
    permissions:
 
    - Users -> Read
    - Groups -> Read
    - Domain Management
    - User Security Management
-   - Mobile Device Management
 
 NOTE: In order to ingest role and role assignment data you will need to grant
 this account Super Admin permissions in addition to the custom role listed

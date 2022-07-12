@@ -137,7 +137,9 @@ Admin permissions are granted, however access to group setting updates and token
 deletions will be an incidental side effect due to the limitations in the Google
 domain wide API settings. These permissions will not be used by the JupiterOne
 integration, but if granting those permissions is unacceptable, please do not
-provide Super Admin permissions.
+provide Super Admin permissions. The only ingestion items that will not be
+ingested due to missing Super Admin permissions are roles, role assignments, and
+token information.
 
 #### Adding Scopes and Privileges
 

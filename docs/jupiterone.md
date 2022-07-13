@@ -132,7 +132,14 @@ permissions required by JupiterOne, and which will include only the
 
 NOTE: In order to ingest role and role assignment data you will need to grant
 this account Super Admin permissions in addition to the custom role listed
-above.
+above. Permissions will still be restricted by the readonly API scopes if Super
+Admin permissions are granted, however access to group setting updates and token
+deletions will be an incidental side effect due to the limitations in the Google
+domain wide API settings. These permissions will not be used by the JupiterOne
+integration, but if granting those permissions is unacceptable, please do not
+provide Super Admin permissions. The only ingestion items that will not be
+ingested due to missing Super Admin permissions are roles, role assignments, and
+token information.
 
 #### Adding Scopes and Privileges
 

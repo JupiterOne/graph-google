@@ -67,7 +67,7 @@ export default abstract class GSuiteClient<T> {
       const endpoint = err.response?.request?.responseURL;
       const statusText = `${
         err.response?.data?.error_description
-      } Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/master/docs/jupiterone.md#admin-api-enablement (requiredScopes=${Array.from(
+      } Please ensure that your API client in GSuite has the correct scopes. See the GSuite integration docs here: https://github.com/JupiterOne/graph-google/blob/main/docs/jupiterone.md#in-google-workspace (requiredScopes=${Array.from(
         this.requiredScopes,
       ).join(', ')})`;
 

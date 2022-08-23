@@ -1,4 +1,10 @@
-import { RelationshipClass } from '@jupiterone/integration-sdk-core';
+import {
+  RelationshipClass,
+  RelationshipDirection,
+  StepEntityMetadata,
+  StepMappedRelationshipMetadata,
+  StepRelationshipMetadata,
+} from '@jupiterone/integration-sdk-core';
 
 export const Steps = {
   DOMAINS: 'step-fetch-domains',
@@ -10,63 +16,96 @@ export const Steps = {
   GROUPS: 'step-fetch-groups',
   GROUP_SETTINGS: 'step-fetch-group-settings',
   MOBILE_DEVICES: 'step-fetch-mobile-devices',
+  USER_DEVICES: 'step-fetch-user-devices',
   CHROME_OS_DEVICE: 'step-fetch-chrome-os-devices',
 };
 
-export const entities = {
+export const entities: Record<
+  | 'DOMAIN'
+  | 'USER'
+  | 'GROUP'
+  | 'GROUP_SETTINGS'
+  | 'ACCOUNT'
+  | 'ROLE'
+  | 'SITE'
+  | 'TOKEN'
+  | 'CHROME_OS_DEVICE'
+  | 'MOBILE_DEVICE'
+  | 'DEVICE',
+  StepEntityMetadata
+> = {
   DOMAIN: {
     resourceName: 'Domain',
     _type: 'google_domain',
-    _class: 'Domain',
+    _class: ['Domain'],
   },
   USER: {
     resourceName: 'User',
     _type: 'google_user',
-    _class: 'User',
+    _class: ['User'],
   },
   GROUP: {
     resourceName: 'Group',
     _type: 'google_group',
-    _class: 'UserGroup',
+    _class: ['UserGroup'],
   },
   GROUP_SETTINGS: {
     resourceName: 'Group Settings',
     _type: 'google_group_settings',
-    _class: 'Configuration',
+    _class: ['Configuration'],
   },
   ACCOUNT: {
     resourceName: 'Account',
     _type: 'google_account',
-    _class: 'Account',
+    _class: ['Account'],
   },
   ROLE: {
     resourceName: 'Role',
     _type: 'google_role',
-    _class: 'AccessRole',
+    _class: ['AccessRole'],
   },
   SITE: {
     resourceName: 'Site',
     _type: 'google_site',
-    _class: 'Site',
+    _class: ['Site'],
   },
   TOKEN: {
     resourceName: 'Token',
     _type: 'google_token',
-    _class: 'AccessKey',
+    _class: ['AccessKey'],
   },
   CHROME_OS_DEVICE: {
     resourceName: 'Chrome OS Device',
     _type: 'google_chrome_os_device',
-    _class: 'Device',
+    _class: ['Device'],
   },
   MOBILE_DEVICE: {
     resourceName: 'Mobile Device',
     _type: 'google_mobile_device',
-    _class: 'Device',
+    _class: ['Device'],
+  },
+  DEVICE: {
+    resourceName: 'Device',
+    _type: 'user_endpoint',
+    _class: ['Device'],
   },
 };
 
-export const relationships = {
+export const relationships: Record<
+  | 'ACCOUNT_HAS_USER'
+  | 'ACCOUNT_HAS_ROLE'
+  | 'ACCOUNT_MANAGES_MOBILE_DEVICE'
+  | 'ACCOUNT_MANAGES_CHROME_OS_DEVICE'
+  | 'SITE_HOSTS_USER'
+  | 'GROUP_HAS_SETTINGS'
+  | 'GROUP_HAS_USER'
+  | 'GROUP_HAS_GROUP'
+  | 'ACCOUNT_HAS_GROUP'
+  | 'USER_ASSIGNED_TOKEN'
+  | 'USER_ASSIGNED_ROLE'
+  | 'TOKEN_ALLOWS_VENDOR',
+  StepRelationshipMetadata
+> = {
   ACCOUNT_HAS_USER: {
     _type: 'google_account_has_user',
     _class: RelationshipClass.HAS,
@@ -139,5 +178,18 @@ export const relationships = {
     _class: RelationshipClass.ALLOWS,
     sourceType: entities.TOKEN._type,
     targetType: 'mapped_entity (class Vendor)',
+  },
+};
+
+export const mappedRelationships: Record<
+  'ACCOUNT_MANAGES_DEVICE',
+  StepMappedRelationshipMetadata
+> = {
+  ACCOUNT_MANAGES_DEVICE: {
+    _type: 'google_account_manages_user_endpoint',
+    _class: RelationshipClass.MANAGES,
+    sourceType: entities.ACCOUNT._type,
+    targetType: entities.DEVICE._type,
+    direction: RelationshipDirection.FORWARD,
   },
 };

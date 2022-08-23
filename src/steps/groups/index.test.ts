@@ -28,6 +28,7 @@ describe('#fetchGroups', () => {
     const context = createMockStepExecutionContext<IntegrationConfig>({
       instanceConfig: integrationConfig,
     });
+
     await createAccount(context);
     await fetchUsers(context);
     await fetchGroups(context);
@@ -46,7 +47,7 @@ describe('#fetchGroups', () => {
         e._class.includes('UserGroup'),
       ),
     ).toMatchGraphObjectSchema({
-      _class: [entities.GROUP._class],
+      _class: entities.GROUP._class,
       schema: {
         additionalProperties: true,
         properties: {
@@ -69,7 +70,7 @@ describe('#fetchGroups', () => {
         e._class.includes('Configuration'),
       ),
     ).toMatchGraphObjectSchema({
-      _class: [entities.GROUP_SETTINGS._class],
+      _class: entities.GROUP_SETTINGS._class,
       schema: {
         additionalProperties: true,
         properties: {

@@ -73,7 +73,7 @@ perform the following actions.
 
    ```text
    https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security, https://www.googleapis.com/auth/apps.groups.settings, https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly,
-   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly, https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly
+   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly, https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly, https://www.googleapis.com/auth/cloud-identity.devices.readonly
    ```
 
 6. Click **Authorize**.
@@ -255,6 +255,14 @@ The following relationships are created:
 | `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
 | `google_user`         | **ASSIGNED**          | `google_role`                  |
 | `google_user`         | **ASSIGNED**          | `google_token`                 |
+
+### Mapped Relationships
+
+The following mapped relationships are created:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` | Direction |
+| --------------------- | --------------------- | --------------------- | --------- |
+| `google_account`      | **MANAGES**           | `*user_endpoint*`     | FORWARD   |
 
 <!--
 ********************************************************************************

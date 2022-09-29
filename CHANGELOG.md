@@ -8,6 +8,13 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.13.8 - 2022-09-28
+
+### Changed
+
+- use latest sdk
+- remove gitleaks
+
 ## 3.13.7 - 2022-06-18
 
 ### Fixed

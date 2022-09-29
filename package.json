@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-google",
-  "version": "3.13.7",
+  "version": "3.13.8",
   "description": "A JupiterOne managed integration for Google",
   "license": "MPL-2.0",
   "main": "src/index.js",
@@ -31,12 +31,12 @@
     "validate:questions:dry": "j1-integration validate-question-file --dry-run"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.14.0"
+    "@jupiterone/integration-sdk-core": "^8.25.1"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.14.0",
-    "@jupiterone/integration-sdk-dev-tools": "^8.14.0",
-    "@jupiterone/integration-sdk-testing": "^8.14.0",
+    "@jupiterone/integration-sdk-core": "^8.25.1",
+    "@jupiterone/integration-sdk-dev-tools": "^8.25.1",
+    "@jupiterone/integration-sdk-testing": "^8.25.1",
     "dotenv": "^10.0.0"
   },
   "dependencies": {

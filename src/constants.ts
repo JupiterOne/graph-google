@@ -1,8 +1,6 @@
 import {
   RelationshipClass,
-  RelationshipDirection,
   StepEntityMetadata,
-  StepMappedRelationshipMetadata,
   StepRelationshipMetadata,
 } from '@jupiterone/integration-sdk-core';
 
@@ -86,7 +84,7 @@ export const entities: Record<
   },
   DEVICE: {
     resourceName: 'Device',
-    _type: 'user_endpoint',
+    _type: 'google_device',
     _class: ['Device'],
   },
 };
@@ -103,7 +101,8 @@ export const relationships: Record<
   | 'ACCOUNT_HAS_GROUP'
   | 'USER_ASSIGNED_TOKEN'
   | 'USER_ASSIGNED_ROLE'
-  | 'TOKEN_ALLOWS_VENDOR',
+  | 'TOKEN_ALLOWS_VENDOR'
+  | 'ACCOUNT_MANAGES_DEVICE',
   StepRelationshipMetadata
 > = {
   ACCOUNT_HAS_USER: {
@@ -179,17 +178,10 @@ export const relationships: Record<
     sourceType: entities.TOKEN._type,
     targetType: 'mapped_entity (class Vendor)',
   },
-};
-
-export const mappedRelationships: Record<
-  'ACCOUNT_MANAGES_DEVICE',
-  StepMappedRelationshipMetadata
-> = {
   ACCOUNT_MANAGES_DEVICE: {
-    _type: 'google_account_manages_user_endpoint',
+    _type: 'google_account_manages_device',
     _class: RelationshipClass.MANAGES,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.DEVICE._type,
-    direction: RelationshipDirection.FORWARD,
   },
 };

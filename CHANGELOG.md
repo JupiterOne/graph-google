@@ -10,11 +10,17 @@ and this project adheres to
 
 ### Added
 
-- The following **new** mapped relationships are now created:
+- The following **new** entities are now created:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` | Direction |
-| --------------------- | --------------------- | --------------------- | --------- |
-| `google_account`      | **MANAGES**           | `*user_endpoint*`     | FORWARD   |
+| Resources | Entity `_type`  | Entity `_class` |
+| --------- | --------------- | --------------- |
+| Device    | `google_device` | `Device`        |
+
+- The following **new** relationships are now created:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
+| --------------------- | --------------------- | --------------------- |
+| `google_account`      | **MANAGES**           | `*google_device*`     |
 
 ## 3.13.8 - 2022-09-28
 

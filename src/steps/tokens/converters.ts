@@ -21,7 +21,7 @@ export function createTokenEntity(data: admin_directory_v1.Schema$Token) {
       assign: {
         _key: getTokenKey(data),
         _type: entities.TOKEN._type,
-        _class: [entities.TOKEN._class],
+        _class: entities.TOKEN._class,
         clientId: data.clientId,
         name: displayName,
         displayName,

@@ -29,7 +29,7 @@ export function createGroupEntity(data: admin_directory_v1.Schema$Group) {
       assign: {
         _key: generateEntityKey(entities.GROUP._type, groupId),
         _type: entities.GROUP._type,
-        _class: [entities.GROUP._class],
+        _class: entities.GROUP._class,
         id: groupId,
         adminCreated: data.adminCreated,
         directMembersCount: data.directMembersCount,
@@ -61,7 +61,7 @@ export function createGroupSettingsEntity(
       assign: {
         _key: generateEntityKey(entities.GROUP_SETTINGS._type, group.id!),
         _type: entities.GROUP_SETTINGS._type,
-        _class: [entities.GROUP_SETTINGS._class],
+        _class: entities.GROUP_SETTINGS._class,
         id: group.id!,
         name: group.email!,
         displayName: group.email!,

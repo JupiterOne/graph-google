@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#fetchUserDevices should collect data 1`] = `
+Object {
+  "collectedEntities": Array [
+    Object {
+      "_class": Array [
+        "Account",
+      ],
+      "_key": "google_account_C03yf7qja",
+      "_rawData": Array [
+        Object {
+          "name": "default",
+          "rawData": Object {
+            "account": Object {
+              "googleAccountId": "C03yf7qja",
+              "name": "Local Integration",
+            },
+            "domainNames": Array [],
+            "primaryDomain": undefined,
+          },
+        },
+      ],
+      "_type": "google_account",
+      "accountId": undefined,
+      "createdOn": undefined,
+      "displayName": "Local Integration",
+      "domains": Array [],
+      "id": "C03yf7qja",
+      "name": "Local Integration",
+      "primaryDomain": undefined,
+      "vendor": "Google",
+    },
+  ],
+  "collectedRelationships": Array [
+    Object {
+      "_class": "MANAGES",
+      "_key": "google_account_C03yf7qja|manages|FORWARD:_type=user_endpoint:deviceId=067b8390-538b-48ef-9b94-d3362f86dd1e",
+      "_mapping": Object {
+        "relationshipDirection": "FORWARD",
+        "skipTargetCreation": false,
+        "sourceEntityKey": "google_account_C03yf7qja",
+        "targetEntity": Object {
+          "_type": "user_endpoint",
+          "deviceId": "067b8390-538b-48ef-9b94-d3362f86dd1e",
+        },
+        "targetFilterKeys": Array [
+          Array [
+            "_type",
+            "deviceId",
+          ],
+        ],
+      },
+      "_type": "google_account_manages_user_endpoint",
+      "displayName": "MANAGES",
+    },
+    Object {
+      "_class": "MANAGES",
+      "_key": "google_account_C03yf7qja|manages|FORWARD:_type=user_endpoint:deviceId=568931cb-ca73-4b4a-a860-248156c222c1",
+      "_mapping": Object {
+        "relationshipDirection": "FORWARD",
+        "skipTargetCreation": false,
+        "sourceEntityKey": "google_account_C03yf7qja",
+        "targetEntity": Object {
+          "_type": "user_endpoint",
+          "deviceId": "568931cb-ca73-4b4a-a860-248156c222c1",
+        },
+        "targetFilterKeys": Array [
+          Array [
+            "_type",
+            "deviceId",
+          ],
+        ],
+      },
+      "_type": "google_account_manages_user_endpoint",
+      "displayName": "MANAGES",
+    },
+    Object {
+      "_class": "MANAGES",
+      "_key": "google_account_C03yf7qja|manages|FORWARD:_type=user_endpoint:deviceId=69199174-891c-46bf-b3f6-f47b19f2fcf2",
+      "_mapping": Object {
+        "relationshipDirection": "FORWARD",
+        "skipTargetCreation": false,
+        "sourceEntityKey": "google_account_C03yf7qja",
+        "targetEntity": Object {
+          "_type": "user_endpoint",
+          "deviceId": "69199174-891c-46bf-b3f6-f47b19f2fcf2",
+        },
+        "targetFilterKeys": Array [
+          Array [
+            "_type",
+            "deviceId",
+          ],
+        ],
+      },
+      "_type": "google_account_manages_user_endpoint",
+      "displayName": "MANAGES",
+    },
+  ],
+  "encounteredTypes": Array [
+    "google_account",
+    "google_account_manages_user_endpoint",
+  ],
+  "numCollectedEntities": 1,
+  "numCollectedRelationships": 3,
+}
+`;

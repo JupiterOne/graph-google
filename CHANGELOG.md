@@ -8,6 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- The following **new** mapped relationships are now created:
+
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type` | Direction |
+| --------------------- | --------------------- | --------------------- | --------- |
+| `google_account`      | **MANAGES**           | `*user_endpoint*`     | FORWARD   |
+
 ## 3.13.8 - 2022-09-28
 
 ### Changed

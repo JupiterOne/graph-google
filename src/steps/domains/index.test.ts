@@ -38,7 +38,7 @@ describe('#fetchDomains', () => {
     }).toMatchSnapshot();
 
     expect(context.jobState.collectedEntities).toMatchGraphObjectSchema({
-      _class: [entities.DOMAIN._class],
+      _class: entities.DOMAIN._class,
       schema: {
         additionalProperties: false,
         properties: {

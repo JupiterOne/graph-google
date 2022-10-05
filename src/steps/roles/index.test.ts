@@ -54,7 +54,7 @@ describe('#fetchRoles', () => {
 
     expect(roleEntities.length).toBeGreaterThan(0);
     expect(roleEntities).toMatchGraphObjectSchema({
-      _class: [entities.ROLE._class],
+      _class: entities.ROLE._class,
       schema: { properties },
     });
 

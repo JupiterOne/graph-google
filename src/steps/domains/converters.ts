@@ -14,7 +14,7 @@ export function createDomainEntity(data: admin_directory_v1.Schema$Domains) {
         // cannot be shorter than 10 chars and domain names can be short...
         _key: generateEntityKey(entities.DOMAIN._type, domainName),
         _type: entities.DOMAIN._type,
-        _class: [entities.DOMAIN._class],
+        _class: entities.DOMAIN._class,
         // The "creationTime" field is a string in UNIX timestamp format
         createdOn: data.creationTime && parseInt(data.creationTime as string),
         id: domainName,

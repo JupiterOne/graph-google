@@ -5,7 +5,7 @@ import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
  * Set of scopes that have been provided since the first release of the
  * integration and expected to be authorized by all integration instances.
  */
-const MINIMUM_ADMIN_DIRECTORY_OAUTH_SCOPES: string[] = [
+export const MINIMUM_ADMIN_DIRECTORY_OAUTH_SCOPES: string[] = [
   'https://www.googleapis.com/auth/admin.directory.user.readonly',
   'https://www.googleapis.com/auth/admin.directory.group.readonly',
   'https://www.googleapis.com/auth/admin.directory.domain.readonly',

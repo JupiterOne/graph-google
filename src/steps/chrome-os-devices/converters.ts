@@ -20,7 +20,7 @@ export function createChromeOSDeviceEntity(
       assign: {
         _key: generateEntityKey(entities.CHROME_OS_DEVICE._type, deviceName),
         _type: entities.CHROME_OS_DEVICE._type,
-        _class: [entities.CHROME_OS_DEVICE._class],
+        _class: entities.CHROME_OS_DEVICE._class,
         id: deviceName,
         category: 'chrome-os-device',
         make: data.model,

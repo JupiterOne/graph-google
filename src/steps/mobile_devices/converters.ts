@@ -26,7 +26,7 @@ export function createMobileDeviceEntity(
       assign: {
         _key: generateEntityKey(entities.MOBILE_DEVICE._type, deviceName),
         _type: entities.MOBILE_DEVICE._type,
-        _class: [entities.MOBILE_DEVICE._class],
+        _class: entities.MOBILE_DEVICE._class,
         id: deviceName,
         name,
         displayName: name,

@@ -228,6 +228,7 @@ The following entities are created:
 | ---------------- | ------------------------- | --------------- |
 | Account          | `google_account`          | `Account`       |
 | Chrome OS Device | `google_chrome_os_device` | `Device`        |
+| Device           | `google_device`           | `Device`        |
 | Domain           | `google_domain`           | `Domain`        |
 | Group            | `google_group`            | `UserGroup`     |
 | Group Settings   | `google_group_settings`   | `Configuration` |
@@ -247,6 +248,7 @@ The following relationships are created:
 | `google_account`      | **HAS**               | `google_role`                  |
 | `google_account`      | **HAS**               | `google_user`                  |
 | `google_account`      | **MANAGES**           | `google_chrome_os_device`      |
+| `google_account`      | **MANAGES**           | `google_device`                |
 | `google_account`      | **MANAGES**           | `google_mobile_device`         |
 | `google_group`        | **HAS**               | `google_group`                 |
 | `google_group`        | **HAS**               | `google_group_settings`        |
@@ -255,14 +257,6 @@ The following relationships are created:
 | `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
 | `google_user`         | **ASSIGNED**          | `google_role`                  |
 | `google_user`         | **ASSIGNED**          | `google_token`                 |
-
-### Mapped Relationships
-
-The following mapped relationships are created:
-
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` | Direction |
-| --------------------- | --------------------- | --------------------- | --------- |
-| `google_account`      | **MANAGES**           | `*user_endpoint*`     | FORWARD   |
 
 <!--
 ********************************************************************************

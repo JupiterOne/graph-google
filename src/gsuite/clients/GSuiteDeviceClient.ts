@@ -37,6 +37,7 @@ export class GSuiteDeviceClient extends GSuiteCloudIdentityClient {
     // If you're using this API for your own organization, use `customers/my_customer`. If you're using
     // this API to manage another organization, use `customers/{customer\}`, where customer is the customer
     // to whom the device belongs.
+
     const customerFilter = 'customers/' + this.accountId;
     // const customerFilter = "customers/my_customer";
 

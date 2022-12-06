@@ -43,8 +43,7 @@ export function getUserEntityKey(userId: UnsafeIdKey) {
 
 export function createUserEntity(data: admin_directory_v1.Schema$User) {
   const userId = data.id as string;
-  const username = getUsername(data);
-  const name = data.name?.fullName || username;
+  const name = data.name?.fullName || data.primaryEmail;
 
   return createIntegrationEntity({
     entityData: {
@@ -58,7 +57,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         emailDomain: getDomain(data),
         name,
         displayName: name,
-        username: getUsername(data),
+        username: data.primaryEmail,
         firstName: data.name?.givenName,
         lastName: data.name?.familyName,
         mfaEnabled: !!data.isEnrolledIn2Sv,
@@ -158,11 +157,6 @@ export function createAccountHasUserRelationship(params: {
     from: params.accountEntity,
     to: params.userEntity,
   });
-}
-
-function getUsername(data: admin_directory_v1.Schema$User): string | null {
-  const usernameMatch = /(.*?)@.*/.exec(data.primaryEmail as string);
-  return usernameMatch && usernameMatch[1];
 }
 
 function last<T>(arr: T[] | undefined): T | undefined {

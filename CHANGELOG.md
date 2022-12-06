@@ -8,6 +8,11 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Stopped parsing the username from emails for the following properties on the
+  `google_user` entity - `username`, `name` and `displayName`.
+
 ## 3.14.0 - 2022-10-06
 
 ### Added

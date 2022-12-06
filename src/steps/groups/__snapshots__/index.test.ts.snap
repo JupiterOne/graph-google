@@ -127,7 +127,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "adam.williams",
+      "username": "adam.williams@jupiterone.dev",
     },
     Object {
       "_class": Array [
@@ -225,7 +225,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "austin.kelleher",
+      "username": "austin.kelleher@jupiterone.dev",
     },
     Object {
       "_class": Array [
@@ -333,7 +333,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "development",
+      "username": "development@jupiterone.dev",
       "workEmail": "austin.kelleher@jupiterone.com",
       "workPhone": "5859430080",
     },
@@ -431,7 +431,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "integration-development",
+      "username": "integration-development@jupiterone.dev",
     },
     Object {
       "_class": Array [
@@ -531,7 +531,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "nick.dowmon",
+      "username": "nick.dowmon@jupiterone.dev",
       "workEmail": "nick.dowmon@jupiterone.com",
     },
     Object {
@@ -632,7 +632,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "solutions.engineers",
+      "username": "solutions.engineers@jupiterone.dev",
       "workEmail": "eric.ayotte@jupiterone.com",
     },
     Object {
@@ -729,7 +729,7 @@ Object {
       "suspended": false,
       "suspensionReason": undefined,
       "thumbnailPhotoUrl": undefined,
-      "username": "system",
+      "username": "system@jupiterone.dev",
     },
     Object {
       "_class": Array [

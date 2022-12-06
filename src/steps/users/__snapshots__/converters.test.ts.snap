@@ -128,7 +128,7 @@ Object {
   "suspensionReason": undefined,
   "thumbnailPhotoUrl": undefined,
   "title": "CMO",
-  "username": "john.doe",
+  "username": "john.doe@jupiterone.io",
   "workEmail": "john.doe@jupiterone.io",
 }
 `;

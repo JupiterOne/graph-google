@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.15.0 - 2022-12-20
+
 ### Changed
 
 - Stopped parsing the username from emails for the following properties on the

@@ -30,9 +30,10 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
 
     try {
       const response = await client.groups.get({
-        groupUniqueId: groupEmailAddress,
+        groupUniqueId: encodeURIComponent(groupEmailAddress),
         alt: 'json',
       });
+
       settings = response.data;
     } catch (err) {
       if ([400, 404].includes(err.code)) {

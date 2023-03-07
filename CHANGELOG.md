@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.16.0 - 2023-03-07
+
 ### Added
 
 - New properties added to resources:

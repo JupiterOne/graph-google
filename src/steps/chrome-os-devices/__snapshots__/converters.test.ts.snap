@@ -39,6 +39,12 @@ Object {
   "serial": undefined,
   "status": "APPROVED",
   "supportEndDate": undefined,
+  "tpmFamily": undefined,
+  "tpmFirmwareVersion": undefined,
+  "tpmManufacturer": undefined,
+  "tpmModel": undefined,
+  "tpmSpecLevel": undefined,
+  "tpmVendorId": undefined,
   "version": "Android 4.2.2",
 }
 `;
@@ -131,6 +137,12 @@ Object {
   "serial": "3WAZ9FGNC00030E",
   "status": "ACTIVE",
   "supportEndDate": undefined,
+  "tpmFamily": "322e3000",
+  "tpmFirmwareVersion": "9d5b602704bc089b",
+  "tpmManufacturer": "43524f53",
+  "tpmModel": "1",
+  "tpmSpecLevel": "74",
+  "tpmVendorId": "xCG fTPM",
   "version": "89.0.4389.95",
 }
 `;

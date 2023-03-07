@@ -36,6 +36,12 @@ export function createChromeOSDeviceEntity(
         lastSync: parseTimePropertyValue(data.lastSync),
         lastEnrollementTime: parseTimePropertyValue(data.lastEnrollmentTime),
         bootMode: data.bootMode,
+        tpmFamily: data.tpmVersionInfo?.family,
+        tpmFirmwareVersion: data.tpmVersionInfo?.firmwareVersion,
+        tpmManufacturer: data.tpmVersionInfo?.manufacturer,
+        tpmSpecLevel: data.tpmVersionInfo?.specLevel,
+        tpmModel: data.tpmVersionInfo?.tpmModel,
+        tpmVendorId: data.tpmVersionInfo?.vendorSpecific,
       },
     },
   });

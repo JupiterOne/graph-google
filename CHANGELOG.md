@@ -8,6 +8,19 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- New properties added to resources:
+
+  | Entity                    | Properties           |
+  | ------------------------- | -------------------- |
+  | `google_chrome_os_device` | `tpmFamily`          |
+  | `google_chrome_os_device` | `tpmFirmwareVersion` |
+  | `google_chrome_os_device` | `tpmManufacturer`    |
+  | `google_chrome_os_device` | `tpmSpecLevel`       |
+  | `google_chrome_os_device` | `tpmModel`           |
+  | `google_chrome_os_device` | `tpmVendorId`        |
+
 ## 3.15.0 - 2022-12-20
 
 ### Changed

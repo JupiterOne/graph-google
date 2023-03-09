@@ -13,7 +13,7 @@ function gzipStringToUtf8(str: string) {
   const hexChunks = JSON.parse(str) as string[];
 
   hexChunks.forEach((chunk) => {
-    const chunkBuffer = Buffer.from(chunk, 'hex');
+    const chunkBuffer = Buffer.from(chunk, 'base64');
     chunkBuffers.push(chunkBuffer);
   });
 
@@ -41,6 +41,14 @@ export function setupIntegrationRecording({
       redact(entry);
     },
     ...overrides,
+    options: {
+      matchRequestsBy: {
+        headers: false,
+        body: false,
+        order: false,
+      },
+      ...overrides.options,
+    },
   });
 }
 
@@ -82,6 +90,7 @@ function redact(entry): void {
     const parsedResponseText = JSON.parse(
       responseText.replace(/\r?\n|\r/g, ''),
     );
+    entry.response.content.encoding = undefined;
     entry.response.content.text = JSON.stringify(parsedResponseText);
   }
 }

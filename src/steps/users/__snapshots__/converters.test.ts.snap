@@ -15,6 +15,9 @@ Object {
         "changePasswordAtNextLogin": false,
         "creationTime": "2020-08-13T19:03:11.000Z",
         "customSchemas": Object {
+          "Github": Object {
+            "githubUsername": "test123",
+          },
           "SSO": Object {
             "role": Array [
               Object {
@@ -89,7 +92,7 @@ Object {
   "costCenter": "01A",
   "createdOn": 1597345391000,
   "creationTime": 1597345391000,
-  "customSchemas": "{\\"SSO\\":{\\"role\\":[{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}]}}",
+  "customSchemas": "{\\"SSO\\":{\\"role\\":[{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}]},\\"Github\\":{\\"githubUsername\\":\\"test123\\"}}",
   "customType": "",
   "customerId": "abc123",
   "deletedOn": undefined,
@@ -103,6 +106,7 @@ Object {
   ],
   "employeeType": "Full-time",
   "firstName": "John",
+  "githubUsername": "test123",
   "hashFunction": undefined,
   "id": "123456789",
   "includeInGlobalAddressList": true,

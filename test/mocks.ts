@@ -75,6 +75,9 @@ export function getMockUser(
           },
         ],
       },
+      Github: {
+        githubUsername: 'test123',
+      },
     },
     ...partial,
   };

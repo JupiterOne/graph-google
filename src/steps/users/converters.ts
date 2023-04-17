@@ -45,8 +45,6 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
   const userId = data.id as string;
   const name = data.name?.fullName || data.primaryEmail;
 
-  console.log({ msg: 'SCHEMA TEST', customSchema: data.customSchemas });
-
   return createIntegrationEntity({
     entityData: {
       source: data,

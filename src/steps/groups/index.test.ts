@@ -29,7 +29,6 @@ describe('#fetchGroups', () => {
       instanceConfig: integrationConfig,
     });
 
-    console.log({ context });
     await createAccount(context);
     await fetchUsers(context);
     await fetchGroups(context);

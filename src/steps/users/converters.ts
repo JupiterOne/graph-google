@@ -93,6 +93,10 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         // Copy the entire stringified value of `customSchemas` onto the entity,
         // so that it can be queried using a `contains` filter.
         customSchemas: data.customSchemas && JSON.stringify(data.customSchemas),
+        githubUsername:
+          data.customSchemas &&
+          data.customSchemas['Github'] &&
+          data.customSchemas['Github']['githubUsername'],
         ...getAddresses(data),
         ...getPhones(data),
         ...getRelations(data),

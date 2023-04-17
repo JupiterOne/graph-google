@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.16.1 - 2023-04-17
+
+### Changed
+
+- Modified the event log names to values provided by the SDK.
+
 ## 3.16.0 - 2023-03-07
 
 ### Added

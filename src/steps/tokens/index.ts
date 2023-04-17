@@ -4,6 +4,7 @@ import {
   createMappedRelationship,
   RelationshipClass,
   RelationshipDirection,
+  IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, Steps } from '../../constants';
@@ -77,7 +78,7 @@ export async function fetchTokens(
     if (err instanceof IntegrationProviderAuthorizationError) {
       context.logger.info({ err }, 'Could not ingest token entities');
       context.logger.publishEvent({
-        name: 'missing_scope',
+        name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest token entities. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
         )})`,

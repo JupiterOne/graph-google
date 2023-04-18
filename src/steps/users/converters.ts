@@ -9,6 +9,7 @@ import {
 } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
+import camelCase from 'lodash/camelCase';
 
 interface GSuiteDataCollection {
   type: string;
@@ -18,6 +19,67 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   collection: T[];
   suffix: string;
   valueMethod: string;
+}
+
+const TIME_PROPERTY_NAMES = /^\w+((T|_t)ime|(O|_o)n|(A|_a)t|(D|_d)ate)$/;
+function isTimeProperty(property: string): boolean {
+  return TIME_PROPERTY_NAMES.test(property);
+}
+
+type ConvertPropertiesOptions = {
+  /**
+   * Parse properties that are named with date/time-like suffixes into number of
+   * milliseconds since epoch (UNIX timestamp).
+   */
+  parseTime?: boolean;
+};
+
+export function convertCustomSchemas(
+  object: any = {},
+  options: ConvertPropertiesOptions = {},
+  prevKey: string = '',
+  converted = {},
+) {
+  for (const [key, value] of Object.entries(object)) {
+    const newKey =
+      prevKey === '' ? camelCase(key) : `${prevKey}.${camelCase(key)}`;
+
+    switch (typeof value) {
+      case 'string':
+        converted[newKey] =
+          isTimeProperty(key) && options.parseTime
+            ? parseTimePropertyValue(value) || value
+            : value;
+        continue;
+      case 'object':
+        if (!value) {
+          converted[newKey] = value;
+          continue;
+        }
+        if (Array.isArray(value)) {
+          if (value.every((v) => typeof v !== 'object' || !v)) {
+            converted[newKey] = value;
+            continue;
+          }
+
+          converted[newKey] = value.map(
+            (v) => typeof v === 'object' && JSON.stringify(v),
+          );
+          continue;
+        }
+
+        converted = {
+          ...converted,
+          ...convertCustomSchemas(value, options, newKey, converted),
+        };
+        break;
+      default:
+        converted[newKey] = value;
+        break;
+    }
+  }
+
+  return converted;
 }
 
 export function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
@@ -93,10 +155,6 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         // Copy the entire stringified value of `customSchemas` onto the entity,
         // so that it can be queried using a `contains` filter.
         customSchemas: data.customSchemas && JSON.stringify(data.customSchemas),
-        githubUsername:
-          data.customSchemas &&
-          data.customSchemas['Github'] &&
-          data.customSchemas['Github']['githubUsername'],
         ...getAddresses(data),
         ...getPhones(data),
         ...getRelations(data),
@@ -106,6 +164,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         ...getEmails(data),
         ...getManagementInfo(data),
         ...getEmployeeInfo(data),
+        ...convertCustomSchemas(data.customSchemas),
       },
     },
   });

@@ -106,7 +106,7 @@ Object {
   ],
   "employeeType": "Full-time",
   "firstName": "John",
-  "githubUsername": "test123",
+  "github.githubUsername": "test123",
   "hashFunction": undefined,
   "id": "123456789",
   "includeInGlobalAddressList": true,
@@ -128,6 +128,9 @@ Object {
   "primaryEmail": "john.doe@jupiterone.io",
   "recoveryEmail": "john.doe.recovery@jupiterone.io",
   "recoveryPhone": "+19999999999",
+  "sso.role": Array [
+    "{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}",
+  ],
   "suspended": false,
   "suspensionReason": undefined,
   "thumbnailPhotoUrl": undefined,

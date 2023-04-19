@@ -93,6 +93,10 @@ Object {
   "createdOn": 1597345391000,
   "creationTime": 1597345391000,
   "customSchemas": "{\\"SSO\\":{\\"role\\":[{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}]},\\"Github\\":{\\"githubUsername\\":\\"test123\\"}}",
+  "customSchemas.Github.githubUsername": "test123",
+  "customSchemas.SSO.role": Array [
+    "{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}",
+  ],
   "customType": "",
   "customerId": "abc123",
   "deletedOn": undefined,
@@ -106,7 +110,6 @@ Object {
   ],
   "employeeType": "Full-time",
   "firstName": "John",
-  "githubUsername": "test123",
   "hashFunction": undefined,
   "id": "123456789",
   "includeInGlobalAddressList": true,

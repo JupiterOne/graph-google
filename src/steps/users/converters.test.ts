@@ -68,7 +68,7 @@ describe('#convertCustomSchemas', () => {
     array: ['a', 'b', 'c'],
     number: 123,
     aGoodTime: '2019-04-23T18:06:05Z',
-    anotherTime: '2019-04-23T18:06:05Z',
+    another_time: '2019-04-23T18:06:05Z',
     someDate: '2019-04-23T18:06:05Z',
     occurredOn: '2019-04-23T18:06:05Z',
     updatedAt: '2019-04-23T18:06:05Z',
@@ -89,7 +89,27 @@ describe('#convertCustomSchemas', () => {
     aNullTime: null,
   };
 
+  const originalWithoutPrefix: any = {
+    one: 'i',
+    two: 'am',
+    three: {
+      four: 'test',
+    },
+  };
+
+  const convertedWithPrefix: any = {
+    'test.one': 'i',
+    'test.two': 'am',
+    'test.three.four': 'test',
+  };
+
   test('default options', () => {
     expect(convertCustomSchemas(original)).toEqual(converted);
+  });
+
+  test('expected prefix', () => {
+    expect(convertCustomSchemas(originalWithoutPrefix, 'test')).toEqual(
+      convertedWithPrefix,
+    );
   });
 });

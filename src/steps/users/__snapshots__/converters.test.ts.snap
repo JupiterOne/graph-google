@@ -2,6 +2,10 @@
 
 exports[`#createUserEntity should convert to entity 1`] = `
 Object {
+  "Github.githubUsername": "test123",
+  "SSO.role": Array [
+    "{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}",
+  ],
   "_class": Array [
     "User",
   ],
@@ -106,7 +110,6 @@ Object {
   ],
   "employeeType": "Full-time",
   "firstName": "John",
-  "github.githubUsername": "test123",
   "hashFunction": undefined,
   "id": "123456789",
   "includeInGlobalAddressList": true,
@@ -128,9 +131,6 @@ Object {
   "primaryEmail": "john.doe@jupiterone.io",
   "recoveryEmail": "john.doe.recovery@jupiterone.io",
   "recoveryPhone": "+19999999999",
-  "sso.role": Array [
-    "{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}",
-  ],
   "suspended": false,
   "suspensionReason": undefined,
   "thumbnailPhotoUrl": undefined,

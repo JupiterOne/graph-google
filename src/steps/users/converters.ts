@@ -9,7 +9,6 @@ import {
 } from '@jupiterone/integration-sdk-core';
 import { admin_directory_v1 } from 'googleapis';
 import { entities } from '../../constants';
-import camelCase from 'lodash/camelCase';
 
 interface GSuiteDataCollection {
   type: string;
@@ -21,14 +20,13 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   valueMethod: string;
 }
 
-export function convertCustomSchemas(object: any, prevKey?: string) {
+export function convertCustomSchemas(object: any, prefix?: string) {
   let converted: { [k: string]: any } = {};
 
   if (!object) return converted;
 
   for (const [key, value] of Object.entries(object)) {
-    const newKey =
-      prevKey === undefined ? camelCase(key) : `${prevKey}.${camelCase(key)}`;
+    const newKey = prefix === undefined ? key : `${prefix}.${key}`;
 
     switch (typeof value) {
       case 'object':
@@ -144,7 +142,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         ...getEmails(data),
         ...getManagementInfo(data),
         ...getEmployeeInfo(data),
-        ...convertCustomSchemas(data.customSchemas),
+        ...convertCustomSchemas(data.customSchemas, 'customSchemas'),
       },
     },
   });

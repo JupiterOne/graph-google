@@ -21,7 +21,7 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   valueMethod: string;
 }
 
-export function convertCustomSchemas(object: any, prevKey: string) {
+export function convertCustomSchemas(object: any, prevKey?: string) {
   let converted: { [k: string]: any } = {};
 
   if (!object) return converted;

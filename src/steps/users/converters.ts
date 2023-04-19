@@ -21,12 +21,14 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   valueMethod: string;
 }
 
-export function convertCustomSchemas(object: any, prevKey: string = '') {
-  var converted: { [k: string]: any } = {};
+export function convertCustomSchemas(object: any, prevKey: string) {
+  let converted: { [k: string]: any } = {};
+
+  if (!object) return converted;
 
   for (const [key, value] of Object.entries(object)) {
     const newKey =
-      prevKey === '' ? camelCase(key) : `${prevKey}.${camelCase(key)}`;
+      prevKey === undefined ? camelCase(key) : `${prevKey}.${camelCase(key)}`;
 
     switch (typeof value) {
       case 'object':

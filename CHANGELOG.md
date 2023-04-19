@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 3.16.2 - 2023-04-17
+
+## Added
+
+- Elevated customSchema `githubUsername` to the `google_user` entity.
+
 ## 3.16.0 - 2023-03-07
 
 ### Added

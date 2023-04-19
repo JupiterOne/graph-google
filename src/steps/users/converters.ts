@@ -21,36 +21,14 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   valueMethod: string;
 }
 
-const TIME_PROPERTY_NAMES = /^\w+((T|_t)ime|(O|_o)n|(A|_a)t|(D|_d)ate)$/;
-function isTimeProperty(property: string): boolean {
-  return TIME_PROPERTY_NAMES.test(property);
-}
+export function convertCustomSchemas(object: any, prevKey: string = '') {
+  var converted: { [k: string]: any } = {};
 
-type ConvertPropertiesOptions = {
-  /**
-   * Parse properties that are named with date/time-like suffixes into number of
-   * milliseconds since epoch (UNIX timestamp).
-   */
-  parseTime?: boolean;
-};
-
-export function convertCustomSchemas(
-  object: any = {},
-  options: ConvertPropertiesOptions = {},
-  prevKey: string = '',
-  converted = {},
-) {
   for (const [key, value] of Object.entries(object)) {
     const newKey =
       prevKey === '' ? camelCase(key) : `${prevKey}.${camelCase(key)}`;
 
     switch (typeof value) {
-      case 'string':
-        converted[newKey] =
-          isTimeProperty(key) && options.parseTime
-            ? parseTimePropertyValue(value) || value
-            : value;
-        continue;
       case 'object':
         if (!value) {
           converted[newKey] = value;
@@ -70,7 +48,7 @@ export function convertCustomSchemas(
 
         converted = {
           ...converted,
-          ...convertCustomSchemas(value, options, newKey, converted),
+          ...convertCustomSchemas(value, newKey),
         };
         break;
       default:

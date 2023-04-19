@@ -92,15 +92,4 @@ describe('#convertCustomSchemas', () => {
   test('default options', () => {
     expect(convertCustomSchemas(original)).toEqual(converted);
   });
-
-  test('parseTime', () => {
-    expect(convertCustomSchemas(original, { parseTime: true })).toEqual({
-      ...converted,
-      aGoodTime: 1556042765000,
-      anotherTime: 1556042765000,
-      someDate: 1556042765000,
-      occurredOn: 1556042765000,
-      updatedAt: 1556042765000,
-    });
-  });
 });

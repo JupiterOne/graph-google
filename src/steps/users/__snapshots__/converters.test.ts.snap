@@ -2,10 +2,6 @@
 
 exports[`#createUserEntity should convert to entity 1`] = `
 Object {
-  "Github.githubUsername": "test123",
-  "SSO.role": Array [
-    "{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}",
-  ],
   "_class": Array [
     "User",
   ],
@@ -97,6 +93,10 @@ Object {
   "createdOn": 1597345391000,
   "creationTime": 1597345391000,
   "customSchemas": "{\\"SSO\\":{\\"role\\":[{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}]},\\"Github\\":{\\"githubUsername\\":\\"test123\\"}}",
+  "customSchemas.Github.githubUsername": "test123",
+  "customSchemas.SSO.role": Array [
+    "{\\"type\\":\\"work\\",\\"value\\":\\"arn:aws:iam::123456789:role/Developer,arn:aws:iam::123456789:saml-provider/gsuite\\"}",
+  ],
   "customType": "",
   "customerId": "abc123",
   "deletedOn": undefined,

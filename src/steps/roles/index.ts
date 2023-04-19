@@ -41,7 +41,7 @@ export async function fetchRoles(
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
       context.logger.info({ err }, 'Could not ingest roles');
-      context.logger.publishEvent({
+      context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest role data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',

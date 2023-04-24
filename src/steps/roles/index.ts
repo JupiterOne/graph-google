@@ -3,6 +3,7 @@ import {
   IntegrationMissingKeyError,
   IntegrationProviderAuthorizationError,
   IntegrationStep,
+  IntegrationWarnEventName,
   RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
@@ -40,8 +41,8 @@ export async function fetchRoles(
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
       context.logger.info({ err }, 'Could not ingest roles');
-      context.logger.publishEvent({
-        name: 'missing_scope',
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest role data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
         )}).  Additionally, Admin Email provided in configuration must be a Super Admin.`,

@@ -3,6 +3,7 @@ import {
   IntegrationStep,
   IntegrationProviderAuthorizationError,
   RelationshipClass,
+  IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { relationships, Steps } from '../../constants';
@@ -64,8 +65,8 @@ export async function fetchRoleAssignments(
   } catch (err) {
     if (err instanceof IntegrationProviderAuthorizationError) {
       context.logger.info({ err }, 'Could not ingest role assignments');
-      context.logger.publishEvent({
-        name: 'missing_scope',
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest role assignment data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
         )}).  Additionally, Admin Email provided in configuration must be a Super Admin.`,

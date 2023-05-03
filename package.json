@@ -37,11 +37,29 @@
     "@jupiterone/integration-sdk-core": "^8.25.1",
     "@jupiterone/integration-sdk-dev-tools": "^8.25.1",
     "@jupiterone/integration-sdk-testing": "^8.25.1",
+    "auto": "^10.37.4",
     "dotenv": "^10.0.0"
   },
   "dependencies": {
     "@jupiterone/vendor-stack": "^2.0.0",
     "gaxios": "^4.3.2",
     "googleapis": "^92.0.0"
+  },
+  "auto": {
+    "plugins": [
+      [
+        "npm",
+        {
+          "setRcToken": false,
+          "publishFolder": "."
+        }
+      ],
+      "released"
+    ],
+    "onlyPublishWithReleaseLabel": true,
+    "shipit": {
+      "noChangelog": true,
+      "prerelease": false
+    }
   }
 }

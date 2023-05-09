@@ -1,16 +1,13 @@
-name: J1 Integration deployment google PR
+name: J1 Integration deployment
+
 on:
   release:
     types:
       - published
 
 jobs:
-  integration-google:
-    name: Release integration-google
+  j1-integration-deployment:
     runs-on: ubuntu-latest
-    outputs:
-      pull-request-url:
-        ${{ steps.create-pull-request.outputs.pull-request-url }}
     steps:
       - name: Get version number
         id: get-version-number
@@ -20,61 +17,13 @@ jobs:
             const tagName = context.payload.release.tag_name
             const versionNumber = tagName.replace("v", "")
             core.setOutput('versionNumber', versionNumber)
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - name: Clone integration-google repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.AUTO_GITHUB_PAT_TOKEN }}
-          repository: JupiterOne/integration-google
-          ref: main
-          path: './integration-google'
-      - name: Set git config
-        shell: bash
-        working-directory: ./integration-google
-        run: |
-          git config --local user.email "internal-automation.bot@jupiterone.com"
-          git config --local user.name "j1-internal-automation"
-      - name: Clean up and create branch
-        shell: bash
-        working-directory: ./integration-google
-        run: |
-          git reset --hard
-          git checkout -b deploy-graph-google-${{ steps.get-version-number.outputs.versionNumber }}
-          git push origin deploy-graph-google-${{ steps.get-version-number.outputs.versionNumber }}
-      - name: Bump version in package.json and commit changes
-        shell: bash
-        working-directory: ./integration-google
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-          yarn install --ignore-scripts
-          yarn upgrade @jupiterone/graph-google@^${{ steps.get-version-number.outputs.versionNumber }}
-          git add .
-          git commit -m "bump graph-google to version ${{ steps.get-version-number.outputs.versionNumber }}"
-      - name: Create Pull Request
+      - name: Bump integration deployment version
         id: create-pull-request
-        uses: peter-evans/create-pull-request@v4
+        uses: JupiterOne/integration-github-actions/create-integration-deployment@v1.2.2
         with:
-          token: ${{ secrets.AUTO_GITHUB_PAT_TOKEN }}
-          path: ./integration-google
-          branch:
-            deploy-graph-google-${{
-            steps.get-version-number.outputs.versionNumber }}
-          base: main
-          title:
-            '[Github Action] - Deploy graph-google v${{
-            steps.get-version-number.outputs.versionNumber }}'
-          body: |
-            ## Summary
-            ${{ github.event.release.body }}
-      - name: Enable Automerge
-        if:
-          steps.create-pull-request.outputs.pull-request-operation == 'created'
-        run:
-          gh pr merge --merge --auto "${{
-          steps.create-pull-request.outputs.pull-request-url }}"
-        env:
-          GH_TOKEN: ${{ secrets.AUTO_GITHUB_PAT_TOKEN }}
+          integrationName: google-workspace
+          graphProjectName: google
+          releaseNotes: ${{ github.event.release.body }}
+          version: ${{ steps.get-version-number.outputs.versionNumber }}
+          githubToken: ${{ secrets.AUTO_GITHUB_PAT_TOKEN }}
+          npmAuthToken: ${{ secrets.NPM_AUTH_TOKEN }}

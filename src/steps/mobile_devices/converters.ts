@@ -19,6 +19,9 @@ export function createMobileDeviceEntity(
   const deviceName = data.deviceId as string;
   const name = firstOrUndefined(data.name);
 
+  const serialNumber = data.serialNumber;
+  const lastSeenOn = parseTimePropertyValue(data.lastSync);
+
   return createIntegrationEntity({
     entityData: {
       // The raw data on mobile devices can be very large, so we've removed it.
@@ -33,7 +36,8 @@ export function createMobileDeviceEntity(
         category: 'mobile',
         make: data.model,
         model: data.model,
-        serial: data.serialNumber,
+        serial: serialNumber,
+        serialNumber,
         adbStatus: data.adbStatus,
         brand: data.brand,
         deviceCompromisedStatus: data.deviceCompromisedStatus,
@@ -44,7 +48,8 @@ export function createMobileDeviceEntity(
         hardware: data.hardware,
         hardwareId: data.hardwareId,
         imei: data.imei,
-        lastSyncOn: parseTimePropertyValue(data.lastSync),
+        lastSyncOn: lastSeenOn,
+        lastSeenOn,
         manufacturer: data.manufacturer,
         ownerName: name,
         os: data.os,

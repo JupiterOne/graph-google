@@ -28,7 +28,7 @@ export async function fetchChromeOSDevices(
     await client.iterateChromeOSDevices(async (device) => {
       const deviceEntity = createChromeOSDeviceEntity(device);
 
-      if (await jobState.hasKey(deviceEntity._key)) {
+      if (jobState.hasKey(deviceEntity._key)) {
         logger.info(
           { _key: deviceEntity._key },
           'Duplicate device entity _key found',

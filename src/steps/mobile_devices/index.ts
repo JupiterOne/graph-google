@@ -28,7 +28,7 @@ export async function fetchMobileDevices(
     await client.iterateMobileDevices(async (device) => {
       const deviceEntity = createMobileDeviceEntity(device);
 
-      if (await jobState.hasKey(deviceEntity._key)) {
+      if (jobState.hasKey(deviceEntity._key)) {
         logger.info(
           { _key: deviceEntity._key },
           'Duplicate device entity _key found',

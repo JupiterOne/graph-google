@@ -8,6 +8,16 @@ and this project adheres to
 
 ## [Unreleased]
 
+# 3.17.0 - 2023-05-12
+
+- New properties added to entities:
+
+  | Entity                    | Properties                                 |
+  | ------------------------- | ------------------------------------------ |
+  | `google_device`           | `macAddress`, `serialNumber`, `lastSeenOn` |
+  | `google_mobile_device`    | `serialNumber`, `lastSeenOn`               |
+  | `google_chrome_os_device` | `serialNumber`, `lastSeenOn`               |
+
 # 3.17.0 - 2023-05-03
 
 ## Added

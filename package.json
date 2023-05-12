@@ -31,7 +31,7 @@
     "validate:questions:dry": "j1-integration validate-question-file --dry-run"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.25.1"
+    "@jupiterone/integration-sdk-core": "^9.4.0"
   },
   "devDependencies": {
     "@jupiterone/integration-sdk-core": "^9.4.0",
@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "@jupiterone/vendor-stack": "^2.0.0",
-    "gaxios": "^4.3.2",
+    "@types/node": "^18",
+    "gaxios": "^5.1.0",
     "googleapis": "^92.0.0"
   },
   "auto": {

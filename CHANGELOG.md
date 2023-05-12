@@ -8,7 +8,9 @@ and this project adheres to
 
 ## [Unreleased]
 
-# 3.17.0 - 2023-05-12
+# 4.0.0 - 2023-05-12
+
+- Upgrade to Node.js 18
 
 - New properties added to entities:
 

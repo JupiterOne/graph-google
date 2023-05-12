@@ -31,18 +31,18 @@
     "validate:questions:dry": "j1-integration validate-question-file --dry-run"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.25.1"
+    "@jupiterone/integration-sdk-core": "^9.4.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.25.1",
-    "@jupiterone/integration-sdk-dev-tools": "^8.25.1",
-    "@jupiterone/integration-sdk-testing": "^8.25.1",
-    "auto": "^10.37.4",
-    "dotenv": "^10.0.0"
+    "@jupiterone/integration-sdk-core": "^9.4.0",
+    "@jupiterone/integration-sdk-dev-tools": "^9.4.0",
+    "@jupiterone/integration-sdk-testing": "^9.4.0",
+    "auto": "^10.46.0"
   },
   "dependencies": {
     "@jupiterone/vendor-stack": "^2.0.0",
-    "gaxios": "^4.3.2",
+    "@types/node": "^18",
+    "gaxios": "^5.1.0",
     "googleapis": "^92.0.0"
   },
   "auto": {

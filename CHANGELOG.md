@@ -1,3 +1,15 @@
+# v4.0.2 (Mon May 15 2023)
+
+#### 🐛 Bug Fix
+
+- Upgrade `@jupiterone/vendor-stack` [#197](https://github.com/JupiterOne/graph-google/pull/197) ([@austinkelleher](https://github.com/austinkelleher))
+
+#### Authors: 1
+
+- Austin Kelleher ([@austinkelleher](https://github.com/austinkelleher))
+
+---
+
 # v4.0.1 (Mon May 15 2023)
 
 #### 🐛 Bug Fix

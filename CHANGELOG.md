@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+# 4.0.1 - 2023-05-12
+
+- Update scripts in `package.json` to properly publish package
+
 # 4.0.0 - 2023-05-12
 
 - Upgrade to Node.js 18

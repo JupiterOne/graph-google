@@ -1764,10 +1764,10 @@
     deepmerge "^4.2.2"
     lodash "^4.17.15"
 
-"@jupiterone/vendor-stack@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/vendor-stack/-/vendor-stack-2.0.0.tgz#922ed40b680f625914d03e1352dd2a5e29aa93ec"
-  integrity sha512-T3LjX9yEhzqbcQ1Ke6P/B71Nb6pwVVgrgwGxe2GGe+16K/n8a4wSNbamm9TYD5lxxK6cyDrT5tIQvZbQ/PNjNg==
+"@jupiterone/vendor-stack@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@jupiterone/vendor-stack/-/vendor-stack-2.0.4.tgz#e7eaf1bd0f59961f062308efd6126d263dfacc43"
+  integrity sha512-dbIK91cfLYBsbdQV7hjXNdpH0uQWGk2n3DGtkRmuHHbZ9wEnYF5kppPpdXzZ3O8r76HXKpa6goO/7YuKSYozOg==
 
 "@lifeomic/alpha@^5.1.1":
   version "5.1.1"

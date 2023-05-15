@@ -2,7 +2,9 @@
 
 #### 🐛 Bug Fix
 
-- Update scripts in `package.json` to properly publish package [#196](https://github.com/JupiterOne/graph-google/pull/196) ([@austinkelleher](https://github.com/austinkelleher))
+- Update scripts in `package.json` to properly publish package
+  [#196](https://github.com/JupiterOne/graph-google/pull/196)
+  ([@austinkelleher](https://github.com/austinkelleher))
 
 #### Authors: 1
 
@@ -158,8 +160,8 @@ and this project adheres to
      `https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly`
   4. Click **Account** > **Admin roles**.
   5. Click the JupiterOne System role, and click Privileges
-  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
-     Devices and Settings**
+  6. Under **Services**, **Mobile Device Management**, enable **Manage Devices
+     and Settings**
 
 - New relationship added:
 
@@ -225,8 +227,8 @@ and this project adheres to
      `https://www.googleapis.com/auth/admin.directory.device.mobile.readonly`
   4. Click **Account** > **Admin roles**.
   5. Click the JupiterOne System role, and click Privileges
-  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
-     Devices and Settings**
+  6. Under **Services**, **Mobile Device Management**, enable **Manage Devices
+     and Settings**
 
 - New relationship added:
 
@@ -320,7 +322,7 @@ and this project adheres to
 
 ### Fixed
 
-- If a `400` is recieved from `GroupSettings` endpoint in `getGroupSettings`, it
+- If a `400` is received from `GroupSettings` endpoint in `getGroupSettings`, it
   is because of an invalid email. This was throwing an error and causing step
   failure. `getGroupSettings` now catches the error and logs if there is a
   `400`, but skips over it to continue ingestion.

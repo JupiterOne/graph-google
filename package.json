@@ -44,7 +44,7 @@
     "auto": "^10.46.0"
   },
   "dependencies": {
-    "@jupiterone/vendor-stack": "^2.0.0",
+    "@jupiterone/vendor-stack": "^2.0.4",
     "@types/node": "^18",
     "gaxios": "^5.1.0",
     "googleapis": "^92.0.0"

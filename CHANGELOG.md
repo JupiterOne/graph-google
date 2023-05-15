@@ -1,3 +1,15 @@
+# v4.0.1 (Mon May 15 2023)
+
+#### 🐛 Bug Fix
+
+- Update scripts in `package.json` to properly publish package [#196](https://github.com/JupiterOne/graph-google/pull/196) ([@austinkelleher](https://github.com/austinkelleher))
+
+#### Authors: 1
+
+- Austin Kelleher ([@austinkelleher](https://github.com/austinkelleher))
+
+---
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

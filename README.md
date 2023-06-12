@@ -5,7 +5,7 @@
 ### Prerequisites
 
 You must have Node.JS installed to run this project. If you don't already have
-it installed, you can can download the installer
+it installed, you can download the installer
 [here](https://nodejs.org/en/download/). You can alternatively install Node.JS
 using a version manager like [fnm](https://github.com/Schniz/fnm) or
 [nvm](https://github.com/nvm-sh/nvm).

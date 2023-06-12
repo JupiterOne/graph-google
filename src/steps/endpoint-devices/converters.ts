@@ -26,6 +26,7 @@ export function createDeviceEntity(
         displayName: data.name!,
         createdOn: parseTimePropertyValue(data.createTime),
         lastSyncedOn: lastSeenOn,
+        lastSeenOn,
         ownerType: data.ownerType,
         model: data.model || '',
         osVersion: data.osVersion,

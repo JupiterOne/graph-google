@@ -1,3 +1,17 @@
+# v4.0.3 (Wed Jun 14 2023)
+
+#### 🐛 Bug Fix
+
+- DEVICE-115 - Add lastSeenOn to Devices [#199](https://github.com/JupiterOne/graph-google/pull/199) ([@mknoedel](https://github.com/mknoedel))
+- Update integration-deployment.yml [#198](https://github.com/JupiterOne/graph-google/pull/198) ([@Nick-NCSU](https://github.com/Nick-NCSU))
+
+#### Authors: 2
+
+- Michael Knoedel ([@mknoedel](https://github.com/mknoedel))
+- Nick Thompson ([@Nick-NCSU](https://github.com/Nick-NCSU))
+
+---
+
 # v4.0.2 (Mon May 15 2023)
 
 #### 🐛 Bug Fix

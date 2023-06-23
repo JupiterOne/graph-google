@@ -1,23 +1,14 @@
-import { Recording, setupRecording } from '@jupiterone/integration-sdk-testing';
-import { gunzipSync } from 'zlib';
+import {
+  Recording,
+  mutations,
+  setupRecording,
+} from '@jupiterone/integration-sdk-testing';
 export { Recording } from '@jupiterone/integration-sdk-testing';
 
 type SetupParameters = Parameters<typeof setupRecording>[0];
 
 enum GoogleHeaders {
   UPLOADER = 'x-guploader-uploadid',
-}
-
-function gzipStringToUtf8(str: string) {
-  const chunkBuffers: Buffer[] = [];
-  const hexChunks = JSON.parse(str) as string[];
-
-  hexChunks.forEach((chunk) => {
-    const chunkBuffer = Buffer.from(chunk, 'hex');
-    chunkBuffers.push(chunkBuffer);
-  });
-
-  return gunzipSync(Buffer.concat(chunkBuffers)).toString('utf-8');
 }
 
 function getRedactedOAuthResponse() {
@@ -45,43 +36,21 @@ export function setupIntegrationRecording({
 }
 
 function redact(entry): void {
+  mutations.unzipGzippedRecordingEntry(entry);
+
   const requestUrl: string = entry.request.url;
 
   if (entry.request.postData) {
     entry.request.postData.text = '[REDACTED]';
   }
 
-  let responseText = entry.response.content.text;
-  if (!responseText) {
+  if (requestUrl === 'https://www.googleapis.com/oauth2/v4/token') {
+    entry.response.content.text = JSON.stringify(getRedactedOAuthResponse());
     return;
   }
 
-  const contentEncoding = entry.response.headers.find(
-    (e) => e.name === 'content-encoding',
+  entry.response.content.text = entry.response.content.text.replace(
+    /\r?\n|\r/g,
+    '',
   );
-  const transferEncoding = entry.response.headers.find(
-    (e) => e.name === 'transfer-encoding',
-  );
-
-  if (contentEncoding && contentEncoding.value === 'gzip') {
-    // Remove encoding/chunking since content is going to be unzipped
-    entry.response.headers = entry.response.headers.filter(
-      (e) => e && e !== contentEncoding && e !== transferEncoding,
-    );
-
-    // Remove recording binary marker
-    delete (entry.response.content as any)._isBinary;
-
-    if (requestUrl === 'https://www.googleapis.com/oauth2/v4/token') {
-      entry.response.content.text = JSON.stringify(getRedactedOAuthResponse());
-      return;
-    }
-
-    responseText = gzipStringToUtf8(responseText);
-
-    const parsedResponseText = JSON.parse(
-      responseText.replace(/\r?\n|\r/g, ''),
-    );
-    entry.response.content.text = JSON.stringify(parsedResponseText);
-  }
 }

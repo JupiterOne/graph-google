@@ -4,6 +4,10 @@ import {
   StepRelationshipMetadata,
 } from '@jupiterone/integration-sdk-core';
 
+export const SetDataKeys = {
+  DEVICE_EXTENSIONS_MAP: 'DEVICE_EXTENSIONS_MAP',
+};
+
 export const Steps = {
   DOMAINS: 'step-fetch-domains',
   ACCOUNT: 'step-create-account',
@@ -16,6 +20,9 @@ export const Steps = {
   MOBILE_DEVICES: 'step-fetch-mobile-devices',
   USER_DEVICES: 'step-fetch-user-devices',
   CHROME_OS_DEVICE: 'step-fetch-chrome-os-devices',
+  CHROME_EXTENSIONS: 'step-fetch-chrome-extensions',
+  BUILD_DEVICE_EXTENSION_RELATIONSHIPS:
+    'step-build-device-extension-relationships',
 };
 
 export const entities: Record<
@@ -29,7 +36,8 @@ export const entities: Record<
   | 'TOKEN'
   | 'CHROME_OS_DEVICE'
   | 'MOBILE_DEVICE'
-  | 'DEVICE',
+  | 'DEVICE'
+  | 'CHROME_EXTENSION',
   StepEntityMetadata
 > = {
   DOMAIN: {
@@ -87,6 +95,11 @@ export const entities: Record<
     _type: 'google_device',
     _class: ['Device'],
   },
+  CHROME_EXTENSION: {
+    resourceName: 'Chrome Extension',
+    _type: 'google_chrome_extension',
+    _class: ['Application'],
+  },
 };
 
 export const relationships: Record<
@@ -102,7 +115,8 @@ export const relationships: Record<
   | 'USER_ASSIGNED_TOKEN'
   | 'USER_ASSIGNED_ROLE'
   | 'TOKEN_ALLOWS_VENDOR'
-  | 'ACCOUNT_MANAGES_DEVICE',
+  | 'ACCOUNT_MANAGES_DEVICE'
+  | 'CHROME_OS_DEVICE_INSTALLED_CHROME_EXTENSION',
   StepRelationshipMetadata
 > = {
   ACCOUNT_HAS_USER: {
@@ -183,5 +197,11 @@ export const relationships: Record<
     _class: RelationshipClass.MANAGES,
     sourceType: entities.ACCOUNT._type,
     targetType: entities.DEVICE._type,
+  },
+  CHROME_OS_DEVICE_INSTALLED_CHROME_EXTENSION: {
+    _type: 'google_chrome_os_device_installed_chrome_extension',
+    _class: RelationshipClass.INSTALLED,
+    sourceType: entities.CHROME_OS_DEVICE._type,
+    targetType: entities.CHROME_EXTENSION._type,
   },
 };

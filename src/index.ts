@@ -11,6 +11,7 @@ import { tokenSteps } from './steps/tokens';
 import { chromeOSDeviceSteps } from './steps/chrome-os-devices';
 import { mobileDeviceSteps } from './steps/mobile_devices';
 import { endpointDeviceSteps } from './steps/endpoint-devices';
+import { extensionSteps } from './steps/chrome-extensions';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields: {
@@ -37,5 +38,6 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
     ...chromeOSDeviceSteps,
     ...mobileDeviceSteps,
     ...endpointDeviceSteps,
+    ...extensionSteps,
   ],
 };

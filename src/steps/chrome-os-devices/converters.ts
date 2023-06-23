@@ -14,6 +14,9 @@ export function createChromeOSDeviceEntity(
 ) {
   const deviceName = data.deviceId as string;
 
+  const serialNumber = data.serialNumber;
+  const lastSeenOn = parseTimePropertyValue(data.lastSync);
+
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -28,14 +31,22 @@ export function createChromeOSDeviceEntity(
         status: data.status,
         model: data.model,
         serial: data.serialNumber,
+        serialNumber,
         version: data.osVersion,
         supportEndDate: data.supportEndDate,
         platformVersion: data.platformVersion,
         firmwareVersion: data.firmwareVersion,
         macAddress: data.macAddress,
-        lastSync: parseTimePropertyValue(data.lastSync),
+        lastSync: lastSeenOn,
+        lastSeenOn,
         lastEnrollementTime: parseTimePropertyValue(data.lastEnrollmentTime),
         bootMode: data.bootMode,
+        tpmFamily: data.tpmVersionInfo?.family,
+        tpmFirmwareVersion: data.tpmVersionInfo?.firmwareVersion,
+        tpmManufacturer: data.tpmVersionInfo?.manufacturer,
+        tpmSpecLevel: data.tpmVersionInfo?.specLevel,
+        tpmModel: data.tpmVersionInfo?.tpmModel,
+        tpmVendorId: data.tpmVersionInfo?.vendorSpecific,
       },
     },
   });

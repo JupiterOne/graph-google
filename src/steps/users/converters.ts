@@ -20,6 +20,46 @@ interface GetCollectionAsFlattendFieldsParams<T extends GSuiteDataCollection> {
   valueMethod: string;
 }
 
+export function convertCustomSchemas(object: any, prefix?: string) {
+  let converted: { [k: string]: any } = {};
+
+  if (!object) return converted;
+
+  for (const [key, value] of Object.entries(object)) {
+    const newKey = prefix === undefined ? key : `${prefix}.${key}`;
+
+    switch (typeof value) {
+      case 'object':
+        if (!value) {
+          converted[newKey] = value;
+          continue;
+        }
+        if (Array.isArray(value)) {
+          if (value.every((v) => typeof v !== 'object' || !v)) {
+            converted[newKey] = value;
+            continue;
+          }
+
+          converted[newKey] = value.map(
+            (v) => typeof v === 'object' && JSON.stringify(v),
+          );
+          continue;
+        }
+
+        converted = {
+          ...converted,
+          ...convertCustomSchemas(value, newKey),
+        };
+        break;
+      default:
+        converted[newKey] = value;
+        break;
+    }
+  }
+
+  return converted;
+}
+
 export function getCollectionAsFlattendFields<T extends GSuiteDataCollection>({
   collection,
   suffix,
@@ -102,6 +142,7 @@ export function createUserEntity(data: admin_directory_v1.Schema$User) {
         ...getEmails(data),
         ...getManagementInfo(data),
         ...getEmployeeInfo(data),
+        ...convertCustomSchemas(data.customSchemas, 'customSchemas'),
       },
     },
   });

@@ -11,6 +11,9 @@ import {
 export function createDeviceEntity(
   data: cloudidentity_v1.Schema$GoogleAppsCloudidentityDevicesV1Device,
 ) {
+  const serialNumber = data.serialNumber || '';
+  const lastSeenOn = parseTimePropertyValue(data.lastSyncTime);
+
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -22,7 +25,8 @@ export function createDeviceEntity(
         name: data.name,
         displayName: data.name!,
         createdOn: parseTimePropertyValue(data.createTime),
-        lastSyncedOn: parseTimePropertyValue(data.lastSyncTime),
+        lastSyncedOn: lastSeenOn,
+        lastSeenOn,
         ownerType: data.ownerType,
         model: data.model || '',
         osVersion: data.osVersion,
@@ -32,7 +36,8 @@ export function createDeviceEntity(
         encrypted: data.encryptionState === 'ENCRYPTED',
         category: 'endpoint',
         make: data.manufacturer || '',
-        serial: data.serialNumber || '',
+        serial: serialNumber,
+        serialNumber,
         // Monkeypatch: deviceId field is not included in type but is included in response.
         // ** deviceId is a required field in J1 Device schema.
         deviceId: (data as any).deviceId || '',
@@ -41,6 +46,7 @@ export function createDeviceEntity(
         imei: data.imei,
         meid: data.meid,
         wifiMacAddresses: data.wifiMacAddresses,
+        macAddress: data.wifiMacAddresses,
         networkOperator: data.networkOperator,
         releaseVersion: data.releaseVersion,
         brand: data.brand,

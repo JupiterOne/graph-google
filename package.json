@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-google",
-  "version": "3.15.0",
+  "version": "4.0.3",
   "description": "A JupiterOne managed integration for Google",
   "license": "MPL-2.0",
   "main": "src/index.js",
@@ -12,36 +12,57 @@
   "publishConfig": {
     "access": "public"
   },
+  "engines": {
+    "node": ">=18.0.0 <19.x"
+  },
   "scripts": {
     "start": "j1-integration collect",
     "graph": "j1-integration visualize",
-    "graph:spec": "j1-integration visualize-types --project-path docs/spec --output-file ./.j1-integration/types-graph/index.spec.html",
     "graph:types": "j1-integration visualize-types",
+    "graph:spec": "j1-integration visualize-types --project-path docs/spec --output-file ./.j1-integration/types-graph/index.spec.html",
     "graph:dependencies": "j1-integration visualize-dependencies",
+    "validate:questions:dry": "j1-integration validate-question-file --dry-run",
+    "validate:questions": "j1-integration validate-question-file -a $MANAGED_QUESTIONS_JUPITERONE_ACCOUNT_ID -k $MANAGED_QUESTIONS_JUPITERONE_API_KEY",
     "lint": "eslint . --cache --fix --ext .ts,.tsx",
-    "format": "prettier --write '**/*.{ts,js,json,css,md,yml}'",
-    "format:check": "prettier --check '**/*.{ts,js,json,css,md,yml}'",
+    "format": "prettier --write \"**/*.{ts,js,json,css,md,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,css,md,yml}\"",
     "type-check": "tsc",
-    "test:env": "LOAD_ENV=1 yarn test",
     "test": "jest",
+    "test:env": "LOAD_ENV=1 yarn test",
     "test:ci": "yarn format:check && yarn lint && yarn type-check && yarn test",
     "build": "tsc -p tsconfig.dist.json --declaration && cp README.md dist/README.md && cp -r jupiterone/ dist/jupiterone/",
     "prepush": "yarn format:check && yarn lint && yarn type-check && jest --changedSince main",
-    "validate:questions": "j1-integration validate-question-file -a $MANAGED_QUESTIONS_JUPITERONE_ACCOUNT_ID -k $MANAGED_QUESTIONS_JUPITERONE_API_KEY",
-    "validate:questions:dry": "j1-integration validate-question-file --dry-run"
+    "postversion": "cp package.json ./dist/package.json"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.25.1"
+    "@jupiterone/integration-sdk-core": "^9.4.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.25.1",
-    "@jupiterone/integration-sdk-dev-tools": "^8.25.1",
-    "@jupiterone/integration-sdk-testing": "^8.25.1",
-    "dotenv": "^10.0.0"
+    "@jupiterone/integration-sdk-core": "^9.4.0",
+    "@jupiterone/integration-sdk-dev-tools": "^9.4.0",
+    "@jupiterone/integration-sdk-testing": "^9.4.0",
+    "auto": "^10.46.0"
   },
   "dependencies": {
-    "@jupiterone/vendor-stack": "^2.0.0",
-    "gaxios": "^4.3.2",
+    "@jupiterone/vendor-stack": "^2.0.4",
+    "@types/node": "^18",
+    "gaxios": "^5.1.0",
     "googleapis": "^92.0.0"
+  },
+  "auto": {
+    "plugins": [
+      [
+        "npm",
+        {
+          "setRcToken": false,
+          "publishFolder": "./dist"
+        }
+      ],
+      "released"
+    ],
+    "onlyPublishWithReleaseLabel": true,
+    "shipit": {
+      "prerelease": false
+    }
   }
 }

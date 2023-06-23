@@ -21,7 +21,7 @@ export default async function validateInvocation(
     !serializedIntegrationConfig.googleAccountId
   ) {
     throw new IntegrationConfigLoadError(
-      'config.seriveAccountKeyFile, config.googleAccountId, config.domainAdminEmail must be provided by the user',
+      'config.serviceAccountKeyFile, config.googleAccountId, config.domainAdminEmail must be provided by the user',
     );
   }
 

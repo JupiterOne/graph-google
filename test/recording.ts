@@ -32,6 +32,14 @@ export function setupIntegrationRecording({
       redact(entry);
     },
     ...overrides,
+    options: {
+      matchRequestsBy: {
+        headers: false,
+        body: false,
+        order: false,
+      },
+      ...overrides.options,
+    },
   });
 }
 

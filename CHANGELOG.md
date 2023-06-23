@@ -1,12 +1,91 @@
-# Changelog
+# v4.0.3 (Wed Jun 14 2023)
 
-All notable changes to this project will be documented in this file.
+#### 🐛 Bug Fix
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to
-[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+- DEVICE-115 - Add lastSeenOn to Devices [#199](https://github.com/JupiterOne/graph-google/pull/199) ([@mknoedel](https://github.com/mknoedel))
+- Update integration-deployment.yml [#198](https://github.com/JupiterOne/graph-google/pull/198) ([@Nick-NCSU](https://github.com/Nick-NCSU))
 
-## [Unreleased]
+#### Authors: 2
+
+- Michael Knoedel ([@mknoedel](https://github.com/mknoedel))
+- Nick Thompson ([@Nick-NCSU](https://github.com/Nick-NCSU))
+
+---
+
+# v4.0.2 (Mon May 15 2023)
+
+#### 🐛 Bug Fix
+
+- Upgrade `@jupiterone/vendor-stack` [#197](https://github.com/JupiterOne/graph-google/pull/197) ([@austinkelleher](https://github.com/austinkelleher))
+
+#### Authors: 1
+
+- Austin Kelleher ([@austinkelleher](https://github.com/austinkelleher))
+
+---
+
+# v4.0.1 (Mon May 15 2023)
+
+#### 🐛 Bug Fix
+
+- Update scripts in `package.json` to properly publish package
+  [#196](https://github.com/JupiterOne/graph-google/pull/196)
+  ([@austinkelleher](https://github.com/austinkelleher))
+
+#### Authors: 1
+
+- Austin Kelleher ([@austinkelleher](https://github.com/austinkelleher))
+
+---
+
+# 4.0.1 - 2023-05-12
+
+- Update scripts in `package.json` to properly publish package
+
+# 4.0.0 - 2023-05-12
+
+- Upgrade to Node.js 18
+
+- New properties added to entities:
+
+  | Entity                    | Properties                                 |
+  | ------------------------- | ------------------------------------------ |
+  | `google_device`           | `macAddress`, `serialNumber`, `lastSeenOn` |
+  | `google_mobile_device`    | `serialNumber`, `lastSeenOn`               |
+  | `google_chrome_os_device` | `serialNumber`, `lastSeenOn`               |
+
+# 3.17.0 - 2023-05-03
+
+## Added
+
+- Added `auto` package to help with builds, versioning and npm packaging
+
+# 3.16.3 - 2023-04-24
+
+### Changed
+
+- Modified the event log names to values provided by the SDK.
+
+## 3.16.2 - 2023-04-17
+
+## Added
+
+- Elevated customSchema `githubUsername` to the `google_user` entity.
+
+## 3.16.0 - 2023-03-07
+
+### Added
+
+- New properties added to resources:
+
+  | Entity                    | Properties           |
+  | ------------------------- | -------------------- |
+  | `google_chrome_os_device` | `tpmFamily`          |
+  | `google_chrome_os_device` | `tpmFirmwareVersion` |
+  | `google_chrome_os_device` | `tpmManufacturer`    |
+  | `google_chrome_os_device` | `tpmSpecLevel`       |
+  | `google_chrome_os_device` | `tpmModel`           |
+  | `google_chrome_os_device` | `tpmVendorId`        |
 
 ## 3.15.0 - 2022-12-20
 
@@ -97,8 +176,8 @@ and this project adheres to
      `https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly`
   4. Click **Account** > **Admin roles**.
   5. Click the JupiterOne System role, and click Privileges
-  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
-     Devices and Settings**
+  6. Under **Services**, **Mobile Device Management**, enable **Manage Devices
+     and Settings**
 
 - New relationship added:
 
@@ -164,8 +243,8 @@ and this project adheres to
      `https://www.googleapis.com/auth/admin.directory.device.mobile.readonly`
   4. Click **Account** > **Admin roles**.
   5. Click the JupiterOne System role, and click Privileges
-  6. Under **Services**, **Mobile Devicement Management**, enable **Manage
-     Devices and Settings**
+  6. Under **Services**, **Mobile Device Management**, enable **Manage Devices
+     and Settings**
 
 - New relationship added:
 
@@ -259,7 +338,7 @@ and this project adheres to
 
 ### Fixed
 
-- If a `400` is recieved from `GroupSettings` endpoint in `getGroupSettings`, it
+- If a `400` is received from `GroupSettings` endpoint in `getGroupSettings`, it
   is because of an invalid email. This was throwing an error and causing step
   failure. `getGroupSettings` now catches the error and logs if there is a
   `400`, but skips over it to continue ingestion.

@@ -32,8 +32,7 @@ export async function fetchChromeExtensions(
       const chromeExtensionEntity = await context.jobState.addEntity(
         createChromeExtensionEntity(app),
       );
-      // eslint-disable-next-line @typescript-eslint/require-await
-      await client.iterateInstalledAppDevices(app.appId, async (device) => {
+      await client.iterateInstalledAppDevices(app.appId, (device) => {
         const deviceId = device.deviceId;
         if (!deviceId) {
           return;

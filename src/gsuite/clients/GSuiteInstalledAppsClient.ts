@@ -39,7 +39,7 @@ export class GSuiteInstalledAppsClient extends GSuiteChromeManagementClient {
     appId: string,
     callback: (
       data: chromemanagement_v1.Schema$GoogleChromeManagementV1Device,
-    ) => Promise<void>,
+    ) => void,
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();
 
@@ -50,9 +50,9 @@ export class GSuiteInstalledAppsClient extends GSuiteChromeManagementClient {
           appId,
         });
       },
-      async (data) => {
+      (data) => {
         for (const device of data.devices || []) {
-          await callback(device);
+          callback(device);
         }
       },
     );

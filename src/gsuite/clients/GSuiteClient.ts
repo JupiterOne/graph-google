@@ -86,7 +86,7 @@ export default abstract class GSuiteClient<T> {
 
   protected async iterateApi<T>(
     fn: (nextPageToken?: string) => Promise<PageableGaxiosResponse<T>>,
-    callback: (data: T) => Promise<void>,
+    callback: (data: T) => Promise<void> | void,
   ) {
     let nextPageToken: string | undefined;
 

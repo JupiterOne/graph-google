@@ -1,4 +1,9 @@
-import { Entity, IntegrationStep } from '@jupiterone/integration-sdk-core';
+import {
+  Entity,
+  IntegrationErrorEventName,
+  IntegrationProviderAuthorizationError,
+  IntegrationStep,
+} from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, SetDataKeys, Steps } from '../../constants';
 import {
@@ -24,26 +29,44 @@ export async function fetchChromeExtensions(
 
   const deviceExtensionsMap = new Map<DeviceId, ChromeExtensionEntityKey[]>();
 
-  await client.iterateInstalledApps(async (app) => {
-    if (!isValidInstalledAppEntity(app)) {
+  try {
+    await client.iterateInstalledApps(async (app) => {
+      if (!isValidInstalledAppEntity(app)) {
+        return;
+      }
+      if (app.appType === APP_EXTENSION_TYPE) {
+        const chromeExtensionEntity = await context.jobState.addEntity(
+          createChromeExtensionEntity(app),
+        );
+        await client.iterateInstalledAppDevices(app.appId, (device) => {
+          const deviceId = device.deviceId;
+          if (!deviceId) {
+            return;
+          }
+          deviceExtensionsMap.set(deviceId, [
+            ...(deviceExtensionsMap.get(deviceId) || []),
+            chromeExtensionEntity._key,
+          ]);
+        });
+      }
+    });
+  } catch (err) {
+    if (err instanceof IntegrationProviderAuthorizationError) {
+      context.logger.info(
+        { err },
+        'Could not ingest chrome browser extensions information.',
+      );
+      context.logger.publishErrorEvent({
+        name: IntegrationErrorEventName.MissingPermission,
+        description: `Could not ingest chrome browser extension data. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )}).  Additionally, the admin email provided in configuration must have the Admin API privilege "Chrome Management" enabled.`,
+      });
       return;
     }
-    if (app.appType === APP_EXTENSION_TYPE) {
-      const chromeExtensionEntity = await context.jobState.addEntity(
-        createChromeExtensionEntity(app),
-      );
-      await client.iterateInstalledAppDevices(app.appId, (device) => {
-        const deviceId = device.deviceId;
-        if (!deviceId) {
-          return;
-        }
-        deviceExtensionsMap.set(deviceId, [
-          ...(deviceExtensionsMap.get(deviceId) || []),
-          chromeExtensionEntity._key,
-        ]);
-      });
-    }
-  });
+
+    throw err;
+  }
 
   await context.jobState.setData(
     SetDataKeys.DEVICE_EXTENSIONS_MAP,

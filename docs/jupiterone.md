@@ -73,7 +73,7 @@ perform the following actions.
 
    ```text
    https://www.googleapis.com/auth/admin.directory.domain.readonly, https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/admin.directory.group.readonly, https://www.googleapis.com/auth/admin.directory.user.security, https://www.googleapis.com/auth/apps.groups.settings, https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly,
-   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly, https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly, https://www.googleapis.com/auth/cloud-identity.devices.readonly
+   https://www.googleapis.com/auth/admin.directory.device.mobile.readonly, https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly, https://www.googleapis.com/auth/cloud-identity.devices.readonly, https://www.googleapis.com/auth/chrome.management.reports.readonly
    ```
 
 6. Click **Authorize**.
@@ -129,6 +129,7 @@ permissions required by JupiterOne, and which will include only the
    - Groups -> Read
    - Domain Management
    - User Security Management
+   - Chrome Management
 
 NOTE: In order to ingest role and role assignment data you will need to grant
 this account Super Admin permissions in addition to the custom role listed
@@ -227,6 +228,7 @@ The following entities are created:
 | Resources        | Entity `_type`            | Entity `_class` |
 | ---------------- | ------------------------- | --------------- |
 | Account          | `google_account`          | `Account`       |
+| Chrome Extension | `google_chrome_extension` | `Application`   |
 | Chrome OS Device | `google_chrome_os_device` | `Device`        |
 | Device           | `google_device`           | `Device`        |
 | Domain           | `google_domain`           | `Domain`        |
@@ -242,21 +244,22 @@ The following entities are created:
 
 The following relationships are created:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type`          |
-| --------------------- | --------------------- | ------------------------------ |
-| `google_account`      | **HAS**               | `google_group`                 |
-| `google_account`      | **HAS**               | `google_role`                  |
-| `google_account`      | **HAS**               | `google_user`                  |
-| `google_account`      | **MANAGES**           | `google_chrome_os_device`      |
-| `google_account`      | **MANAGES**           | `google_device`                |
-| `google_account`      | **MANAGES**           | `google_mobile_device`         |
-| `google_group`        | **HAS**               | `google_group`                 |
-| `google_group`        | **HAS**               | `google_group_settings`        |
-| `google_group`        | **HAS**               | `google_user`                  |
-| `google_site`         | **HAS**               | `google_user`                  |
-| `google_token`        | **ALLOWS**            | `mapped_entity (class Vendor)` |
-| `google_user`         | **ASSIGNED**          | `google_role`                  |
-| `google_user`         | **ASSIGNED**          | `google_token`                 |
+| Source Entity `_type`     | Relationship `_class` | Target Entity `_type`          |
+| ------------------------- | --------------------- | ------------------------------ |
+| `google_account`          | **HAS**               | `google_group`                 |
+| `google_account`          | **HAS**               | `google_role`                  |
+| `google_account`          | **HAS**               | `google_user`                  |
+| `google_account`          | **MANAGES**           | `google_chrome_os_device`      |
+| `google_account`          | **MANAGES**           | `google_device`                |
+| `google_account`          | **MANAGES**           | `google_mobile_device`         |
+| `google_chrome_os_device` | **INSTALLED**         | `google_chrome_extension`      |
+| `google_group`            | **HAS**               | `google_group`                 |
+| `google_group`            | **HAS**               | `google_group_settings`        |
+| `google_group`            | **HAS**               | `google_user`                  |
+| `google_site`             | **HAS**               | `google_user`                  |
+| `google_token`            | **ALLOWS**            | `mapped_entity (class Vendor)` |
+| `google_user`             | **ASSIGNED**          | `google_role`                  |
+| `google_user`             | **ASSIGNED**          | `google_token`                 |
 
 <!--
 ********************************************************************************

@@ -4,11 +4,22 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { ParsedServiceAccountKeyFile } from '../src/utils/parseServiceAccountKeyFile';
 import { deserializeIntegrationConfig } from '../src/utils/integrationConfig';
+import { StepTestConfig } from '@jupiterone/integration-sdk-testing';
+import { invocationConfig } from '../src';
+import { IntegrationInvocationConfig } from '@jupiterone/integration-sdk-core';
 
 if (process.env.LOAD_ENV) {
   dotenv.config({
     path: path.join(__dirname, '../.env'),
   });
+}
+
+export function buildStepTestConfig(stepId: string): StepTestConfig {
+  return {
+    stepId,
+    instanceConfig: integrationConfig,
+    invocationConfig: invocationConfig as IntegrationInvocationConfig,
+  };
 }
 
 export const DEFAULT_INTEGRATION_CONFIG_PROJECT_ID = 'j1-gc-integration-dev';

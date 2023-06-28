@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetch-chrome-extensions success 1`] = `
+Object {
+  "collectedData": Object {
+    "DEVICE_EXTENSIONS_MAP": Map {},
+  },
+  "collectedEntities": Array [],
+  "collectedRelationships": Array [],
+  "encounteredEntityKeys": Set {},
+  "encounteredTypes": Array [],
+}
+`;

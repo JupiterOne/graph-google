@@ -1,3 +1,19 @@
+# v4.1.0 (Wed Jun 28 2023)
+
+#### 🚀 Enhancement
+
+- release v4.1.0 [#203](https://github.com/JupiterOne/graph-google/pull/203) (ronald.arias@contractor.jupiterone.com)
+
+#### 🐛 Bug Fix
+
+- INT-7756 - Ingest chrome browser extensions [#200](https://github.com/JupiterOne/graph-google/pull/200) (ronald.arias@contractor.jupiterone.com)
+
+#### Authors: 1
+
+- Ronald Arias ([@RonaldEAM](https://github.com/RonaldEAM))
+
+---
+
 # v4.0.3 (Wed Jun 14 2023)
 
 #### 🐛 Bug Fix

@@ -1,3 +1,9 @@
+## 4.1.0-beta.1 - 2023-06-28
+
+### Added
+
+- Ingest Chrome Browser Extensions and relate to Chrome OS Devices.
+
 # v4.0.3 (Wed Jun 14 2023)
 
 #### 🐛 Bug Fix

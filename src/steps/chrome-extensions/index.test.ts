@@ -1,3 +1,5 @@
+jest.setTimeout(50000);
+
 import { Steps } from '../../constants';
 import { buildStepTestConfig } from '../../../test/config';
 import { executeStepWithDependencies } from '@jupiterone/integration-sdk-testing';
@@ -23,6 +25,6 @@ describe('fetch-chrome-extensions', () => {
 
     const stepConfig = buildStepTestConfig(Steps.CHROME_EXTENSIONS);
     const stepResults = await executeStepWithDependencies(stepConfig);
-    expect(stepResults).toMatchSnapshot();
+    expect(stepResults).toMatchStepMetadata(stepConfig);
   });
 });

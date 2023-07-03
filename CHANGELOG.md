@@ -1,3 +1,15 @@
+# v4.1.1 (Mon Jul 03 2023)
+
+#### 🐛 Bug Fix
+
+- INT-7756 - remove wrong relationship, adjust tests recordings [#204](https://github.com/JupiterOne/graph-google/pull/204) (ronald.arias@contractor.jupiterone.com)
+
+#### Authors: 1
+
+- Ronald Arias ([@RonaldEAM](https://github.com/RonaldEAM))
+
+---
+
 # v4.1.0 (Wed Jun 28 2023)
 
 #### 🚀 Enhancement

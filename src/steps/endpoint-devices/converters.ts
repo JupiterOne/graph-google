@@ -22,8 +22,16 @@ export function createDeviceEntity(
         _type: entities.DEVICE._type,
         _class: entities.DEVICE._class,
         id: data.name!,
-        name: data.name,
-        displayName: data.name!,
+        name:
+          data.name ||
+          `${data.otherAccounts?.[0] || 'Unknown User'}'s ${
+            data.model || 'Device'
+          }`,
+        displayName:
+          data.name ||
+          `${data.otherAccounts?.[0] || 'Unknown User'}'s ${
+            data.model || 'Device'
+          }`,
         createdOn: parseTimePropertyValue(data.createTime),
         lastSyncedOn: lastSeenOn,
         lastSeenOn,

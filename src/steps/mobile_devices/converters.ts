@@ -31,8 +31,12 @@ export function createMobileDeviceEntity(
         _type: entities.MOBILE_DEVICE._type,
         _class: entities.MOBILE_DEVICE._class,
         id: deviceName,
-        name,
-        displayName: name,
+        name:
+          name ||
+          `${data.email?.[0] || 'Unknown User'}'s ${data.model || 'Device'}`,
+        displayName:
+          name ||
+          `${data.email?.[0] || 'Unknown User'}'s ${data.model || 'Device'}`,
         category: 'mobile',
         make: data.model,
         model: data.model,

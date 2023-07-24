@@ -1,3 +1,15 @@
+# v4.1.2 (Mon Jul 24 2023)
+
+#### 🐛 Bug Fix
+
+- DEVICE-107 - Add a default for name properties in Device entities [#205](https://github.com/JupiterOne/graph-google/pull/205) ([@mknoedel](https://github.com/mknoedel))
+
+#### Authors: 1
+
+- Michael Knoedel ([@mknoedel](https://github.com/mknoedel))
+
+---
+
 # v4.1.1 (Mon Jul 03 2023)
 
 #### 🐛 Bug Fix

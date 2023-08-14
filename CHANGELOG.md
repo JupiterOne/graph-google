@@ -1,3 +1,15 @@
+# v4.1.4 (Mon Aug 14 2023)
+
+#### 🐛 Bug Fix
+
+- Update groups and group-members error handling [#207](https://github.com/JupiterOne/graph-google/pull/207) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.1.3 (Tue Aug 01 2023)
 
 #### 🐛 Bug Fix

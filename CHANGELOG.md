@@ -1,3 +1,15 @@
+# v4.1.5 (Mon Sep 11 2023)
+
+#### 🐛 Bug Fix
+
+- INT-9249: add debug logger [#208](https://github.com/JupiterOne/graph-google/pull/208) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.1.4 (Mon Aug 14 2023)
 
 #### 🐛 Bug Fix

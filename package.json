@@ -2,6 +2,10 @@
   "name": "@jupiterone/graph-google",
   "version": "4.1.5",
   "description": "A JupiterOne managed integration for Google",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JupiterOne/graph-google"
+  },
   "license": "MPL-2.0",
   "main": "src/index.js",
   "types": "src/index.d.ts",

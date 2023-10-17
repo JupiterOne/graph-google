@@ -75,8 +75,10 @@ export async function fetchTokens(
       });
     }
   } catch (err) {
-    if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.info({ err }, 'Could not ingest token entities');
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest token entities. Missing required scope(s) (scopes=${client.requiredScopes.join(

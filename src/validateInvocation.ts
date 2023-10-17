@@ -25,13 +25,6 @@ export default async function validateInvocation(
     );
   }
 
-  // TODO: remove this after INT-9249 is done
-  if (
-    !serializedIntegrationConfig.domainAdminEmail.includes('jupiterone-admin')
-  ) {
-    logger.warn('Domain email does not includes jupiterone-admin.');
-  }
-
   // Override the incoming config with the new config that has parsed service
   // account data
   const config = (context.instance.config = deserializeIntegrationConfig(

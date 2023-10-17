@@ -1,4 +1,8 @@
-import { IntegrationStep } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationProviderAuthorizationError,
+  IntegrationStep,
+  IntegrationWarnEventName,
+} from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, Steps } from '../../constants';
 import { GSuiteUserClient } from '../../gsuite/clients/GSuiteUserClient';
@@ -23,41 +27,60 @@ export async function fetchUsers(
   const buildingIdSet = new Set<string>();
   const accountEntity = await getAccountEntity(context);
 
-  await client.iterateUsers(async (user) => {
-    const userEntity = await context.jobState.addEntity(createUserEntity(user));
+  try {
+    await client.iterateUsers(async (user) => {
+      const userEntity = await context.jobState.addEntity(
+        createUserEntity(user),
+      );
 
-    await context.jobState.addRelationship(
-      createAccountHasUserRelationship({
-        accountEntity,
-        userEntity,
-      }),
-    );
+      await context.jobState.addRelationship(
+        createAccountHasUserRelationship({
+          accountEntity,
+          userEntity,
+        }),
+      );
 
-    for (const location of user.locations || []) {
-      const siteEntity = createSiteEntity(user.id as string, location);
+      for (const location of user.locations || []) {
+        const siteEntity = createSiteEntity(user.id as string, location);
 
-      if (buildingIdSet.has(location.buildingId)) {
-        await context.jobState.addRelationship(
-          createSiteHostsUserRelationship({
-            siteEntity,
-            userEntity,
-          }),
-        );
+        if (buildingIdSet.has(location.buildingId)) {
+          await context.jobState.addRelationship(
+            createSiteHostsUserRelationship({
+              siteEntity,
+              userEntity,
+            }),
+          );
 
-        continue;
-      } else {
-        await context.jobState.addEntity(siteEntity);
-        await context.jobState.addRelationship(
-          createSiteHostsUserRelationship({
-            siteEntity,
-            userEntity,
-          }),
-        );
+          continue;
+        } else {
+          await context.jobState.addEntity(siteEntity);
+          await context.jobState.addRelationship(
+            createSiteHostsUserRelationship({
+              siteEntity,
+              userEntity,
+            }),
+          );
+        }
+
+        buildingIdSet.add(location.buildingId);
       }
-
-      buildingIdSet.add(location.buildingId);
+    });
+  } catch (err) {
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
+        description: `Could not ingest users. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )}).  Additionally, Users -> Read Admin API Privilege needs to be enabled.`,
+      });
+      return;
     }
-  });
+
+    throw err;
+  }
 }
 
 export const userSteps: IntegrationStep<IntegrationConfig>[] = [

@@ -1,4 +1,4 @@
-import { GaxiosResponse } from 'gaxios';
+import { GaxiosError, GaxiosResponse } from 'gaxios';
 import { JWTOptions } from 'google-auth-library';
 import { Auth, google } from 'googleapis';
 
@@ -10,11 +10,11 @@ import {
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../../types';
-import { createErrorProps } from './utils/createErrorProps';
-
-export interface PageableResponse {
-  nextPageToken?: string;
-}
+import {
+  GaxiosErrorResponse,
+  createErrorProps,
+} from './utils/createErrorProps';
+import { retry } from '@lifeomic/attempt';
 
 export type PageableGaxiosResponse<T> = GaxiosResponse<
   T & {
@@ -91,7 +91,7 @@ export default abstract class GSuiteClient<T> {
     let nextPageToken: string | undefined;
 
     do {
-      const result = await withErrorHandling(fn)(nextPageToken);
+      const result = await withErrorHandling(this.logger, fn)(nextPageToken);
       nextPageToken = result.data.nextPageToken || undefined;
       await callback(result.data);
     } while (nextPageToken);
@@ -107,28 +107,82 @@ export default abstract class GSuiteClient<T> {
   }
 }
 
-export function withErrorHandling<T extends (...params: any) => any>(fn: T) {
-  return async (...params: any) => {
-    try {
-      return await fn(...params);
-    } catch (error) {
-      handleError(error);
-    }
+export function withErrorHandling<T extends (...params: any) => any>(
+  logger: IntegrationLogger,
+  fn: T,
+) {
+  return (...params: any) => {
+    return retry(
+      async () => {
+        return await fn(...params);
+      },
+      {
+        delay: 2_000,
+        timeout: 91_000,
+        maxAttempts: 2,
+        factor: 2.25,
+        handleError(err, ctx) {
+          const { error, isRetryableError } = handleError(err);
+
+          logger.info(
+            { err },
+            `Handling API error. Attempt: ${ctx.attemptNum}.`,
+          );
+
+          if (!isRetryableError) {
+            ctx.abort();
+            throw error;
+          }
+        },
+      },
+    );
   };
 }
 
 /**
  * Codes unknown error into JupiterOne errors
  */
-function handleError(error: any): never {
-  // If the error was already handled, forward it on
+export function handleError(
+  error: GaxiosError & { errors: GaxiosErrorResponse[] },
+): {
+  error: IntegrationError;
+  isRetryableError: boolean;
+} {
   if (error instanceof IntegrationError) {
-    throw error;
+    return {
+      error,
+      isRetryableError: false,
+    };
   }
 
-  if ([401, 403].includes(error.code)) {
-    throw new IntegrationProviderAuthorizationError(createErrorProps(error));
+  let err: IntegrationError;
+  let isRetryableError = false;
+  const errorProps = createErrorProps(error);
+  const code = Number(errorProps.status);
+
+  if (code == 403) {
+    err = new IntegrationProviderAuthorizationError(errorProps);
+
+    if (error.message?.match && error.message.match(/Quota exceeded/i)) {
+      isRetryableError = true;
+    }
+  } else if (
+    code == 400 &&
+    error.message?.match &&
+    error.message.match(/billing/i)
+  ) {
+    err = new IntegrationProviderAuthorizationError(errorProps);
+  } else if (code == 401) {
+    err = new IntegrationProviderAuthorizationError(errorProps);
+  } else if (code === 429 || code >= 500) {
+    err = new IntegrationProviderAPIError(errorProps);
+    isRetryableError = true;
+  } else {
+    err = new IntegrationProviderAPIError(errorProps);
   }
 
-  throw new IntegrationProviderAPIError(createErrorProps(error));
+  return {
+    error: err,
+    isRetryableError,
+  };
 }

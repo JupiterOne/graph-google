@@ -1,4 +1,8 @@
-import { IntegrationStep } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationProviderAuthorizationError,
+  IntegrationStep,
+  IntegrationWarnEventName,
+} from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, Steps } from '../../constants';
 import { createDomainEntity } from './converters';
@@ -12,9 +16,26 @@ export async function fetchDomains(
     logger: context.logger,
   });
 
-  await client.iterateDomains(async (domain) => {
-    await context.jobState.addEntity(createDomainEntity(domain));
-  });
+  try {
+    await client.iterateDomains(async (domain) => {
+      await context.jobState.addEntity(createDomainEntity(domain));
+    });
+  } catch (err) {
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
+        description: `Could not ingest domains. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )}). Additionally, Domain Management Admin API Privilege needs to be enabled.`,
+      });
+      return;
+    }
+
+    throw err;
+  }
 }
 
 export const domainSteps: IntegrationStep<IntegrationConfig>[] = [

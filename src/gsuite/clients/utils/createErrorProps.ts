@@ -8,13 +8,21 @@ type J1ApiErrorProps = GetConstructorArgs<
   typeof IntegrationProviderAPIError
 >[0];
 
-export function createErrorProps(error: GaxiosError): J1ApiErrorProps {
+export type GaxiosErrorResponse = {
+  message: string;
+  domain: string;
+  reason: string;
+};
+
+export function createErrorProps(
+  error: GaxiosError & { errors: GaxiosErrorResponse[] },
+): J1ApiErrorProps {
   if (error.constructor.name === 'GaxiosError' && error.response) {
     return {
       cause: error,
       endpoint: error.response?.config?.url || UNKNOWN_VALUE,
       status: error.response?.status,
-      statusText: error.response?.statusText,
+      statusText: error.errors[0].message || error.response?.statusText,
     };
   } else {
     return {

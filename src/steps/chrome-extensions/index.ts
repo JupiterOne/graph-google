@@ -1,7 +1,7 @@
 import {
-  IntegrationErrorEventName,
   IntegrationProviderAuthorizationError,
   IntegrationStep,
+  IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, Steps } from '../../constants';
@@ -28,16 +28,15 @@ export async function fetchChromeExtensions(
       await context.jobState.addEntity(createChromeExtensionEntity(app));
     });
   } catch (err) {
-    if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.info(
-        { err },
-        'Could not ingest chrome browser extensions information.',
-      );
-      context.logger.publishErrorEvent({
-        name: IntegrationErrorEventName.MissingPermission,
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest chrome browser extension data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
-        )}).  Additionally, the admin email provided in configuration must have the Admin API privilege "Chrome Management" enabled.`,
+        )}). Additionally, the admin email provided in configuration must have the Admin console privilege Chrome Management -> View Extensions List Report enabled.`,
       });
       return;
     }

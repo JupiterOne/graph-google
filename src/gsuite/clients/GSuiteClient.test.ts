@@ -153,7 +153,10 @@ describe('withErrorHandling', () => {
         const executionHandler = jest
           .fn()
           .mockRejectedValue(mockForbiddenError);
-        const handledFunction = withErrorHandling(executionHandler);
+        const handledFunction = withErrorHandling(
+          createMockIntegrationLogger(),
+          executionHandler,
+        );
         await expect(handledFunction()).rejects.toThrow(J1Error);
       });
     },
@@ -162,7 +165,10 @@ describe('withErrorHandling', () => {
   test('should handle errors of unknown format', async () => {
     const mockUnknownError = new Error() as any;
     const executionHandler = jest.fn().mockRejectedValue(mockUnknownError);
-    const handledFunction = withErrorHandling(executionHandler);
+    const handledFunction = withErrorHandling(
+      createMockIntegrationLogger(),
+      executionHandler,
+    );
     await expect(handledFunction()).rejects.toThrow(
       IntegrationProviderAPIError,
     );
@@ -174,7 +180,10 @@ describe('withErrorHandling', () => {
     mockForbiddenError.message = mockForbiddenError.name =
       'unauthorized_client';
     const executionHandler = jest.fn().mockRejectedValue(mockForbiddenError);
-    const handledFunction = withErrorHandling(executionHandler);
+    const handledFunction = withErrorHandling(
+      createMockIntegrationLogger(),
+      executionHandler,
+    );
     await expect(handledFunction()).rejects.toThrow(
       IntegrationProviderAuthorizationError,
     );
@@ -186,7 +195,10 @@ describe('withErrorHandling', () => {
     mockForbiddenError.message = 'Not Authorized to access this resource/api';
     mockForbiddenError.name = 'Error';
     const executionHandler = jest.fn().mockRejectedValue(mockForbiddenError);
-    const handledFunction = withErrorHandling(executionHandler);
+    const handledFunction = withErrorHandling(
+      createMockIntegrationLogger(),
+      executionHandler,
+    );
     await expect(handledFunction()).rejects.toThrow(
       IntegrationProviderAuthorizationError,
     );
@@ -196,7 +208,10 @@ describe('withErrorHandling', () => {
     const executionHandler = jest
       .fn()
       .mockRejectedValue(new Error('Something esploded'));
-    const handledFunction = withErrorHandling(executionHandler);
+    const handledFunction = withErrorHandling(
+      createMockIntegrationLogger(),
+      executionHandler,
+    );
     await expect(handledFunction()).rejects.toThrow(
       IntegrationProviderAPIError,
     );
@@ -206,7 +221,10 @@ describe('withErrorHandling', () => {
     const executionHandler = jest
       .fn()
       .mockImplementation((...params) => Promise.resolve(params));
-    const handledFunction = withErrorHandling(executionHandler);
+    const handledFunction = withErrorHandling(
+      createMockIntegrationLogger(),
+      executionHandler,
+    );
     await expect(handledFunction('param1', 'param2')).resolves.toEqual([
       'param1',
       'param2',

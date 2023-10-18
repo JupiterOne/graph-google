@@ -1,3 +1,20 @@
+# v4.2.0 (Wed Oct 18 2023)
+
+#### 🚀 Enhancement
+
+- INT-9794: refactor integration error handling and add retry logic [#209](https://github.com/JupiterOne/graph-google/pull/209) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### ⚠️ Pushed to `main`
+
+- Populate CODEOWENRS, baseline package.json and baseline cortex.yaml ([@jablonnc](https://github.com/jablonnc))
+
+#### Authors: 2
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+- Noah Jablonski ([@jablonnc](https://github.com/jablonnc))
+
+---
+
 # v4.1.5 (Mon Sep 11 2023)
 
 #### 🐛 Bug Fix

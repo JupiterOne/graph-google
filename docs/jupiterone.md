@@ -120,7 +120,8 @@ permissions required by JupiterOne, and which will include only the
    permissions:
 
    - Manage Devices and Settings
-   - Manage Chrome OS Devices (read only)
+   - Chrome Management -> Manage Chrome OS Devices
+   - Chrome Management -> View Extensions List Report
 
 6. In the **Privileges**, **Admin API Privileges** section, check these
    permissions:
@@ -129,7 +130,6 @@ permissions required by JupiterOne, and which will include only the
    - Groups -> Read
    - Domain Management
    - User Security Management
-   - Chrome Management -> View Extensions List Report
 
 NOTE: In order to ingest role and role assignment data you will need to grant
 this account Super Admin permissions in addition to the custom role listed

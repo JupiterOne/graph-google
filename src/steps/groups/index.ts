@@ -4,9 +4,9 @@ import {
   createDirectRelationship,
   Entity,
   getRawData,
-  IntegrationErrorEventName,
   IntegrationProviderAuthorizationError,
   IntegrationStep,
+  IntegrationWarnEventName,
   JobState,
   Relationship,
 } from '@jupiterone/integration-sdk-core';
@@ -63,11 +63,15 @@ async function createGroupEntities(
       }
     });
   } catch (err) {
-    if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.info({ err }, 'Could not ingest group.');
-      context.logger.publishErrorEvent({
-        name: IntegrationErrorEventName.MissingPermission,
-        description: `Could not ingest groups. Missing required API Privilege. Under Privileges -> Admin API Privileges please check Groups -> Read.`,
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
+        description: `Could not ingest groups. Missing required scope(s) (scopes=${client.requiredScopes.join(
+          ', ',
+        )}). Additionally, Groups -> Read Admin API Privilege needs to be enabled.`,
       });
       return;
     }
@@ -98,6 +102,7 @@ function findGroupByEmail(groups: Entity[], email: string): Entity | undefined {
 }
 
 async function iterateGroupMembers(
+  context: IntegrationStepContext,
   groupEntities: Entity[],
   client: GSuiteGroupClient,
   callback: (
@@ -108,9 +113,26 @@ async function iterateGroupMembers(
   for (const groupEntity of groupEntities) {
     const groupId = groupEntity.id as string;
 
-    await client.iterateGroupMembers(groupId, async (groupMember) => {
-      await callback(groupEntity, groupMember);
-    });
+    try {
+      await client.iterateGroupMembers(groupId, async (groupMember) => {
+        await callback(groupEntity, groupMember);
+      });
+    } catch (err) {
+      if (
+        err instanceof IntegrationProviderAuthorizationError &&
+        err.message.includes('Not Authorized')
+      ) {
+        context.logger.publishWarnEvent({
+          name: IntegrationWarnEventName.MissingPermission,
+          description: `Could not ingest group members. Missing required scope(s) (scopes=${client.requiredScopes.join(
+            ', ',
+          )}). Additionally, Groups -> Read Admin API Privilege needs to be enabled.`,
+        });
+        return;
+      }
+
+      throw err;
+    }
   }
 }
 
@@ -172,93 +194,81 @@ export async function fetchGroups(
   let currentGroupKey;
   let currentGroupMembersProcessed;
 
-  try {
-    if (!groupEntities) return;
+  if (!groupEntities) return;
 
-    await iterateGroupMembers(
-      groupEntities,
-      client,
-      async (groupEntity, groupMember) => {
-        if (!currentGroupKey || currentGroupKey !== groupEntity._key) {
-          currentGroupMembersProcessed = 0;
-          currentGroupKey = groupEntity._key;
-          groupsProcessed++;
-        }
+  await iterateGroupMembers(
+    context,
+    groupEntities,
+    client,
+    async (groupEntity, groupMember) => {
+      if (!currentGroupKey || currentGroupKey !== groupEntity._key) {
+        currentGroupMembersProcessed = 0;
+        currentGroupKey = groupEntity._key;
+        groupsProcessed++;
+      }
 
-        currentGroupMembersProcessed++;
-        totalGroupMembersProcessed++;
+      currentGroupMembersProcessed++;
+      totalGroupMembersProcessed++;
 
-        switch (groupMember.type) {
-          case MemberType.GROUP:
-            await jobState.addRelationship(
-              createRelationshipFromGroupMemberTypeGroup(
-                groupEntities,
-                groupEntity,
-                groupMember,
-              ),
-            );
-            break;
-          case MemberType.USER: {
-            const relationship = await createRelationshipFromGroupMemberTypeUser(
+      switch (groupMember.type) {
+        case MemberType.GROUP:
+          await jobState.addRelationship(
+            createRelationshipFromGroupMemberTypeGroup(
+              groupEntities,
               groupEntity,
               groupMember,
-              jobState,
-            );
-            // Due to the fact that multiple users can have the same email address,
-            // mapped group->member relationships are liable to be duplicated. Handle
-            // these specific cases.
-            if (
-              typeof relationship.email === 'string' &&
-              jobState.hasKey(relationship._key)
-            ) {
-              logger.warn(
-                {
-                  relationship,
-                },
-                `There are multiple users in the group ${groupEntity.displayName} with the same email address: ${groupMember.email}. This is against Google's policies.` +
-                  groupEntity.webLink
-                  ? ` Please fix this issue here: ${groupEntity.webLink}`
-                  : '',
-              );
-            } else {
-              await jobState.addRelationship(relationship);
-            }
-            break;
-          }
-          default:
-            context.logger.trace(
-              {
-                groupType: groupMember.type,
-              },
-              'Unknown group type encountered',
-            );
-            break;
-        }
-
-        if (groupsProcessed % GROUPS_LOG_INTERVAL === 0) {
-          context.logger.info(
-            {
-              groupsProcessed,
-              totalGroupMembersProcessed,
-              currentGroupMembersProcessed,
-            },
-            'Generating member relationships for directory groups...',
+            ),
           );
+          break;
+        case MemberType.USER: {
+          const relationship = await createRelationshipFromGroupMemberTypeUser(
+            groupEntity,
+            groupMember,
+            jobState,
+          );
+          // Due to the fact that multiple users can have the same email address,
+          // mapped group->member relationships are liable to be duplicated. Handle
+          // these specific cases.
+          if (
+            typeof relationship.email === 'string' &&
+            jobState.hasKey(relationship._key)
+          ) {
+            logger.warn(
+              {
+                relationship,
+              },
+              `There are multiple users in the group ${groupEntity.displayName} with the same email address: ${groupMember.email}. This is against Google's policies.` +
+                groupEntity.webLink
+                ? ` Please fix this issue here: ${groupEntity.webLink}`
+                : '',
+            );
+          } else {
+            await jobState.addRelationship(relationship);
+          }
+          break;
         }
-      },
-    );
-  } catch (err) {
-    if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.info({ err }, 'Could not ingest group members .');
-      context.logger.publishErrorEvent({
-        name: IntegrationErrorEventName.MissingPermission,
-        description: `Could not ingest group members. Missing required API Privilege. Under Privileges -> Admin API Privileges please check Users -> Read.`,
-      });
-      return;
-    }
+        default:
+          context.logger.trace(
+            {
+              groupType: groupMember.type,
+            },
+            'Unknown group type encountered',
+          );
+          break;
+      }
 
-    throw err;
-  }
+      if (groupsProcessed % GROUPS_LOG_INTERVAL === 0) {
+        context.logger.info(
+          {
+            groupsProcessed,
+            totalGroupMembersProcessed,
+            currentGroupMembersProcessed,
+          },
+          'Generating member relationships for directory groups...',
+        );
+      }
+    },
+  );
 
   context.logger.info(
     {
@@ -283,19 +293,38 @@ export async function fetchGroupSettings(
   await jobState.iterateEntities(
     { _type: entities.GROUP._type },
     async (groupEntity) => {
-      const group = getRawData(groupEntity) as admin_directory_v1.Schema$Group;
-      const groupSettings = await client.getGroupSettings(group.email!);
+      try {
+        const group = getRawData(
+          groupEntity,
+        ) as admin_directory_v1.Schema$Group;
+        const groupSettings = await client.getGroupSettings(group.email!);
 
-      if (groupSettings) {
-        await context.jobState.addRelationship(
-          createDirectRelationship({
-            _class: relationships.GROUP_HAS_SETTINGS._class,
-            from: groupEntity,
-            to: await context.jobState.addEntity(
-              createGroupSettingsEntity(group, groupSettings),
-            ),
-          }),
-        );
+        if (groupSettings) {
+          await context.jobState.addRelationship(
+            createDirectRelationship({
+              _class: relationships.GROUP_HAS_SETTINGS._class,
+              from: groupEntity,
+              to: await context.jobState.addEntity(
+                createGroupSettingsEntity(group, groupSettings),
+              ),
+            }),
+          );
+        }
+      } catch (err) {
+        if (
+          err instanceof IntegrationProviderAuthorizationError &&
+          err.message.includes('Not Authorized')
+        ) {
+          context.logger.publishWarnEvent({
+            name: IntegrationWarnEventName.MissingPermission,
+            description: `Could not ingest group setttings. Missing required scope(s) (scopes=${client.requiredScopes.join(
+              ', ',
+            )}). Additionally, Groups -> Read Admin API Privilege needs to be enabled.`,
+          });
+          return;
+        }
+
+        throw err;
       }
     },
   );

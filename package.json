@@ -49,9 +49,10 @@
   },
   "dependencies": {
     "@jupiterone/vendor-stack": "^2.0.4",
+    "@lifeomic/attempt": "^3.0.3",
     "@types/node": "^18",
-    "gaxios": "^5.1.0",
-    "googleapis": "^92.0.0"
+    "gaxios": "^6.1.1",
+    "googleapis": "^127.0.0"
   },
   "auto": {
     "plugins": [

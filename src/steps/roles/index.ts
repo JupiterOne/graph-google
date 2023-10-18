@@ -39,8 +39,10 @@ export async function fetchRoles(
       await context.jobState.addRelationship(relationship);
     });
   } catch (err) {
-    if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.info({ err }, 'Could not ingest roles');
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest role data. Missing required scope(s) (scopes=${client.requiredScopes.join(

@@ -1,7 +1,7 @@
 import {
   IntegrationStep,
   IntegrationProviderAuthorizationError,
-  IntegrationErrorEventName,
+  IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, relationships, Steps } from '../../constants';
@@ -45,16 +45,15 @@ export async function fetchMobileDevices(
       );
     });
   } catch (err) {
-    if (err instanceof IntegrationProviderAuthorizationError) {
-      context.logger.info(
-        { err },
-        'Could not ingest mobile device information.',
-      );
-      context.logger.publishErrorEvent({
-        name: IntegrationErrorEventName.MissingPermission,
+    if (
+      err instanceof IntegrationProviderAuthorizationError &&
+      err.message.includes('Not Authorized')
+    ) {
+      context.logger.publishWarnEvent({
+        name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest mobile device data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',
-        )}).  Additionally, the admin email provided in configuration must have the Admin API privilege "Manage Devices and Settings" enabled.`,
+        )}). Additionally, the admin email provided in configuration must have the Admin API privilege "Manage Devices and Settings" enabled.`,
       });
       return;
     }

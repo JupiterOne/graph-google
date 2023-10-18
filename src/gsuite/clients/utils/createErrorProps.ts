@@ -17,12 +17,14 @@ export type GaxiosErrorResponse = {
 export function createErrorProps(
   error: GaxiosError & { errors: GaxiosErrorResponse[] },
 ): J1ApiErrorProps {
+  const errorInResponse = error.errors ? error.errors[0].message : undefined;
+
   if (error.constructor.name === 'GaxiosError' && error.response) {
     return {
       cause: error,
       endpoint: error.response?.config?.url || UNKNOWN_VALUE,
       status: error.response?.status,
-      statusText: error.errors[0].message || error.response?.statusText,
+      statusText: errorInResponse || error.response?.statusText,
     };
   } else {
     return {

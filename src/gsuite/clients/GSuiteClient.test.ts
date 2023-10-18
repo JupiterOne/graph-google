@@ -10,6 +10,7 @@ import { createMockIntegrationLogger } from '@jupiterone/integration-sdk-testing
 import { getMockIntegrationConfig } from '../../../test/config';
 import GSuiteAdminClient from './GSuiteAdminClient';
 import { CreateGSuiteClientParams, withErrorHandling } from './GSuiteClient';
+import { GaxiosError } from 'gaxios';
 
 function getMockCredentials(): Credentials {
   return {};
@@ -175,10 +176,20 @@ describe('withErrorHandling', () => {
   });
 
   test('should throw an IntegrationProviderAuthorizationError on 401 errors', async () => {
-    const mockForbiddenError = new Error() as any;
-    mockForbiddenError.code = 401;
-    mockForbiddenError.message = mockForbiddenError.name =
-      'unauthorized_client';
+    const mockForbiddenError = new GaxiosError(
+      'Not Authorized to access this resource/api',
+      {},
+      {
+        status: 401,
+        statusText: 'unauthorized_client',
+        config: {},
+        headers: {},
+        data: {},
+        request: {
+          responseURL: '',
+        },
+      },
+    );
     const executionHandler = jest.fn().mockRejectedValue(mockForbiddenError);
     const handledFunction = withErrorHandling(
       createMockIntegrationLogger(),
@@ -190,10 +201,22 @@ describe('withErrorHandling', () => {
   });
 
   test('should throw an IntegrationProviderAuthorizationError on 403 errors', async () => {
-    const mockForbiddenError = new Error() as any;
-    mockForbiddenError.code = 403;
+    const mockForbiddenError = new GaxiosError(
+      'Not Authorized to access this resource/api',
+      {},
+      {
+        status: 403,
+        statusText: 'Not Authorized',
+        config: {},
+        headers: {},
+        data: {},
+        request: {
+          responseURL: '',
+        },
+      },
+    );
+    mockForbiddenError.status = 403;
     mockForbiddenError.message = 'Not Authorized to access this resource/api';
-    mockForbiddenError.name = 'Error';
     const executionHandler = jest.fn().mockRejectedValue(mockForbiddenError);
     const handledFunction = withErrorHandling(
       createMockIntegrationLogger(),

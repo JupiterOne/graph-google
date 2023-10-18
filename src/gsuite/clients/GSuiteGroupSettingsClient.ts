@@ -1,9 +1,9 @@
 import { google, groupssettings_v1 } from 'googleapis';
 
-import GSuiteClient, { CreateGSuiteClientParams } from './GSuiteClient';
-
-import { IntegrationProviderAuthorizationError } from '@jupiterone/integration-sdk-core';
-import { createErrorProps } from './utils/createErrorProps';
+import GSuiteClient, {
+  CreateGSuiteClientParams,
+  withErrorHandling,
+} from './GSuiteClient';
 
 export class GSuiteGroupSettingsClient extends GSuiteClient<
   groupssettings_v1.Groupssettings
@@ -29,10 +29,13 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
     let settings: groupssettings_v1.Schema$Groups;
 
     try {
-      const response = await client.groups.get({
-        groupUniqueId: encodeURIComponent(groupEmailAddress),
-        alt: 'json',
-      });
+      const response = await withErrorHandling(this.logger, async () => {
+        return client.groups.get({
+          groupUniqueId: encodeURIComponent(groupEmailAddress),
+          alt: 'json',
+        });
+      })();
+
       settings = response.data;
     } catch (err) {
       if ([400, 404].includes(err.code)) {
@@ -48,8 +51,6 @@ export class GSuiteGroupSettingsClient extends GSuiteClient<
         );
         // Next check if we have an auth error.  Handling separate so we
         // can throw IntegrationProviderAuthorizationError specifically.
-      } else if ([401, 403].includes(err.code)) {
-        throw new IntegrationProviderAuthorizationError(createErrorProps(err));
       } else {
         // Other errors may be being thrown by `GSuiteClient` so we should
         // just throw this so that it isn't skipped over.

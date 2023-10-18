@@ -7,6 +7,7 @@ import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, Steps } from '../../constants';
 import { createDomainEntity } from './converters';
 import { GSuiteDomainClient } from '../../gsuite/clients/GSuiteDomainClient';
+import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
 
 export async function fetchDomains(
   context: IntegrationStepContext,
@@ -23,7 +24,7 @@ export async function fetchDomains(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      err.message.includes('Not Authorized')
+      authorizationErrorResponses.includes(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

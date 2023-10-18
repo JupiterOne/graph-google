@@ -16,6 +16,11 @@ import {
 } from './utils/createErrorProps';
 import { retry } from '@lifeomic/attempt';
 
+export const authorizationErrorResponses = [
+  'Not Authorized to access this resource/api',
+  'The caller does not have permission',
+];
+
 export type PageableGaxiosResponse<T> = GaxiosResponse<
   T & {
     nextPageToken?: string | null | undefined;
@@ -119,7 +124,7 @@ export function withErrorHandling<T extends (...params: any) => any>(
       {
         delay: 2_000,
         timeout: 91_000,
-        maxAttempts: 2,
+        maxAttempts: 10,
         factor: 2.25,
         handleError(err, ctx) {
           const { error, isRetryableError } = handleError(err);

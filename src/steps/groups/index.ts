@@ -27,6 +27,7 @@ import {
   createGroupSettingsEntity,
   MemberType,
 } from './converters';
+import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
 
 const GROUPS_LOG_INTERVAL = 50;
 
@@ -65,7 +66,7 @@ async function createGroupEntities(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      err.message.includes('Not Authorized')
+      authorizationErrorResponses.includes(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,
@@ -120,7 +121,7 @@ async function iterateGroupMembers(
     } catch (err) {
       if (
         err instanceof IntegrationProviderAuthorizationError &&
-        err.message.includes('Not Authorized')
+        authorizationErrorResponses.includes(err.statusText)
       ) {
         context.logger.publishWarnEvent({
           name: IntegrationWarnEventName.MissingPermission,
@@ -313,7 +314,7 @@ export async function fetchGroupSettings(
       } catch (err) {
         if (
           err instanceof IntegrationProviderAuthorizationError &&
-          err.message.includes('Not Authorized')
+          authorizationErrorResponses.includes(err.statusText)
         ) {
           context.logger.publishWarnEvent({
             name: IntegrationWarnEventName.MissingPermission,

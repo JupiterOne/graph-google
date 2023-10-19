@@ -14,6 +14,7 @@ import {
   createUserAssignedTokenRelationship,
 } from './converters';
 import { createVendorTypeFromName } from '@jupiterone/vendor-stack';
+import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
 
 export async function fetchTokens(
   context: IntegrationStepContext,
@@ -77,7 +78,7 @@ export async function fetchTokens(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      err.message.includes('Not Authorized')
+      authorizationErrorResponses.includes(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

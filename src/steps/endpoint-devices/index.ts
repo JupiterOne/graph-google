@@ -14,6 +14,7 @@ import {
   VIEW,
 } from '../../gsuite/clients/GSuiteDeviceClient';
 import getAccountEntity from '../../utils/getAccountEntity';
+import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
 
 export async function fetchUserDevices(
   context: IntegrationStepContext,
@@ -54,7 +55,7 @@ export async function fetchUserDevices(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      err.message.includes('Not Authorized')
+      authorizationErrorResponses.includes(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

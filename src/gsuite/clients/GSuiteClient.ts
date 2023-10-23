@@ -136,8 +136,9 @@ export function withErrorHandling<T extends (...params: any) => any>(
 
           if (!isRetryableError) {
             ctx.abort();
-            throw error;
           }
+
+          throw error;
         },
       },
     );

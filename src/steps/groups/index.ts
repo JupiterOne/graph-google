@@ -325,6 +325,18 @@ export async function fetchGroupSettings(
           return;
         }
 
+        if (
+          err instanceof IntegrationProviderAuthorizationError &&
+          err.status === 403 &&
+          err.statusText.match(/Quota exceeded/i)
+        ) {
+          context.logger.publishWarnEvent({
+            name: IntegrationWarnEventName.IngestionLimitEncountered,
+            description: err.statusText,
+          });
+          return;
+        }
+
         throw err;
       }
     },

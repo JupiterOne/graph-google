@@ -4,7 +4,12 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships, Steps } from '../../constants';
+import {
+  entities,
+  IngestionSources,
+  relationships,
+  Steps,
+} from '../../constants';
 import {
   createMobileDeviceEntity,
   createAccountManagesMobileDeviceRelationship,
@@ -66,6 +71,7 @@ export async function fetchMobileDevices(
 export const mobileDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.MOBILE_DEVICES,
+    ingestionSourceId: IngestionSources.MOBILE_DEVICES,
     name: 'Mobile Device',
     entities: [entities.MOBILE_DEVICE],
     relationships: [relationships.ACCOUNT_MANAGES_MOBILE_DEVICE],

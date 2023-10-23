@@ -4,7 +4,7 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, Steps } from '../../constants';
+import { entities, IngestionSources, Steps } from '../../constants';
 import { createChromeExtensionEntity } from './converters';
 import { GSuiteInstalledAppsClient } from '../../gsuite/clients/GSuiteInstalledAppsClient';
 import { chromemanagement_v1 } from 'googleapis';
@@ -55,6 +55,7 @@ function isValidInstalledAppEntity(
 export const extensionSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.CHROME_EXTENSIONS,
+    ingestionSourceId: IngestionSources.CHROME_EXTENSIONS,
     name: 'Chrome Extensions',
     entities: [entities.CHROME_EXTENSION],
     relationships: [],

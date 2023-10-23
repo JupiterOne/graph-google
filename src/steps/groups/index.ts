@@ -11,7 +11,12 @@ import {
   Relationship,
 } from '@jupiterone/integration-sdk-core';
 
-import { entities, relationships, Steps } from '../../constants';
+import {
+  entities,
+  IngestionSources,
+  relationships,
+  Steps,
+} from '../../constants';
 import { GSuiteGroupClient } from '../../gsuite/clients/GSuiteGroupClient';
 import { GSuiteGroupSettingsClient } from '../../gsuite/clients/GSuiteGroupSettingsClient';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
@@ -346,6 +351,7 @@ export async function fetchGroupSettings(
 export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.GROUPS,
+    ingestionSourceId: IngestionSources.GROUPS,
     name: 'Groups',
     entities: [entities.GROUP],
     relationships: [
@@ -358,6 +364,7 @@ export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
   },
   {
     id: Steps.GROUP_SETTINGS,
+    ingestionSourceId: IngestionSources.GROUP_SETTINGS,
     name: 'Group Settings',
     entities: [entities.GROUP_SETTINGS],
     relationships: [relationships.GROUP_HAS_SETTINGS],

@@ -7,7 +7,12 @@ import {
   RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships, Steps } from '../../constants';
+import {
+  entities,
+  IngestionSources,
+  relationships,
+  Steps,
+} from '../../constants';
 import { createRoleEntity } from './converters';
 import { GSuiteRoleClient } from '../../gsuite/clients/GSuiteRoleClient';
 import { getAccountKey } from '../account/converters';
@@ -60,6 +65,7 @@ export async function fetchRoles(
 export const roleSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.ROLES,
+    ingestionSourceId: IngestionSources.ROLES,
     name: 'Roles',
     entities: [entities.ROLE],
     relationships: [relationships.ACCOUNT_HAS_ROLE],

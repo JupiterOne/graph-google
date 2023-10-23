@@ -6,7 +6,7 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { relationships, Steps } from '../../constants';
+import { IngestionSources, relationships, Steps } from '../../constants';
 import { GSuiteRoleAssignmentClient } from '../../gsuite/clients/GSuiteRoleAssignmentClient';
 import { getUserEntityKey } from '../users/converters';
 import { getRoleEntityKey } from '../roles/converters';
@@ -84,6 +84,7 @@ export async function fetchRoleAssignments(
 export const roleAssignmentSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.ROLE_ASSIGNMENTS,
+    ingestionSourceId: IngestionSources.ROLE_ASSIGNMENTS,
     name: 'Role Assignments',
     entities: [],
     relationships: [relationships.USER_ASSIGNED_ROLE],

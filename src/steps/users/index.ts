@@ -4,7 +4,12 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships, Steps } from '../../constants';
+import {
+  entities,
+  IngestionSources,
+  relationships,
+  Steps,
+} from '../../constants';
 import { GSuiteUserClient } from '../../gsuite/clients/GSuiteUserClient';
 import {
   createUserEntity,
@@ -87,6 +92,7 @@ export async function fetchUsers(
 export const userSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.USERS,
+    ingestionSourceId: IngestionSources.USERS,
     name: 'Users',
     entities: [entities.USER, entities.SITE],
     relationships: [

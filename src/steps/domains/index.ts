@@ -4,7 +4,7 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, Steps } from '../../constants';
+import { entities, IngestionSources, Steps } from '../../constants';
 import { createDomainEntity } from './converters';
 import { GSuiteDomainClient } from '../../gsuite/clients/GSuiteDomainClient';
 import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
@@ -42,6 +42,7 @@ export async function fetchDomains(
 export const domainSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.DOMAINS,
+    ingestionSourceId: IngestionSources.DOMAINS,
     name: 'Domains',
     entities: [entities.DOMAIN],
     relationships: [],

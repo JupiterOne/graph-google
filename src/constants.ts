@@ -23,6 +23,20 @@ export const Steps = {
   CHROME_EXTENSIONS: 'step-fetch-chrome-extensions',
 };
 
+export const IngestionSources = {
+  DOMAINS: 'domains',
+  ROLES: 'roles',
+  ROLE_ASSIGNMENTS: 'role-assignments',
+  USERS: 'users',
+  TOKENS: 'tokens',
+  GROUPS: 'groups',
+  GROUP_SETTINGS: 'group-settings',
+  MOBILE_DEVICES: 'mobile-devices',
+  USER_DEVICES: 'user-devices',
+  CHROME_OS_DEVICE: 'chrome-os-devices',
+  CHROME_EXTENSIONS: 'chrome-extensions',
+};
+
 export const entities: Record<
   | 'DOMAIN'
   | 'USER'

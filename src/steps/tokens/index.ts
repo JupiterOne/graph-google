@@ -7,7 +7,12 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships, Steps } from '../../constants';
+import {
+  entities,
+  IngestionSources,
+  relationships,
+  Steps,
+} from '../../constants';
 import { GSuiteTokenClient } from '../../gsuite/clients/GSuiteTokenClient';
 import {
   createTokenEntity,
@@ -96,6 +101,7 @@ export async function fetchTokens(
 export const tokenSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.TOKENS,
+    ingestionSourceId: IngestionSources.TOKENS,
     name: 'Tokens',
     entities: [entities.TOKEN],
     relationships: [

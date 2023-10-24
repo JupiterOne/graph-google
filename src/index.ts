@@ -12,6 +12,7 @@ import { chromeOSDeviceSteps } from './steps/chrome-os-devices';
 import { mobileDeviceSteps } from './steps/mobile_devices';
 import { endpointDeviceSteps } from './steps/endpoint-devices';
 import { extensionSteps } from './steps/chrome-extensions';
+import { ingestionConfig } from './ingestSources';
 
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields: {
@@ -27,6 +28,7 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
     },
   },
   validateInvocation,
+  ingestionConfig,
   integrationSteps: [
     ...domainSteps,
     ...accountSteps,

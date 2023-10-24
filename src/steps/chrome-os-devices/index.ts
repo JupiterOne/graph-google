@@ -4,7 +4,12 @@ import {
   IntegrationWarnEventName,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
-import { entities, relationships, Steps } from '../../constants';
+import {
+  entities,
+  IngestionSources,
+  relationships,
+  Steps,
+} from '../../constants';
 import {
   createAccountManagesChromeOSDeviceRelationship,
   createChromeOSDeviceEntity,
@@ -66,6 +71,7 @@ export async function fetchChromeOSDevices(
 export const chromeOSDeviceSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: Steps.CHROME_OS_DEVICE,
+    ingestionSourceId: IngestionSources.CHROME_OS_DEVICE,
     name: 'Chrome OS Device',
     entities: [entities.CHROME_OS_DEVICE],
     relationships: [relationships.ACCOUNT_MANAGES_CHROME_OS_DEVICE],

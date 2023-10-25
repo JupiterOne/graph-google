@@ -296,6 +296,8 @@ export async function fetchGroupSettings(
     logger,
   });
 
+  const quotaExceededWarnings: string[] = [];
+
   await jobState.iterateEntities(
     { _type: entities.GROUP._type },
     async (groupEntity) => {
@@ -335,10 +337,10 @@ export async function fetchGroupSettings(
           err.status === 403 &&
           err.statusText.match(/Quota exceeded/i)
         ) {
-          context.logger.publishWarnEvent({
-            name: IntegrationWarnEventName.IngestionLimitEncountered,
-            description: err.statusText,
-          });
+          if (!quotaExceededWarnings.includes(err.statusText)) {
+            quotaExceededWarnings.push(err.statusText);
+          }
+
           return;
         }
 
@@ -346,6 +348,13 @@ export async function fetchGroupSettings(
       }
     },
   );
+
+  for (const quotaExceededWarning of quotaExceededWarnings) {
+    context.logger.publishWarnEvent({
+      name: IntegrationWarnEventName.IngestionLimitEncountered,
+      description: quotaExceededWarning,
+    });
+  }
 }
 
 export const groupSteps: IntegrationStep<IntegrationConfig>[] = [

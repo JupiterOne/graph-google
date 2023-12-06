@@ -10,30 +10,38 @@ import { GSuiteInstalledAppsClient } from '../../gsuite/clients/GSuiteInstalledA
 import { chromemanagement_v1 } from 'googleapis';
 import { RawInstalledAppEntity } from './types';
 import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import generateEntityKey from '../../utils/generateEntityKey';
 
 const APP_EXTENSION_TYPE = 'EXTENSION';
 
-export async function fetchChromeExtensions(
-  context: IntegrationStepContext,
-): Promise<void> {
+export async function fetchChromeExtensions({
+  instance,
+  logger,
+  jobState,
+}: IntegrationStepContext): Promise<void> {
   const client = new GSuiteInstalledAppsClient({
-    config: context.instance.config,
-    logger: context.logger,
+    config: instance.config,
+    logger: logger,
   });
 
   try {
     await client.iterateInstalledApps(APP_EXTENSION_TYPE, async (app) => {
-      if (!isValidInstalledAppEntity(app)) {
+      if (
+        !isValidInstalledAppEntity(app) &&
+        !jobState.hasKey(
+          generateEntityKey(entities.CHROME_EXTENSION._type, app.appId),
+        )
+      ) {
         return;
       }
-      await context.jobState.addEntity(createChromeExtensionEntity(app));
+      await jobState.addEntity(createChromeExtensionEntity(app));
     });
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
       authorizationErrorResponses.includes(err.statusText)
     ) {
-      context.logger.publishWarnEvent({
+      logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,
         description: `Could not ingest chrome browser extension data. Missing required scope(s) (scopes=${client.requiredScopes.join(
           ', ',

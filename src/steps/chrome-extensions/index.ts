@@ -28,7 +28,7 @@ export async function fetchChromeExtensions({
     await client.iterateInstalledApps(APP_EXTENSION_TYPE, async (app) => {
       if (
         !isValidInstalledAppEntity(app) &&
-        !jobState.hasKey(
+        jobState.hasKey(
           generateEntityKey(entities.CHROME_EXTENSION._type, app.appId),
         )
       ) {

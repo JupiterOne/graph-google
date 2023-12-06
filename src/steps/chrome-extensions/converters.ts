@@ -15,7 +15,7 @@ export function createChromeExtensionEntity(
     entityData: {
       source: data,
       assign: {
-        _key: generateEntityKey(entities.CHROME_EXTENSION._type, data.appId),
+        _key: createChromeExtensionEntityKey(data),
         _type: entities.CHROME_EXTENSION._type,
         _class: entities.CHROME_EXTENSION._class,
         id: data.appId || 'UNKNOWN',
@@ -33,6 +33,15 @@ export function createChromeExtensionEntity(
     },
   });
 }
+
+export const createChromeExtensionEntityKey = (
+  data: chromemanagement_v1.Schema$GoogleChromeManagementV1InstalledApp,
+): string => {
+  return generateEntityKey(
+    entities.CHROME_EXTENSION._type,
+    `${data.appId}_${data.appInstallType}_${data.appSource}`,
+  );
+};
 
 export function createChromeOsDeviceInstalledChromeExtensionRelationship(params: {
   deviceEntity: Entity;

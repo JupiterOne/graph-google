@@ -5,12 +5,14 @@ import {
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { entities, IngestionSources, Steps } from '../../constants';
-import { createChromeExtensionEntity } from './converters';
+import {
+  createChromeExtensionEntity,
+  createChromeExtensionEntityKey,
+} from './converters';
 import { GSuiteInstalledAppsClient } from '../../gsuite/clients/GSuiteInstalledAppsClient';
 import { chromemanagement_v1 } from 'googleapis';
 import { RawInstalledAppEntity } from './types';
 import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
-import generateEntityKey from '../../utils/generateEntityKey';
 
 const APP_EXTENSION_TYPE = 'EXTENSION';
 
@@ -27,10 +29,8 @@ export async function fetchChromeExtensions({
   try {
     await client.iterateInstalledApps(APP_EXTENSION_TYPE, async (app) => {
       if (
-        !isValidInstalledAppEntity(app) &&
-        !jobState.hasKey(
-          generateEntityKey(entities.CHROME_EXTENSION._type, app.appId),
-        )
+        !isValidInstalledAppEntity(app) ||
+        jobState.hasKey(createChromeExtensionEntityKey(app))
       ) {
         return;
       }

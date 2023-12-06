@@ -1,3 +1,15 @@
+# v4.2.5 (Wed Dec 06 2023)
+
+#### 🐛 Bug Fix
+
+- Int 9845 fix [#214](https://github.com/JupiterOne/graph-google/pull/214) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.2.4 (Wed Dec 06 2023)
 
 #### 🐛 Bug Fix

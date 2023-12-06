@@ -6,9 +6,11 @@ import {
   createDirectRelationship,
   createIntegrationEntity,
 } from '@jupiterone/integration-sdk-core';
-import { RawInstalledAppEntity } from './types';
+import { chromemanagement_v1 } from 'googleapis';
 
-export function createChromeExtensionEntity(data: RawInstalledAppEntity) {
+export function createChromeExtensionEntity(
+  data: chromemanagement_v1.Schema$GoogleChromeManagementV1InstalledApp,
+) {
   return createIntegrationEntity({
     entityData: {
       source: data,
@@ -16,8 +18,8 @@ export function createChromeExtensionEntity(data: RawInstalledAppEntity) {
         _key: generateEntityKey(entities.CHROME_EXTENSION._type, data.appId),
         _type: entities.CHROME_EXTENSION._type,
         _class: entities.CHROME_EXTENSION._class,
-        id: data.appId,
-        displayName: data.displayName || data.appId,
+        id: data.appId || 'UNKNOWN',
+        displayName: data.displayName || data.appId || 'UNKNOWN',
         name: data.displayName,
         description: data.description,
         installType: data.appInstallType,

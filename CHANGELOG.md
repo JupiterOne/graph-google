@@ -1,3 +1,20 @@
+# v4.2.4 (Wed Dec 06 2023)
+
+#### 🐛 Bug Fix
+
+- INT-9845: fix duplicated key issue [#213](https://github.com/JupiterOne/graph-google/pull/213) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### ⚠️ Pushed to `main`
+
+- Fix x-cortex-service-groups where tier-4 was set incorrectly ([@jablonnc](https://github.com/jablonnc))
+
+#### Authors: 2
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+- Noah Jablonski ([@jablonnc](https://github.com/jablonnc))
+
+---
+
 # v4.2.3 (Wed Oct 25 2023)
 
 #### 🐛 Bug Fix

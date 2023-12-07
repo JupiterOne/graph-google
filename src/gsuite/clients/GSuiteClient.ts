@@ -134,11 +134,10 @@ export function withErrorHandling<T extends (...params: any) => any>(
             `Handling API error. Attempt: ${ctx.attemptNum}.`,
           );
 
-          if (!isRetryableError) {
+          if (!isRetryableError || ctx.attemptsRemaining === 0) {
             ctx.abort();
+            throw error;
           }
-
-          throw error;
         },
       },
     );

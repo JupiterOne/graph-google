@@ -1,3 +1,15 @@
+# v4.2.6 (Thu Dec 07 2023)
+
+#### 🐛 Bug Fix
+
+- NO-TICKET: improve retry error handling [#215](https://github.com/JupiterOne/graph-google/pull/215) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.2.5 (Wed Dec 06 2023)
 
 #### 🐛 Bug Fix

@@ -1,3 +1,15 @@
+# v4.2.7 (Fri Dec 08 2023)
+
+#### 🐛 Bug Fix
+
+- NO-TICKET: add new auth error message [#216](https://github.com/JupiterOne/graph-google/pull/216) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.2.6 (Thu Dec 07 2023)
 
 #### 🐛 Bug Fix

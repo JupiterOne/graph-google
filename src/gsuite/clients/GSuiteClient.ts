@@ -19,6 +19,7 @@ import { retry } from '@lifeomic/attempt';
 export const authorizationErrorResponses = [
   'Not Authorized to access this resource/api',
   'The caller does not have permission',
+  'Provider authorization failed at',
 ];
 
 export type PageableGaxiosResponse<T> = GaxiosResponse<

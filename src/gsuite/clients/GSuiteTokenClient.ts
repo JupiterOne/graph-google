@@ -2,6 +2,7 @@ import { admin_directory_v1 } from 'googleapis';
 
 import GSuiteAdminClient from './GSuiteAdminClient';
 import { CreateGSuiteClientParams } from './GSuiteClient';
+import pMap from 'p-map';
 
 export class GSuiteTokenClient extends GSuiteAdminClient {
   constructor(params: CreateGSuiteClientParams) {
@@ -41,9 +42,15 @@ export class GSuiteTokenClient extends GSuiteAdminClient {
       }
     }
 
-    for (const token of tokenResponse.items || []) {
-      await callback(token);
-    }
+    await pMap(
+      tokenResponse.items || [],
+      async (token) => {
+        await callback(token);
+      },
+      {
+        concurrency: 5,
+      },
+    );
 
     return tokenDefaultResp;
   }

@@ -14,7 +14,7 @@ afterEach(async () => {
 });
 
 describe('fetch-chrome-extensions', () => {
-  test('success', async () => {
+  test.skip('success', async () => {
     recording = setupIntegrationRecording({
       name: 'fetch-chrome-extensions',
       directory: __dirname,

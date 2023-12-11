@@ -24,7 +24,9 @@ export async function fetchDomains(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.includes(err.statusText)
+      authorizationErrorResponses.filter((errorText) =>
+        err.statusText.match(errorText),
+      ).length > 0
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

@@ -39,7 +39,9 @@ export async function fetchChromeExtensions({
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.includes(err.statusText)
+      authorizationErrorResponses.filter((errorText) =>
+        err.statusText.match(errorText),
+      ).length > 0
     ) {
       logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

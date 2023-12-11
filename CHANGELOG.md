@@ -1,3 +1,15 @@
+# v4.2.9 (Mon Dec 11 2023)
+
+#### 🐛 Bug Fix
+
+- INT-9845: limit chrome extensions ingestion time [#219](https://github.com/JupiterOne/graph-google/pull/219) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.2.8 (Mon Dec 11 2023)
 
 #### 🐛 Bug Fix

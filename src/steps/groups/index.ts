@@ -33,6 +33,7 @@ import {
   MemberType,
 } from './converters';
 import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 const GROUPS_LOG_INTERVAL = 50;
 
@@ -71,9 +72,7 @@ async function createGroupEntities(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.filter((errorText) =>
-        err.statusText.match(errorText),
-      ).length > 0
+      isAuthorizationError(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

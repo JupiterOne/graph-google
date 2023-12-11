@@ -16,7 +16,7 @@ import {
 import { createRoleEntity } from './converters';
 import { GSuiteRoleClient } from '../../gsuite/clients/GSuiteRoleClient';
 import { getAccountKey } from '../account/converters';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 export async function fetchRoles(
   context: IntegrationStepContext,
@@ -47,9 +47,7 @@ export async function fetchRoles(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.filter((errorText) =>
-        err.statusText.match(errorText),
-      ).length > 0
+      isAuthorizationError(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

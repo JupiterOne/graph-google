@@ -10,7 +10,7 @@ import { IngestionSources, relationships, Steps } from '../../constants';
 import { GSuiteRoleAssignmentClient } from '../../gsuite/clients/GSuiteRoleAssignmentClient';
 import { getUserEntityKey } from '../users/converters';
 import { getRoleEntityKey } from '../roles/converters';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 export async function fetchRoleAssignments(
   context: IntegrationStepContext,
@@ -66,9 +66,7 @@ export async function fetchRoleAssignments(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.filter((errorText) =>
-        err.statusText.match(errorText),
-      ).length > 0
+      isAuthorizationError(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

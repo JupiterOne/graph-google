@@ -20,6 +20,7 @@ export const authorizationErrorResponses = [
   'Not Authorized to access this resource/api',
   'The caller does not have permission',
   'Provider authorization failed at',
+  'Please ensure that your API client in GSuite has the correct scopes',
 ];
 
 export type PageableGaxiosResponse<T> = GaxiosResponse<

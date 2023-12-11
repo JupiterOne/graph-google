@@ -18,7 +18,7 @@ import {
   createSiteHostsUserRelationship,
 } from './converters';
 import getAccountEntity from '../../utils/getAccountEntity';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 export async function fetchUsers(
   context: IntegrationStepContext,
@@ -74,7 +74,7 @@ export async function fetchUsers(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.includes(err.statusText)
+      isAuthorizationError(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

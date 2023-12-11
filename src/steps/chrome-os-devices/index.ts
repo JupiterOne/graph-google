@@ -16,7 +16,7 @@ import {
 } from './converters';
 import { GSuiteChromeOSDeviceClient } from '../../gsuite/clients/GSuiteChromeOSDeviceClient';
 import getAccountEntity from '../../utils/getAccountEntity';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 export async function fetchChromeOSDevices(
   context: IntegrationStepContext,
@@ -53,7 +53,7 @@ export async function fetchChromeOSDevices(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.includes(err.statusText)
+      isAuthorizationError(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

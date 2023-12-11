@@ -12,7 +12,7 @@ import {
 import { GSuiteInstalledAppsClient } from '../../gsuite/clients/GSuiteInstalledAppsClient';
 import { chromemanagement_v1 } from 'googleapis';
 import { RawInstalledAppEntity } from './types';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 const APP_EXTENSION_TYPE = 'EXTENSION';
 
@@ -39,7 +39,7 @@ export async function fetchChromeExtensions({
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.includes(err.statusText)
+      isAuthorizationError(err.statusText)
     ) {
       logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

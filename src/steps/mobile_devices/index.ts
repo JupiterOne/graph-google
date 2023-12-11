@@ -16,7 +16,7 @@ import {
 } from './converters';
 import { GSuiteMobileDeviceClient } from '../../gsuite/clients/GSuiteMobileDeviceClient';
 import getAccountEntity from '../../utils/getAccountEntity';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
+import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 export async function fetchMobileDevices(
   context: IntegrationStepContext,
@@ -53,7 +53,7 @@ export async function fetchMobileDevices(
   } catch (err) {
     if (
       err instanceof IntegrationProviderAuthorizationError &&
-      authorizationErrorResponses.includes(err.statusText)
+      isAuthorizationError(err.statusText)
     ) {
       context.logger.publishWarnEvent({
         name: IntegrationWarnEventName.MissingPermission,

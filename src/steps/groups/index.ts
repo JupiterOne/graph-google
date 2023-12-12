@@ -300,6 +300,7 @@ export async function fetchGroupSettings(
   });
 
   const quotaExceededWarnings: string[] = [];
+  const authWarnings: string[] = [];
 
   await jobState.iterateEntities(
     { _type: entities.GROUP._type },
@@ -328,12 +329,14 @@ export async function fetchGroupSettings(
             err.statusText.match(errorText),
           ).length > 0
         ) {
-          context.logger.publishWarnEvent({
-            name: IntegrationWarnEventName.MissingPermission,
-            description: `Could not ingest group setttings. Missing required scope(s) (scopes=${client.requiredScopes.join(
-              ', ',
-            )}). Additionally, Groups -> Read Admin API Privilege needs to be enabled.`,
-          });
+          const authErrorWarningMessage = `Could not ingest group setttings. Missing required scope(s) (scopes=${client.requiredScopes.join(
+            ', ',
+          )}). Additionally, Groups -> Read Admin API Privilege needs to be enabled.`;
+
+          if (!authWarnings.includes(authErrorWarningMessage)) {
+            authWarnings.push(authErrorWarningMessage);
+          }
+
           return;
         }
 
@@ -358,6 +361,13 @@ export async function fetchGroupSettings(
     context.logger.publishWarnEvent({
       name: IntegrationWarnEventName.IngestionLimitEncountered,
       description: quotaExceededWarning,
+    });
+  }
+
+  for (const authWarning of authWarnings) {
+    context.logger.publishWarnEvent({
+      name: IntegrationWarnEventName.MissingPermission,
+      description: authWarning,
     });
   }
 }

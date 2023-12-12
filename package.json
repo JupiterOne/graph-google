@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-google",
-  "version": "4.2.9",
+  "version": "4.2.10",
   "description": "A JupiterOne managed integration for Google",
   "repository": {
     "type": "git",

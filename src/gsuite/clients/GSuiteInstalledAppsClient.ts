@@ -34,6 +34,7 @@ export class GSuiteInstalledAppsClient extends GSuiteChromeManagementClient {
         return client.customers.reports.countInstalledApps({
           customer: `customers/${this.accountId}`,
           filter: `app_type=${appType} AND latest_profile_active_date>=${threeMonthsFormatted}`,
+          pageSize: 1000,
         });
       },
       async (data) => {

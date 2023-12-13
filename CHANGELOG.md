@@ -1,3 +1,15 @@
+# v4.2.11 (Wed Dec 13 2023)
+
+#### 🐛 Bug Fix
+
+- INT-9845: update fetching page size [#221](https://github.com/JupiterOne/graph-google/pull/221) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.2.10 (Tue Dec 12 2023)
 
 #### 🐛 Bug Fix

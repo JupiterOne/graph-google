@@ -1,3 +1,15 @@
+# v4.2.12 (Thu Dec 14 2023)
+
+#### 🐛 Bug Fix
+
+- INT-9845: add additional logs [#222](https://github.com/JupiterOne/graph-google/pull/222) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v4.2.11 (Wed Dec 13 2023)
 
 #### 🐛 Bug Fix

@@ -25,15 +25,16 @@ export class GSuiteInstalledAppsClient extends GSuiteChromeManagementClient {
   ): Promise<void> {
     const client = await this.getAuthenticatedServiceClient();
 
-    const oneMonth = new Date();
-    oneMonth.setMonth(oneMonth.getMonth() - 1);
-    const oneMonthFormatted = oneMonth.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+    const sixMonths = new Date();
+    sixMonths.setMonth(sixMonths.getMonth() - 1);
+    const sixMonthsFormatted = sixMonths.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
 
     await this.iterateApi(
-      async () => {
+      async (nextPageToken) => {
         return client.customers.reports.countInstalledApps({
+          pageToken: nextPageToken,
           customer: `customers/${this.accountId}`,
-          filter: `app_type=${appType} AND latest_profile_active_date>=${oneMonthFormatted} AND total_install_count>0`,
+          filter: `app_type=${appType} AND latest_profile_active_date>=${sixMonthsFormatted} AND total_install_count>0`,
           pageSize: 1000,
         });
       },

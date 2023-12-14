@@ -17,7 +17,7 @@ import { isAuthorizationError } from '../../utils/isAuthorizationError';
 const APP_EXTENSION_TYPE = 'EXTENSION';
 
 function isMultipleOfHundredThousand(num: number) {
-  return num % 100000 === 0;
+  return num % 1000 === 0;
 }
 
 export async function fetchChromeExtensions({
@@ -42,7 +42,7 @@ export async function fetchChromeExtensions({
       }
       await jobState.addEntity(createChromeExtensionEntity(app));
 
-      processedCount++;
+      processedCount = processedCount + 1;
 
       if (isMultipleOfHundredThousand(processedCount)) {
         logger.info(`Processing extensions: ${processedCount}`);

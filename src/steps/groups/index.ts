@@ -32,7 +32,6 @@ import {
   createGroupSettingsEntity,
   MemberType,
 } from './converters';
-import { authorizationErrorResponses } from '../../gsuite/clients/GSuiteClient';
 import { isAuthorizationError } from '../../utils/isAuthorizationError';
 
 const GROUPS_LOG_INTERVAL = 50;
@@ -127,9 +126,7 @@ async function iterateGroupMembers(
     } catch (err) {
       if (
         err instanceof IntegrationProviderAuthorizationError &&
-        authorizationErrorResponses.filter((errorText) =>
-          err.statusText.match(errorText),
-        ).length > 0
+        isAuthorizationError(err.statusText)
       ) {
         context.logger.publishWarnEvent({
           name: IntegrationWarnEventName.MissingPermission,
@@ -325,9 +322,7 @@ export async function fetchGroupSettings(
       } catch (err) {
         if (
           err instanceof IntegrationProviderAuthorizationError &&
-          authorizationErrorResponses.filter((errorText) =>
-            err.statusText.match(errorText),
-          ).length > 0
+          isAuthorizationError(err.statusText)
         ) {
           const authErrorWarningMessage = `Could not ingest group setttings. Missing required scope(s) (scopes=${client.requiredScopes.join(
             ', ',

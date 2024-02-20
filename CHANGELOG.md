@@ -1,3 +1,20 @@
+# v4.2.14 (Tue Feb 20 2024)
+
+#### 🐛 Bug Fix
+
+- Add user role relationship only if not present in jobstate [#224](https://github.com/JupiterOne/graph-google/pull/224) ([@jehisonprada](https://github.com/jehisonprada))
+
+#### ⚠️ Pushed to `main`
+
+- Apply remove-codeql with multi-gitter [ci skip] ([@electricgull](https://github.com/electricgull))
+
+#### Authors: 2
+
+- [@jehisonprada](https://github.com/jehisonprada)
+- Cameron Griffin ([@electricgull](https://github.com/electricgull))
+
+---
+
 # v4.2.13 (Thu Dec 14 2023)
 
 #### 🐛 Bug Fix

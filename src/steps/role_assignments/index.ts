@@ -61,7 +61,9 @@ export async function fetchRoleAssignments(
         },
       });
 
-      await jobState.addRelationship(roleUserRelationship);
+      if (!jobState.hasKey(roleUserRelationship._key)) {
+        await jobState.addRelationship(roleUserRelationship);
+      }
     });
   } catch (err) {
     if (

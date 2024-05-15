@@ -39,7 +39,7 @@ export function createGroupEntity(data: admin_directory_v1.Schema$Group) {
         name: data.name,
         description: data.description,
         aliases: data.aliases,
-        nonEditableAliases: data.nonEditableAliases
+        nonEditableAliases: data.nonEditableAliases,
       },
     },
   });

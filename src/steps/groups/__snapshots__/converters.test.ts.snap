@@ -13,6 +13,7 @@ Object {
         "adminCreated": true,
         "aliases": Array [
           "randomdistro@jupiterone.com",
+          "randomdistro@jptr.one",
         ],
         "description": "randomdistro@jupiterone.io distribution list",
         "directMembersCount": "5",
@@ -29,6 +30,10 @@ Object {
   ],
   "_type": "google_group",
   "adminCreated": true,
+  "aliases": Array [
+    "randomdistro@jupiterone.com",
+    "randomdistro@jptr.one",
+  ],
   "createdOn": undefined,
   "description": "randomdistro@jupiterone.io distribution list",
   "directMembersCount": "5",
@@ -37,6 +42,9 @@ Object {
   "id": "0184mhaj0imamcg",
   "kind": "admin#directory#group",
   "name": "Random",
+  "nonEditableAliases": Array [
+    "randomdistro@jupiterone.io.test-google-a.com",
+  ],
 }
 `;
 

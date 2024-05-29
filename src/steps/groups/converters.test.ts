@@ -23,7 +23,7 @@ function getMockGroup(
     directMembersCount: '5',
     description: 'randomdistro@jupiterone.io distribution list',
     adminCreated: true,
-    aliases: ['randomdistro@jupiterone.com'],
+    aliases: ['randomdistro@jupiterone.com', 'randomdistro@jptr.one'],
     nonEditableAliases: ['randomdistro@jupiterone.io.test-google-a.com'],
     ...partial,
   };

@@ -663,6 +663,7 @@ Object {
       ],
       "_type": "google_group",
       "adminCreated": true,
+      "aliases": undefined,
       "createdOn": undefined,
       "description": "Developers on JupiterOne integrations team",
       "directMembersCount": "3",
@@ -671,6 +672,9 @@ Object {
       "id": "023ckvvd4kecvcb",
       "kind": "admin#directory#group",
       "name": "Integration Developers",
+      "nonEditableAliases": Array [
+        "integrations@jupiterone.dev.test-google-a.com",
+      ],
     },
     Object {
       "_class": Array [
@@ -697,6 +701,7 @@ Object {
       ],
       "_type": "google_group",
       "adminCreated": true,
+      "aliases": undefined,
       "createdOn": undefined,
       "description": "",
       "directMembersCount": "0",
@@ -705,6 +710,9 @@ Object {
       "id": "00sqyw643dnjpsf",
       "kind": "admin#directory#group",
       "name": "OverlappingEmailTest1",
+      "nonEditableAliases": Array [
+        "overlappingemailtest@jupiterone.dev.test-google-a.com",
+      ],
     },
     Object {
       "_class": Array [
@@ -731,6 +739,7 @@ Object {
       ],
       "_type": "google_group",
       "adminCreated": true,
+      "aliases": undefined,
       "createdOn": undefined,
       "description": "Test additional group",
       "directMembersCount": "1",
@@ -739,6 +748,9 @@ Object {
       "id": "03cqmetx36hgkxw",
       "kind": "admin#directory#group",
       "name": "TestExtraGroup",
+      "nonEditableAliases": Array [
+        "testgroup@jupiterone.dev.test-google-a.com",
+      ],
     },
     Object {
       "_class": Array [

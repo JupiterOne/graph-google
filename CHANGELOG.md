@@ -1,3 +1,16 @@
+# v4.3.0 (Wed May 29 2024)
+
+#### 🚀 Enhancement
+
+- Int 11046 [#225](https://github.com/JupiterOne/graph-google/pull/225) ([@SeaBlooms](https://github.com/SeaBlooms) [@zemberdotnet](https://github.com/zemberdotnet))
+
+#### Authors: 2
+
+- Colin Blumer ([@SeaBlooms](https://github.com/SeaBlooms))
+- Matthew Zember ([@zemberdotnet](https://github.com/zemberdotnet))
+
+---
+
 # v4.2.14 (Tue Feb 20 2024)
 
 #### 🐛 Bug Fix
